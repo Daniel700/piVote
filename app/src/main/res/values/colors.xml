@@ -1,0 +1,8 @@
+<resources>
+
+    <color name="question">#6379F5</color>
+    <color name="question_alternative">#5AC65A</color>
+
+    <color name="table_row_header">#E5E5E5</color>
+
+</resources>

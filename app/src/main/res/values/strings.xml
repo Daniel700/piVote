@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">piVote</string>
+    <string name="title_activity_question_list">QuestionListActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+</resources>

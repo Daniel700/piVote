@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+
+
+        <!--   your app branding color for the app bar
+        <item name="colorPrimary">#777777</item>
+          darker variant for the status bar and contextual app bars
+        <item name="colorPrimaryDark">#30A63E</item>
+          theme UI controls like checkboxes and text fields
+        <item name="colorAccent">#DE3636</item>
+        -->
+
+
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">#3C4FBE</item>
+        <!--  darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">#293CA7</item>
+        <!-- theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">#EDEDED</item>
+
+
+    </style>
+
+</resources>

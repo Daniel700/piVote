@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_question_list"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_filter_list_white_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/fab_button_margin_bottom"
+        android:layout_marginRight="@dimen/fab_button_margin_right"
+        android:layout_marginEnd="@dimen/fab_button_margin_right"
+        android:alpha="0.7"
+        app:backgroundTint="?attr/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="6dp"
+        app:borderWidth="0dp"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_refresh_white_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/fab_filter"
+        android:layout_marginRight="@dimen/fab_button_margin_right"
+        android:layout_marginEnd="@dimen/fab_button_margin_right"
+        android:layout_marginBottom="8dp"
+        android:alpha="0.7"
+        app:backgroundTint="?attr/colorPrimary"
+        app:elevation="6dp"
+        app:pressedTranslationZ="6dp"
+        app:borderWidth="0dp" />
+
+
+
+<!--
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+-->
+
+</RelativeLayout>
