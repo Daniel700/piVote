@@ -18,7 +18,7 @@ public class DialogFilter extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-       // builder.setView(inflater.inflate(R.layout.tab_fragment_create_poll, null));
+       // builder.setView(inflater.inflate(R.layout.fragment_create_poll, null));
 
         builder.setTitle("Filter");
         builder.setMessage("Apply a certain Filter on your list: ");

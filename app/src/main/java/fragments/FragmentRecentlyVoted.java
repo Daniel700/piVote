@@ -1,4 +1,4 @@
-package tabs;
+package fragments;
 
 
 
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import adapter.CreatePollAdapter;
 import adapter.QuestionListAdapter;
 import piv.pivote.Poll;
 import piv.pivote.R;
@@ -20,7 +19,7 @@ import piv.pivote.R;
 /**
  * Created by Daniel on 30.07.2015.
  */
-public class TabFragmentRecentlyVoted extends Fragment {
+public class FragmentRecentlyVoted extends Fragment {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -31,7 +30,7 @@ public class TabFragmentRecentlyVoted extends Fragment {
 
         ArrayList<Poll> pollList = new ArrayList<>();
         // 1.
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 3; i++){
             Poll p = new Poll();
             p.setQuestion("Which character of the Simpsons do you like the most?");
             p.setOverallVotes(456);
@@ -45,7 +44,7 @@ public class TabFragmentRecentlyVoted extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab_fragment_recently_voted, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recently_voted, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_recently_voted);
 
         // 2.

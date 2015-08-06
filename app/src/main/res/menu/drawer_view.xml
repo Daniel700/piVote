@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_polls"
+            android:icon="@drawable/ic_poll_white_24dp"
+            android:title="All Polls" />
+        <item
+            android:id="@+id/nav_my_polls"
+            android:icon="@drawable/ic_create_white_24dp"
+            android:title="My Polls" />
+        <item
+            android:id="@+id/nav_recently"
+            android:icon="@drawable/ic_visibility_white_24dp"
+            android:title="Recently" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_outline_white_24dp"
+            android:title="About" />
+    </group>
+
+</menu>

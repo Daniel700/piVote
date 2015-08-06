@@ -6,13 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_question_list"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_filter"
@@ -47,19 +45,5 @@
         app:elevation="6dp"
         app:pressedTranslationZ="6dp"
         app:borderWidth="0dp" />
-
-
-
-<!--
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
--->
 
 </RelativeLayout>

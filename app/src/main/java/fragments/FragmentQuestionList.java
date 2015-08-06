@@ -1,4 +1,4 @@
-package tabs;
+package fragments;
 
 
 
@@ -23,7 +23,7 @@ import piv.pivote.R;
 /**
  * Created by Daniel on 28.07.2015.
  */
-public class TabFragmentQuestionList extends Fragment {
+public class FragmentQuestionList extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -51,7 +51,7 @@ public class TabFragmentQuestionList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.tab_fragment_question_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
        // Toolbar t = (Toolbar) rootView.findViewById(R.id.toolbar);
        // t.inflateMenu(R.menu.menu_launcher);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_question_list);

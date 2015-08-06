@@ -1,4 +1,4 @@
-package tabs;
+package fragments;
 
 
 import android.os.Bundle;
@@ -15,14 +15,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import adapter.CreatePollAdapter;
-import adapter.QuestionListAdapter;
 import piv.pivote.Poll;
 import piv.pivote.R;
 
 /**
  * Created by Daniel on 28.07.2015.
  */
-public class TabFragmentCreatePoll extends Fragment {
+public class FragmentCreatePoll extends Fragment {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -50,7 +49,7 @@ public class TabFragmentCreatePoll extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.tab_fragment_create_poll, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_create_poll, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_create_poll);
 
         // 2.
