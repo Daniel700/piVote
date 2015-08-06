@@ -52,8 +52,6 @@ public class FragmentQuestionList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
-       // Toolbar t = (Toolbar) rootView.findViewById(R.id.toolbar);
-       // t.inflateMenu(R.menu.menu_launcher);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_question_list);
 
         // 2.

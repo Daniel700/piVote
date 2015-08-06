@@ -6,4 +6,172 @@
 
     <include layout="@layout/toolbar"/>
 
+
+    <TextView
+        android:id="@+id/question_detailed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:background="@drawable/gradient_background"
+        android:textColor="@android:color/white"
+        android:text="What's your favorite hero of the marvel comics?" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_grey_background_rounded"
+                android:padding="3dp"
+                android:text="Votes: "/>
+
+            <TextView
+                android:id="@+id/overallVotes_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="12414"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_grey_background_rounded"
+                android:padding="3dp"
+                android:text="Category: "/>
+
+            <TextView
+                android:id="@+id/category_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="Movies"/>
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_grey_background_rounded"
+                android:padding="3dp"
+                android:text="Language: "/>
+
+            <TextView
+                android:id="@+id/language_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="English"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_grey_background_rounded"
+                android:padding="3dp"
+                android:text="last Voted: "/>
+
+            <TextView
+                android:id="@+id/lastVote_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="05.08.2015"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_grey_background_rounded"
+                android:padding="3dp"
+                android:gravity="center_vertical"
+                android:text="Created By: "/>
+
+            <TextView
+                android:id="@+id/createdBy_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:gravity="center_vertical"
+                android:text="Anonymous"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_grey_background_rounded"
+                android:padding="3dp"
+                android:gravity="center_vertical"
+                android:text="Creation Date: "/>
+
+            <TextView
+                android:id="@+id/creationDate_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:gravity="center_vertical"
+                android:text="31.07.2015"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/frame">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TEST"/>
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_answers"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vote"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
+
+
 </LinearLayout>
