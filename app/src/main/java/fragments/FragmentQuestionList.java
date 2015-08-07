@@ -39,10 +39,27 @@ public class FragmentQuestionList extends Fragment {
         for (int i = 0; i < 25; i++){
             Poll p = new Poll();
             p.setQuestion("What's your favorite hero of the marvel comics?");
-            p.setOverallVotes(4021);
+            p.setOverallVotes(2754);
             p.setCreatedBy("Anonymous");
             p.setCategory("Movies");
             p.setLanguage("English");
+
+            ArrayList<String> answers = new ArrayList<>();
+            answers.add("Iron Man");
+            answers.add("Hulk");
+            answers.add("Captain America");
+            answers.add("Thor");
+            answers.add("Ant-Man");
+            p.setAnswers(answers);
+
+            ArrayList<Integer> answerVotes = new ArrayList<>();
+            answerVotes.add(1021);
+            answerVotes.add(404);
+            answerVotes.add(210);
+            answerVotes.add(766);
+            answerVotes.add(353);
+            p.setAnswerVotes(answerVotes);
+
             pollList.add(p);
         }
         mAdapter = new QuestionListAdapter(pollList);

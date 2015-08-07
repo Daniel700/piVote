@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:id="@+id/linear_layout_detailed">
 
     <include layout="@layout/toolbar"/>
 
@@ -12,13 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:background="@drawable/gradient_background"
-        android:textColor="@android:color/white"
-        android:text="What's your favorite hero of the marvel comics?" />
+        android:textColor="@android:color/white" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -41,8 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="3dp"
-                android:text="12414"/>
+                android:padding="3dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -57,8 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="3dp"
-                android:text="Movies"/>
+                android:padding="3dp" />
 
         </TableRow>
 
@@ -79,8 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="3dp"
-                android:text="English"/>
+                android:padding="3dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -88,15 +90,14 @@
                 android:layout_weight="1"
                 android:background="@drawable/frame_grey_background_rounded"
                 android:padding="3dp"
-                android:text="last Voted: "/>
+                android:text="Last Vote: "/>
 
             <TextView
                 android:id="@+id/lastVote_detailed"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="3dp"
-                android:text="05.08.2015"/>
+                android:padding="3dp" />
 
         </TableRow>
 
@@ -118,8 +119,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
-                android:gravity="center_vertical"
-                android:text="Anonymous"/>
+                android:gravity="center_vertical" />
 
             <TextView
                 android:layout_width="0dp"
@@ -136,42 +136,85 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="3dp"
-                android:gravity="center_vertical"
-                android:text="31.07.2015"/>
+                android:gravity="center_vertical" />
 
         </TableRow>
 
     </TableLayout>
 
 
-    <LinearLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/question"/>
+
+
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/frame">
+        android:stretchColumns="1">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TEST"/>
+        <TableRow>
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Answer"
+                android:textStyle="italic"/>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Votes"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Percentage"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+    </TableLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_answers"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="220dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/question"/>
 
     <Button
+        android:id="@+id/button_vote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Vote"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"/>
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_background"
+        />
 
 
 </LinearLayout>
+
+</ScrollView>

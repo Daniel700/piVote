@@ -7,4 +7,7 @@
     <color name="table_row_header">#E5E5E5</color>
     <color name="table_row_column">#BCBCBC</color>
 
+    <color name="button_background_light">#FFD372</color>
+    <color name="button_background_dark">#FFBE30</color>
+
 </resources>

@@ -2,43 +2,52 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_view"
+    android:id="@+id/card_view_detailed"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="5dp">
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
 
-        <TextView
-            android:id="@+id/answer_text_detailed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Iron Man" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/answer_votes_detailed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="47"/>
+            <TextView
+                android:id="@+id/answer_text_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:textStyle="italic"/>
 
-        <TextView
-            android:id="@+id/answer_votes_percentage_detailed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="14 %"/>
 
-        <CheckBox
-            android:id="@+id/answer_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/answer_votes_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:textStyle="italic"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/answer_votes_percentage_detailed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:textStyle="italic"/>
+
+            <CheckBox
+                android:id="@+id/answer_checked"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+    </TableLayout>
 
 
 </android.support.v7.widget.CardView>

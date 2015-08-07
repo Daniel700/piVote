@@ -67,8 +67,6 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), v.toString(),Toast.LENGTH_SHORT).show();
-
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", plist);
