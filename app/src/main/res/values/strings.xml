@@ -1,12 +1,65 @@
 <resources>
     <string name="app_name">piVote</string>
     <string name="title_activity_question_list">QuestionListActivity</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
     <string name="open">drawerOpened</string>
     <string name="close">drawerClosed</string>
+
+
+
+    <string-array name="categories">
+        <item>Select your Category</item>
+        <item>Economics</item>
+        <item>Environment</item>
+        <item>Global</item>
+        <item>Movies/TV</item>
+        <item>Politics</item>
+        <item>Science</item>
+        <item>Society</item>
+        <item>Technical</item>
+    </string-array>
+
+
+    <string-array name="languages">
+        <item>Select your Language</item>
+        <item>Arabic</item>
+        <item>Bulgaria</item>
+        <item>Catalan</item>
+        <item>Chinese</item>
+        <item>Croatian</item>
+        <item>Czech</item>
+        <item>Danish</item>
+        <item>Dutch</item>
+        <item>Finnish</item>
+        <item>French</item>
+        <item>English</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>Hebrew</item>
+        <item>Hindi</item>
+        <item>Hungarian</item>
+        <item>Indonesian</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Latvian</item>
+        <item>Lithuanian</item>
+        <item>Norwegian</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Romanian</item>
+        <item>Russian</item>
+        <item>Serbian</item>
+        <item>Slovak</item>
+        <item>Slovenian</item>
+        <item>Spanish</item>
+        <item>Swedish</item>
+        <item>Tagalog</item>
+        <item>Thai</item>
+        <item>Turkish</item>
+        <item>Ukrainian</item>
+        <item>Vietnamese</item>
+    </string-array>
 
 
 </resources>

@@ -11,8 +11,7 @@ public class Poll implements Serializable {
 
     private String questionID;
     private String question;
-    private ArrayList<String> answers;
-    private ArrayList<Integer> answerVotes;
+    private ArrayList<Answer> answers;
     private int overallVotes;
     private String language;
     private String category;
@@ -38,20 +37,12 @@ public class Poll implements Serializable {
         this.question = question;
     }
 
-    public ArrayList<String> getAnswers() {
+    public ArrayList<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(ArrayList<String> answers) {
+    public void setAnswers(ArrayList<Answer> answers) {
         this.answers = answers;
-    }
-
-    public ArrayList<Integer> getAnswerVotes() {
-        return answerVotes;
-    }
-
-    public void setAnswerVotes(ArrayList<Integer> answerVotes) {
-        this.answerVotes = answerVotes;
     }
 
     public int getOverallVotes() {

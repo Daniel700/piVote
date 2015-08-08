@@ -2,6 +2,7 @@ package fragments;
 
 
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import adapter.QuestionListAdapter;
+import piv.pivote.Answer;
 import piv.pivote.DialogFilter;
+import utils.Category;
+import utils.Language;
 import piv.pivote.Poll;
 import piv.pivote.R;
 
@@ -41,24 +45,19 @@ public class FragmentQuestionList extends Fragment {
             p.setQuestion("What's your favorite hero of the marvel comics?");
             p.setOverallVotes(2754);
             p.setCreatedBy("Anonymous");
-            p.setCategory("Movies");
-            p.setLanguage("English");
+            p.setCategory(Category.Movies_TV.getLanguage("en"));
+            Resources res = getResources();
+            String[] cat = res.getStringArray(R.array.languages);
+            p.setLanguage(cat[11]);
 
-            ArrayList<String> answers = new ArrayList<>();
-            answers.add("Iron Man");
-            answers.add("Hulk");
-            answers.add("Captain America");
-            answers.add("Thor");
-            answers.add("Ant-Man");
+            ArrayList<Answer> answers = new ArrayList<>();
+            answers.add(new Answer("Iron Man", 1021));
+            answers.add(new Answer("Hulk", 404));
+            answers.add(new Answer("Captain America", 210));
+            answers.add(new Answer("Thor", 766));
+            answers.add(new Answer("Ant Man", 353));
+
             p.setAnswers(answers);
-
-            ArrayList<Integer> answerVotes = new ArrayList<>();
-            answerVotes.add(1021);
-            answerVotes.add(404);
-            answerVotes.add(210);
-            answerVotes.add(766);
-            answerVotes.add(353);
-            p.setAnswerVotes(answerVotes);
 
             pollList.add(p);
         }

@@ -1,6 +1,8 @@
 package fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,8 @@ import java.util.Date;
 
 import adapter.CreatePollAdapter;
 import piv.pivote.Poll;
+import piv.pivote.PollCreateActivity;
+import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
 
 /**
@@ -73,7 +77,9 @@ public class FragmentCreatePoll extends Fragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), v.toString(), Toast.LENGTH_SHORT).show();
+                Context context = v.getContext();
+                Intent intent = new Intent(context, PollCreateActivity.class);
+                context.startActivity(intent);
             }
         });
 

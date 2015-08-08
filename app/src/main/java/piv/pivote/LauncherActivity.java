@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import fragments.FragmentCreatePoll;
@@ -28,36 +29,30 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //createSplashScreen();
 
         //Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // Set the menu icon instead of the launcher icon. (Not needed when you use ActionBarDrawerToggle)
+        // final ActionBar ab = getSupportActionBar();
+        // ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        // ab.setDisplayHomeAsUpEnabled(true);
 
         //Apply Listener on NavigationView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Set the menu icon instead of the launcher icon. (Not needed when you use ActionBarDrawerToggle)
-       // final ActionBar ab = getSupportActionBar();
-       // ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-       // ab.setDisplayHomeAsUpEnabled(true);
-
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         //Animate the Hamburger Icon
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open,  R.string.close);
         mDrawerLayout.setDrawerListener(drawerToggle);
-
 
         //set initial Fragment for the first time
         Fragment frag = new FragmentQuestionList();
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, frag).commit();
-
-
-
+        setTitle("All Polls");
 
 
         /*

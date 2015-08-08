@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,31 +45,6 @@ public class PollDetailedActivity extends AppCompatActivity {
 
 
         poll = (Poll) getIntent().getSerializableExtra("Poll");
-
-
-/*
-        poll = new Poll();
-        poll.setQuestion("Wer sollte der nächste Bundeskanzler werden?");
-        poll.setLanguage("Deutsch");
-        poll.setCategory("Politik");
-        poll.setOverallVotes(1276);
-        poll.setCreatedBy("Dani");
-
-        ArrayList<String> answers = new ArrayList<String>();
-        answers.add("Merkel");
-        answers.add("Gabriel");
-        answers.add("Seehofer");
-        answers.add("Roth");
-        poll.setAnswers(answers);
-
-        ArrayList<Integer> answerVotes = new ArrayList<>();
-        answerVotes.add(566);
-        answerVotes.add(234);
-        answerVotes.add(444);
-        answerVotes.add(32);
-        poll.setAnswerVotes(answerVotes);
-*/
-
         //Set TextViews according to the selected poll
         try {
             TextView tv = (TextView) findViewById(R.id.question_detailed);
@@ -115,15 +91,25 @@ public class PollDetailedActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), String.valueOf(v.getId()), Toast.LENGTH_SHORT).show();
+
+                try {
+                    Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
+                    Toast.makeText(getApplicationContext(), a.getAnswerText(), Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Keine Antwort ausgewählt", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
+        //Set height of recycler view according to the number of items
         /*
         int viewHeight = 75 * poll.getAnswers().size();
         mRecyclerView.getLayoutParams().height = viewHeight;
         Log.e("size", String.valueOf(viewHeight));
         */
+
 
 
     }
