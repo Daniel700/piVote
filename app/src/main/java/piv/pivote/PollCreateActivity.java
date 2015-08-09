@@ -1,6 +1,6 @@
 package piv.pivote;
 
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -8,21 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import adapter.AnswersAdapter;
 import adapter.CreateAnswersAdapter;
 
 /**
@@ -46,7 +41,7 @@ public class PollCreateActivity extends AppCompatActivity {
         //Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Create New Poll");
+        setTitle(getResources().getString(R.string.activity_create_poll));
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
@@ -57,12 +52,12 @@ public class PollCreateActivity extends AppCompatActivity {
         Spinner spinnerCategory = (Spinner) findViewById(R.id.spinner_category_cp);
         Spinner spinnerNumberOfAnswers = (Spinner) findViewById(R.id.spinner_numberAnswers_cp);
         TextView name = (TextView) findViewById(R.id.editText_name_cp);
+        //ToDo: Conduct validation in EditText fields (floating labels)
 
         spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 language = parent.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), language, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -74,7 +69,6 @@ public class PollCreateActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 category = parent.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), category, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -86,7 +80,6 @@ public class PollCreateActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 numberOfAnswers = Integer.valueOf(parent.getSelectedItem().toString());
-                Toast.makeText(getApplicationContext(), String.valueOf(numberOfAnswers), Toast.LENGTH_SHORT).show();
 
                 ArrayList<Integer> arrayList = new ArrayList<>();
                 for (int i = 1; i <= numberOfAnswers; i++) {
@@ -122,6 +115,9 @@ public class PollCreateActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //ToDo: Create Poll Object in DB and redirect to MyPolls
+                //ToDo: Access EditTexts of RecyclerView to get the answers
+                //ToDo: Make creation of only 3 Polls per hour possible
                 Toast.makeText(getApplicationContext(), "Object created", Toast.LENGTH_SHORT).show();
             }
         });
@@ -141,9 +137,12 @@ public class PollCreateActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
+        intent.putExtra("from", this.getTitle().toString());
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                NavUtils.navigateUpTo(this, intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

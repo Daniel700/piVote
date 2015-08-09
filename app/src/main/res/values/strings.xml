@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">piVote</string>
-    <string name="title_activity_question_list">QuestionListActivity</string>
     <string name="action_settings">Settings</string>
     <string name="open">drawerOpened</string>
     <string name="close">drawerClosed</string>
 
+    <string name="activity_detailed_poll">Detailed Poll View</string>
+    <string name="activity_create_poll">Create New Poll</string>
 
+
+<!-- ToDo: Support multi Language and add all missing String resources -->
 
     <string-array name="categories">
         <item>Select your Category</item>
@@ -17,6 +20,7 @@
         <item>Health</item>
         <item>Miscellaneous</item>
         <item>Movies/TV</item>
+        <item>Music</item>
         <item>Politics</item>
         <item>Science</item>
         <item>Society</item>
@@ -29,7 +33,7 @@
     <string-array name="languages">
         <item>Select your Language</item>
         <item>Arabic</item>
-        <item>Bulgaria</item>
+        <item>Bulgarian</item>
         <item>Catalan</item>
         <item>Chinese</item>
         <item>Croatian</item>
@@ -56,7 +60,7 @@
         <item>Romanian</item>
         <item>Russian</item>
         <item>Serbian</item>
-        <item>Slovak</item>
+        <item>Slovakian</item>
         <item>Slovenian</item>
         <item>Spanish</item>
         <item>Swedish</item>

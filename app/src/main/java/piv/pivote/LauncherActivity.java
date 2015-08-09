@@ -1,9 +1,11 @@
 package piv.pivote;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -11,7 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
@@ -47,11 +52,17 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open,  R.string.close);
         mDrawerLayout.setDrawerListener(drawerToggle);
 
-        //set initial Fragment for the first time
-        Fragment frag = new FragmentQuestionList();
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, frag).commit();
-        setTitle("All Polls");
+        //Handle navigation to according fragments
+        String previousActivityName = getIntent().getStringExtra("from");
+        if (getResources().getString(R.string.activity_detailed_poll).equals(previousActivityName))
+            navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
+        else if (getResources().getString(R.string.activity_create_poll).equals(previousActivityName))
+            navigate(navigationView.getMenu().findItem(R.id.nav_my_polls));
+        else
+            navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
+
+        //ToDo: Navigation back from detailed poll always redirects to "All Polls"
+
 
 
         /*
@@ -121,6 +132,14 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+    }
+
     @Override
     public boolean onNavigationItemSelected(final MenuItem menuItem) {
 
@@ -137,6 +156,12 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
+
+        //Start snackbar if previous action was submitting a vote
+        String snackbarText = getIntent().getStringExtra("snackbar_detailed");
+        View coord = findViewById(R.id.snackbarCoordinatorLayout);
+        if (snackbarText != null)
+            Snackbar.make(coord, "Your Vote has been submitted", Snackbar.LENGTH_LONG).show();
     }
 
     @Override

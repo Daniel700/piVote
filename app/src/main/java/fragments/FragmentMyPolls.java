@@ -19,6 +19,7 @@ import adapter.MyPollAdapter;
 import piv.pivote.Poll;
 import piv.pivote.PollCreateActivity;
 import piv.pivote.R;
+import piv.pivote.TestData;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -32,19 +33,7 @@ public class FragmentMyPolls extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<Poll> pollList = new ArrayList<>();
-        // 1.
-        for (int i = 0; i < 4; i++){
-            Poll p = new Poll();
-            p.setQuestion("Should Society spend more money on science?");
-            p.setOverallVotes(1314);
-            p.setCreatedBy("Anonymous");
-            p.setCategory("Society");
-            p.setLanguage("English");
-            p.setLastVoted(new Date());
-            pollList.add(p);
-        }
-        mAdapter = new MyPollAdapter(pollList);
+        mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
     }
 
 

@@ -1,6 +1,8 @@
 package piv.pivote;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
@@ -39,11 +42,11 @@ public class PollDetailedActivity extends AppCompatActivity {
         //Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Detailed Poll View");
+        setTitle(getResources().getString(R.string.activity_detailed_poll));
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
         poll = (Poll) getIntent().getSerializableExtra("Poll");
         //Set TextViews according to the selected poll
         try {
@@ -56,11 +59,11 @@ public class PollDetailedActivity extends AppCompatActivity {
             tv = (TextView) findViewById(R.id.language_detailed);
             tv.setText(poll.getLanguage());
             tv = (TextView) findViewById(R.id.lastVote_detailed);
-            tv.setText("04.08.2015");
+            tv.setText(df.format(poll.getLastVoted()));
             tv = (TextView) findViewById(R.id.createdBy_detailed);
             tv.setText(poll.getCreatedBy());
             tv = (TextView) findViewById(R.id.creationDate_detailed);
-            tv.setText("30.07.2015");
+            tv.setText(df.format(poll.getCreationDate()));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -87,6 +90,7 @@ public class PollDetailedActivity extends AppCompatActivity {
         mRecyclerView.scrollToPosition(scrollPosition);
         mRecyclerView.setAdapter(mAdapter);
 
+
         Button button = (Button) findViewById(R.id.button_vote);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,10 +98,20 @@ public class PollDetailedActivity extends AppCompatActivity {
 
                 try {
                     Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
-                    Toast.makeText(getApplicationContext(), a.getAnswerText(), Toast.LENGTH_SHORT).show();
+                    /*
+                    Intent intent = new Intent(PollDetailedActivity.this, LauncherActivity.class);
+                    intent.putExtra("snackbar_detailed", a.getAnswerText());
+                    startActivity(intent);
+                    */
+                    Intent returnIntent = new Intent();
+                    setResult(RESULT_OK,returnIntent);
+                    finish();
+
+                    //ToDo: Double Check if right solution
+
                 }
                 catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Keine Antwort ausgewählt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -119,10 +133,13 @@ public class PollDetailedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
+        intent.putExtra("from", this.getTitle().toString());
+
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-            return true;
+                NavUtils.navigateUpTo(this, intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

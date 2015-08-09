@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", plist);
-                context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent, 555);
             }
         });
     }

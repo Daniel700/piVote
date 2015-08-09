@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import adapter.QuestionListAdapter;
 import piv.pivote.Poll;
 import piv.pivote.R;
+import piv.pivote.TestData;
 
 /**
  * Created by Daniel on 30.07.2015.
@@ -28,18 +29,7 @@ public class FragmentRecentlyVoted extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<Poll> pollList = new ArrayList<>();
-        // 1.
-        for (int i = 0; i < 3; i++){
-            Poll p = new Poll();
-            p.setQuestion("Which character of the Simpsons do you like the most?");
-            p.setOverallVotes(456);
-            p.setCreatedBy("Anonymous");
-            p.setCategory("Movies");
-            p.setLanguage("English");
-            pollList.add(p);
-        }
-        mAdapter = new QuestionListAdapter(pollList);
+        mAdapter = new QuestionListAdapter(TestData.getInstance().recentlyVotedList);
     }
 
     @Override

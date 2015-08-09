@@ -2,9 +2,9 @@ package fragments;
 
 
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,12 +17,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import adapter.QuestionListAdapter;
-import piv.pivote.Answer;
 import piv.pivote.DialogFilter;
-import utils.Category;
-import utils.Language;
 import piv.pivote.Poll;
 import piv.pivote.R;
+import piv.pivote.TestData;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -38,30 +36,10 @@ public class FragmentQuestionList extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<Poll> pollList = new ArrayList<>();
         // 1.
-        for (int i = 0; i < 25; i++){
-            Poll p = new Poll();
-            p.setQuestion("What's your favorite hero of the marvel comics?");
-            p.setOverallVotes(2754);
-            p.setCreatedBy("Anonymous");
-            p.setCategory(Category.Movies_TV.getLanguage("en"));
-            Resources res = getResources();
-            String[] cat = res.getStringArray(R.array.languages);
-            p.setLanguage(cat[11]);
+        //ToDo: Request only Polls from Database on which the user hasn't yet voted / Alternatively color them grey in the Question-List
 
-            ArrayList<Answer> answers = new ArrayList<>();
-            answers.add(new Answer("Iron Man", 1021));
-            answers.add(new Answer("Hulk", 404));
-            answers.add(new Answer("Captain America", 210));
-            answers.add(new Answer("Thor", 766));
-            answers.add(new Answer("Ant Man", 353));
-
-            p.setAnswers(answers);
-
-            pollList.add(p);
-        }
-        mAdapter = new QuestionListAdapter(pollList);
+        mAdapter = new QuestionListAdapter(TestData.getInstance().questionList);
     }
 
     @Override
@@ -98,6 +76,7 @@ public class FragmentQuestionList extends Fragment {
                 Toast.makeText(v.getContext(), v.toString(), Toast.LENGTH_SHORT).show();
                 DialogFragment dialogFilter = new DialogFilter();
                 dialogFilter.show(getFragmentManager(), "dFilter");
+                //ToDo: Create Dialog Window for Filter Options
             }
         });
 
@@ -130,4 +109,10 @@ public class FragmentQuestionList extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //ToDo: Probably start snackbar here instead of using the parent Activity (Launcher)
+    }
 }
