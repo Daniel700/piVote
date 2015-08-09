@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import piv.pivote.Poll;
@@ -19,7 +18,7 @@ import piv.pivote.R;
 /**
  * Created by Daniel on 03.08.2015.
  */
-public class CreatePollAdapter extends RecyclerView.Adapter<CreatePollAdapter.ViewHolder> {
+public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder> {
     private List<Poll> pollList;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -37,19 +36,19 @@ public class CreatePollAdapter extends RecyclerView.Adapter<CreatePollAdapter.Vi
         }
     }
 
-    public CreatePollAdapter(List<Poll> pollList) {
+    public MyPollAdapter(List<Poll> pollList) {
         this.pollList = pollList;
     }
 
     @Override
-    public CreatePollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_create_poll, parent, false);
+    public MyPollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_my_poll, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(CreatePollAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MyPollAdapter.ViewHolder holder, int position) {
 // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Poll plist = pollList.get(position);

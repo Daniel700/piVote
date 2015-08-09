@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import fragments.FragmentCreatePoll;
+import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
 import fragments.FragmentRecentlyVoted;
 
@@ -30,7 +30,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 FragmentQuestionList tab1 = new FragmentQuestionList();
                 return tab1;
             case 1:
-                FragmentCreatePoll tab2 = new FragmentCreatePoll();
+                FragmentMyPolls tab2 = new FragmentMyPolls();
                 return tab2;
             case 2:
                 FragmentRecentlyVoted tab3 = new FragmentRecentlyVoted();

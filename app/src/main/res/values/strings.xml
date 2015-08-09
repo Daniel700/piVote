@@ -9,14 +9,20 @@
 
     <string-array name="categories">
         <item>Select your Category</item>
-        <item>Economics</item>
+        <item>Economy</item>
         <item>Environment</item>
-        <item>Global</item>
+        <item>Fashion</item>
+        <item>Food</item>
+        <item>Fun</item>
+        <item>Health</item>
+        <item>Miscellaneous</item>
         <item>Movies/TV</item>
         <item>Politics</item>
         <item>Science</item>
         <item>Society</item>
-        <item>Technical</item>
+        <item>Sports</item>
+        <item>Technology</item>
+        <item>World</item>
     </string-array>
 
 
@@ -59,6 +65,20 @@
         <item>Turkish</item>
         <item>Ukrainian</item>
         <item>Vietnamese</item>
+    </string-array>
+
+
+    <string-array name="numberOfAnswers">
+        <item>0</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
 

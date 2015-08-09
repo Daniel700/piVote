@@ -11,21 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import adapter.CreatePollAdapter;
+import adapter.MyPollAdapter;
 import piv.pivote.Poll;
 import piv.pivote.PollCreateActivity;
-import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
 
 /**
  * Created by Daniel on 28.07.2015.
  */
-public class FragmentCreatePoll extends Fragment {
+public class FragmentMyPolls extends Fragment {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -46,14 +44,14 @@ public class FragmentCreatePoll extends Fragment {
             p.setLastVoted(new Date());
             pollList.add(p);
         }
-        mAdapter = new CreatePollAdapter(pollList);
+        mAdapter = new MyPollAdapter(pollList);
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_create_poll, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_my_polls, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_create_poll);
 
         // 2.

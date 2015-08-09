@@ -11,10 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
-import fragments.FragmentCreatePoll;
+import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
 import fragments.FragmentRecentlyVoted;
 
@@ -96,7 +95,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                 fragmentClass = FragmentQuestionList.class;
                 break;
             case R.id.nav_my_polls:
-                fragmentClass = FragmentCreatePoll.class;
+                fragmentClass = FragmentMyPolls.class;
                 break;
             case R.id.nav_recently:
                 fragmentClass = FragmentRecentlyVoted.class;

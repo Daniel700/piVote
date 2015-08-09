@@ -5,19 +5,38 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import adapter.AnswersAdapter;
+import adapter.CreateAnswersAdapter;
 
 /**
  * Created by Daniel on 07.08.2015.
  */
 public class PollCreateActivity extends AppCompatActivity {
+
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView mRecyclerView;
+
+    private String language;
+    private String category;
+    private int numberOfAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +50,90 @@ public class PollCreateActivity extends AppCompatActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberAnswers_cp);
-        numberPicker.setMinValue(2);
-        numberPicker.setMaxValue(10);
-        numberPicker.setWrapSelectorWheel(false);
+        //find Views
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_answers_cp);
+        TextView question = (TextView) findViewById(R.id.editText_question_cp);
+        Spinner spinnerLanguage = (Spinner) findViewById(R.id.spinner_language_cp);
+        Spinner spinnerCategory = (Spinner) findViewById(R.id.spinner_category_cp);
+        Spinner spinnerNumberOfAnswers = (Spinner) findViewById(R.id.spinner_numberAnswers_cp);
+        TextView name = (TextView) findViewById(R.id.editText_name_cp);
+
+        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                language = parent.getSelectedItem().toString();
+                Toast.makeText(getApplicationContext(), language, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = parent.getSelectedItem().toString();
+                Toast.makeText(getApplicationContext(), category, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerNumberOfAnswers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                numberOfAnswers = Integer.valueOf(parent.getSelectedItem().toString());
+                Toast.makeText(getApplicationContext(), String.valueOf(numberOfAnswers), Toast.LENGTH_SHORT).show();
+
+                ArrayList<Integer> arrayList = new ArrayList<>();
+                for (int i = 1; i <= numberOfAnswers; i++) {
+                    arrayList.add(i);
+                }
+
+                    //1.
+                    mAdapter = new CreateAnswersAdapter(arrayList);
+                    mRecyclerView.setAdapter(mAdapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // 2.
+        // use a linear layout manager
+        int scrollPosition = 0;
+        if (mLayoutManager != null) {
+            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        } else {
+            mLayoutManager = new LinearLayoutManager(PollCreateActivity.this);
+        }
+        // 3.
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.scrollToPosition(scrollPosition);
+
+
+        Button button = (Button) findViewById(R.id.button_create);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Object created", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Set height of recycler view according to the number of items
+        /*
+        int viewHeight = 75 * poll.getAnswers().size();
+        mRecyclerView.getLayoutParams().height = viewHeight;
+        Log.e("size", String.valueOf(viewHeight));
+        */
+
+
 
     }
 

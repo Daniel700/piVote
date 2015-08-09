@@ -70,7 +70,7 @@ public class PollDetailedActivity extends AppCompatActivity {
 
         //1.
         mAdapter = new AnswersAdapter(poll);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_answers);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_answers_detailed);
 
         // 2.
         // use a linear layout manager

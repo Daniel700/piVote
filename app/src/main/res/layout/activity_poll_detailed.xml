@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/frame_grey_background_rounded"
+                android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:text="Votes: "/>
 
@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/frame_grey_background_rounded"
+                android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:text="Category: "/>
 
@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/frame_grey_background_rounded"
+                android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:text="Language: "/>
 
@@ -87,7 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/frame_grey_background_rounded"
+                android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:text="Last Vote: "/>
 
@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/frame_grey_background_rounded"
+                android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:gravity="center_vertical"
                 android:text="Created By: "/>
@@ -124,7 +124,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/frame_grey_background_rounded"
+                android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:gravity="center_vertical"
                 android:text="Creation Date: "/>
@@ -191,8 +191,9 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_answers"
+        android:id="@+id/recycler_view_answers_detailed"
         android:scrollbars="vertical"
+        android:fadeScrollbars="false"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         />
