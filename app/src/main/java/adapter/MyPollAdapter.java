@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -65,7 +66,7 @@ public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", plist);
-                context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent, 200);
             }
         });
     }

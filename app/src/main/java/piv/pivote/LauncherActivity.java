@@ -34,7 +34,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //createSplashScreen();
 
         //Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -52,16 +51,9 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open,  R.string.close);
         mDrawerLayout.setDrawerListener(drawerToggle);
 
-        //Handle navigation to according fragments
-        String previousActivityName = getIntent().getStringExtra("from");
-        if (getResources().getString(R.string.activity_detailed_poll).equals(previousActivityName))
-            navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
-        else if (getResources().getString(R.string.activity_create_poll).equals(previousActivityName))
-            navigate(navigationView.getMenu().findItem(R.id.nav_my_polls));
-        else
-            navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
+        //Navigate to the initial fragment
+        navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
 
-        //ToDo: Navigation back from detailed poll always redirects to "All Polls"
 
 
 
@@ -96,8 +88,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void navigate(final MenuItem menuItem) {
-        // Create a new fragment and specify the planet to show based on
-        // position
+        // Create a new fragment and specify the planet to show based on position
         Fragment fragment = null;
 
         Class fragmentClass;
@@ -118,6 +109,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Window could not be created", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
@@ -129,7 +121,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawers();
-
     }
 
 
@@ -137,16 +128,29 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        View coordinatorLayout = null;
+        String snackbarText = null;
 
+        //Start snackbar if previous action was submitting a vote
+        if (data != null && data.getExtras() != null) {
+            snackbarText = data.getStringExtra("snackbarDetailed");
+
+            if (requestCode == 100) {
+                coordinatorLayout = findViewById(R.id.coordinatorLayoutQuestionList);
+            }
+            if (requestCode == 200) {
+                coordinatorLayout = findViewById(R.id.coordinatorLayoutMyPolls);
+            }
+            if (snackbarText != null && coordinatorLayout != null)
+                Snackbar.make(coordinatorLayout, "Your Vote - " + snackbarText + " - has been submitted", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(final MenuItem menuItem) {
-
-        menuItem.setChecked(true);
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        navigate(menuItem);
-
+            menuItem.setChecked(true);
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            navigate(menuItem);
         return true;
     }
 
@@ -156,12 +160,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
-
-        //Start snackbar if previous action was submitting a vote
-        String snackbarText = getIntent().getStringExtra("snackbar_detailed");
-        View coord = findViewById(R.id.snackbarCoordinatorLayout);
-        if (snackbarText != null)
-            Snackbar.make(coord, "Your Vote has been submitted", Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -185,19 +183,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void createSplashScreen(){
-        new CountDownTimer(3000, 1000) {
-            public void onTick(long millisUntilFinished)
-            {
-            }
-            public void onFinish() {
-                //activate main window
-                setContentView(R.layout.activity_launcher);
-            }
-        }.start();
     }
 
 }

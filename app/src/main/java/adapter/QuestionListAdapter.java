@@ -70,7 +70,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", plist);
-                ((Activity) context).startActivityForResult(intent, 555);
+                ((Activity) context).startActivityForResult(intent, 100);
             }
         });
     }

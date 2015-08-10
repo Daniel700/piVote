@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/coordinatorLayoutMyPolls"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_create_poll"
@@ -16,16 +17,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_white_24dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/fab_button_margin_bottom"
         android:layout_marginRight="@dimen/fab_button_margin_right"
         android:layout_marginEnd="@dimen/fab_button_margin_right"
         android:alpha="0.7"
         app:backgroundTint="?attr/colorPrimary"
         app:elevation="6dp"
-        app:pressedTranslationZ="6dp"
-        app:borderWidth="0dp"/>
+        app:layout_anchor="@id/recycler_view_create_poll"
+        app:layout_anchorGravity="bottom|right|end"/>
 
-</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

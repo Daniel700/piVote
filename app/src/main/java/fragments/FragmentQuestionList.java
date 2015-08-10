@@ -2,6 +2,7 @@ package fragments;
 
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -109,10 +110,5 @@ public class FragmentQuestionList extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-        //ToDo: Probably start snackbar here instead of using the parent Activity (Launcher)
-    }
 }

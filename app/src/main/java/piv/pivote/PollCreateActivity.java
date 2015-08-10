@@ -137,12 +137,9 @@ public class PollCreateActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
-        intent.putExtra("from", this.getTitle().toString());
-
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpTo(this, intent);
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

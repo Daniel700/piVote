@@ -98,17 +98,10 @@ public class PollDetailedActivity extends AppCompatActivity {
 
                 try {
                     Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
-                    /*
-                    Intent intent = new Intent(PollDetailedActivity.this, LauncherActivity.class);
-                    intent.putExtra("snackbar_detailed", a.getAnswerText());
-                    startActivity(intent);
-                    */
                     Intent returnIntent = new Intent();
-                    setResult(RESULT_OK,returnIntent);
+                    returnIntent.putExtra("snackbarDetailed", a.getAnswerText());
+                    setResult(RESULT_OK, returnIntent);
                     finish();
-
-                    //ToDo: Double Check if right solution
-
                 }
                 catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
@@ -133,12 +126,9 @@ public class PollDetailedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
-        intent.putExtra("from", this.getTitle().toString());
-
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpTo(this, intent);
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
