@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import adapter.CreateAnswersAdapter;
 
@@ -116,9 +117,19 @@ public class PollCreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //ToDo: Create Poll Object in DB and redirect to MyPolls
-                //ToDo: Access EditTexts of RecyclerView to get the answers
-                //ToDo: Make creation of only 3 Polls per hour possible
-                Toast.makeText(getApplicationContext(), "Object created", Toast.LENGTH_SHORT).show();
+                //ToDo: Limit creation to 3 Polls per hour
+
+                CreateAnswersAdapter createAnswersAdapter = ((CreateAnswersAdapter) mAdapter);
+                ArrayList<String> answers = createAnswersAdapter.getAnswers();
+
+                if (answers.size() == createAnswersAdapter.getItemCount()){
+                    Toast.makeText(getApplicationContext(), String.valueOf(answers.size()), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Please fill out all answers", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 

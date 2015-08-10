@@ -129,11 +129,10 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         super.onActivityResult(requestCode, resultCode, data);
 
         View coordinatorLayout = null;
-        String snackbarText = null;
 
         //Start snackbar if previous action was submitting a vote
         if (data != null && data.getExtras() != null) {
-            snackbarText = data.getStringExtra("snackbarDetailed");
+            String snackbarText = data.getStringExtra("snackbarDetailed");
 
             if (requestCode == 100) {
                 coordinatorLayout = findViewById(R.id.coordinatorLayoutQuestionList);
