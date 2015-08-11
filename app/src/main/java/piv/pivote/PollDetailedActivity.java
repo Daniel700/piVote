@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
+import adapter.QuestionListAdapter;
 
 /**
  * Created by Daniel on 02.08.2015.
@@ -102,25 +103,17 @@ public class PollDetailedActivity extends AppCompatActivity {
                     returnIntent.putExtra("snackbarDetailed", a.getAnswerText());
                     setResult(RESULT_OK, returnIntent);
                     finish();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
-        //Set height of recycler view according to the number of items
-        /*
-        int viewHeight = 75 * poll.getAnswers().size();
-        mRecyclerView.getLayoutParams().height = viewHeight;
-        Log.e("size", String.valueOf(viewHeight));
-        */
 
 
 
     }
-
 
 
     @Override

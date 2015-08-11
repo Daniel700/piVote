@@ -18,7 +18,8 @@ import piv.pivote.R;
 public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHolder> {
 
     private Poll myPoll;
-    public int lastPosition = -1;
+    private int lastPosition = -1;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
@@ -84,13 +85,10 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                 if (lastPosition != position) {
                     notifyItemChanged(lastPosition);
                     myPoll.getAnswers().get(position).setSelected(true);
-                }
-                else
-                {
+                } else {
                     if (holder.answerChecked.isChecked()) {
                         myPoll.getAnswers().get(position).setSelected(true);
-                    }
-                    else {
+                    } else {
                         myPoll.getAnswers().get(position).setSelected(false);
                     }
                 }
@@ -98,8 +96,6 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
                 lastPosition = position;
             }
         });
-
-
 
 
     }
@@ -118,4 +114,5 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
 
         return null;
     }
+
 }

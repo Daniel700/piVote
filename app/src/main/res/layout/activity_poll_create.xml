@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
         <include layout="@layout/toolbar"/>
@@ -30,8 +33,10 @@
             android:id="@+id/editText_question_cp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
+            android:textCursorDrawable="@null"
             android:hint="Question-Text"
+            android:maxLength="100"
+            android:singleLine="true"
             android:padding="5dp" />
 
         <TextView
@@ -97,8 +102,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:ems="10"
+                    android:textCursorDrawable="@null"
                     android:hint="Anonymous"
+                    android:maxLength="20"
+                    android:singleLine="true"
                     android:padding="5dp"
                     android:layout_weight="1"/>
             </TableRow>
@@ -165,15 +172,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_answers_cp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="vertical"
         android:fadeScrollbars="false"
-    />
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/question"/>
+        android:background="@color/question" />
 
     <Button
         android:id="@+id/button_create"
@@ -181,12 +189,13 @@
         android:layout_height="wrap_content"
         android:text="Create Poll"
         android:padding="10dp"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_background" />
 
 
-    </LinearLayout>
+</LinearLayout>
+
 
 </ScrollView>

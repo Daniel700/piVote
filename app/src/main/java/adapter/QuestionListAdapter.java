@@ -73,6 +73,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                 ((Activity) context).startActivityForResult(intent, 100);
             }
         });
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,58 +49,12 @@ public class PollCreateActivity extends AppCompatActivity {
 
         //find Views
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_answers_cp);
-        TextView question = (TextView) findViewById(R.id.editText_question_cp);
-        Spinner spinnerLanguage = (Spinner) findViewById(R.id.spinner_language_cp);
+        final EditText question = (EditText) findViewById(R.id.editText_question_cp);
+        final Spinner spinnerLanguage = (Spinner) findViewById(R.id.spinner_language_cp);
         Spinner spinnerCategory = (Spinner) findViewById(R.id.spinner_category_cp);
         Spinner spinnerNumberOfAnswers = (Spinner) findViewById(R.id.spinner_numberAnswers_cp);
-        TextView name = (TextView) findViewById(R.id.editText_name_cp);
-        //ToDo: Conduct validation in EditText fields (floating labels)
+        final EditText name = (EditText) findViewById(R.id.editText_name_cp);
 
-        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                language = parent.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                category = parent.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spinnerNumberOfAnswers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                numberOfAnswers = Integer.valueOf(parent.getSelectedItem().toString());
-
-                ArrayList<Integer> arrayList = new ArrayList<>();
-                for (int i = 1; i <= numberOfAnswers; i++) {
-                    arrayList.add(i);
-                }
-
-                    //1.
-                    mAdapter = new CreateAnswersAdapter(arrayList);
-                    mRecyclerView.setAdapter(mAdapter);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        // 2.
         // use a linear layout manager
         int scrollPosition = 0;
         if (mLayoutManager != null) {
@@ -107,9 +62,58 @@ public class PollCreateActivity extends AppCompatActivity {
         } else {
             mLayoutManager = new LinearLayoutManager(PollCreateActivity.this);
         }
-        // 3.
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
+
+
+                spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        language = parent.getSelectedItem().toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        category = parent.getSelectedItem().toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                spinnerNumberOfAnswers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        numberOfAnswers = Integer.valueOf(parent.getSelectedItem().toString());
+
+                        ArrayList<Integer> arrayList = new ArrayList<>();
+                        for (int i = 1; i <= numberOfAnswers; i++) {
+                            arrayList.add(i);
+                        }
+
+                        mAdapter = new CreateAnswersAdapter(arrayList);
+                        mRecyclerView.setAdapter(mAdapter);
+
+                        //Update RecyclerView Height
+                        //ToDo: Calculate correct Height for Answers
+                        mRecyclerView.getLayoutParams().height = 100 * numberOfAnswers;
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
 
 
         Button button = (Button) findViewById(R.id.button_create);
@@ -119,26 +123,38 @@ public class PollCreateActivity extends AppCompatActivity {
                 //ToDo: Create Poll Object in DB and redirect to MyPolls
                 //ToDo: Limit creation to 3 Polls per hour
 
+
+                //################# Conduct validation of all input fields ########################
                 CreateAnswersAdapter createAnswersAdapter = ((CreateAnswersAdapter) mAdapter);
                 ArrayList<String> answers = createAnswersAdapter.getAnswers();
 
-                if (answers.size() == createAnswersAdapter.getItemCount()){
-                    Toast.makeText(getApplicationContext(), String.valueOf(answers.size()), Toast.LENGTH_SHORT).show();
+                String[] resLanguages = getResources().getStringArray(R.array.languages);
+                String[] resCategories = getResources().getStringArray(R.array.categories);
+
+                //Check if User has entered all attributes for the corresponding Poll
+                if (question.getText().toString().trim().isEmpty())
+                {
+                    question.setError("Please enter a question");
                 }
-                else {
+                else if (language.equals(resLanguages[0])){
+                    Toast.makeText(getApplicationContext(), "Please select a language", Toast.LENGTH_SHORT).show();
+                }
+                else if (category.equals(resCategories[0])){
+                    Toast.makeText(getApplicationContext(), "Please select a category", Toast.LENGTH_SHORT).show();
+                }
+                else if (!(answers.size() == createAnswersAdapter.getItemCount()) || numberOfAnswers == 0){
                     Toast.makeText(getApplicationContext(), "Please fill out all answers", Toast.LENGTH_SHORT).show();
                 }
+                else {
+                    // Poll has all attributes and can be created
+                    if (name.getText().toString().trim().isEmpty())
+                        name.setText("Anonymous");
 
+                    Toast.makeText(getApplicationContext(), String.valueOf(answers.size()), Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
-
-        //Set height of recycler view according to the number of items
-        /*
-        int viewHeight = 75 * poll.getAnswers().size();
-        mRecyclerView.getLayoutParams().height = viewHeight;
-        Log.e("size", String.valueOf(viewHeight));
-        */
 
 
 
