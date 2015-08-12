@@ -38,10 +38,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         //Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Set the menu icon instead of the launcher icon. (Not needed when you use ActionBarDrawerToggle)
-        // final ActionBar ab = getSupportActionBar();
-        // ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        // ab.setDisplayHomeAsUpEnabled(true);
 
         //Apply Listener on NavigationView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -85,7 +81,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Window could not be created", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.windowError), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
@@ -120,7 +116,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                 coordinatorLayout = findViewById(R.id.coordinatorLayoutTopPolls);
             }
             if (snackbarText != null && coordinatorLayout != null)
-                Snackbar.make(coordinatorLayout, "Your Vote - " + snackbarText + " - has been submitted", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(coordinatorLayout, getString(R.string.voteSubmit1) + " " + snackbarText + " " + getString(R.string.voteSubmit2), Snackbar.LENGTH_LONG).show();
         }
     }
 

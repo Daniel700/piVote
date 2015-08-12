@@ -11,14 +11,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
         <include layout="@layout/toolbar"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Enter your Question:"
+            android:text="@string/createPollEnterQuestion"
             android:padding="5dp"
             android:layout_margin="10dp"
             android:textSize="16sp"
@@ -34,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textCursorDrawable="@null"
-            android:hint="Question-Text"
+            android:hint="@string/hintQuestionText"
             android:maxLength="100"
             android:singleLine="true"
             android:padding="5dp" />
@@ -54,7 +53,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Language:"
+                    android:text="@string/language"
                     android:padding="5dp"
                     android:gravity="center"
                     android:background="@drawable/grey_background_rounded_strong"
@@ -72,7 +71,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Category:"
+                    android:text="@string/category"
                     android:gravity="center"
                     android:padding="5dp"
                     android:background="@drawable/grey_background_rounded_strong"
@@ -90,7 +89,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Your Name:"
+                    android:text="@string/yourName"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
                     android:padding="5dp"
@@ -103,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:textCursorDrawable="@null"
-                    android:hint="Anonymous"
+                    android:hint="@string/hintAnonymous"
                     android:maxLength="20"
                     android:singleLine="true"
                     android:padding="5dp"
@@ -114,7 +113,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select number of answers:"
+                    android:text="@string/selectNumberOfAnswers"
                     android:gravity="center"
                     android:padding="5dp"
                     android:background="@drawable/grey_background_rounded_strong"
@@ -149,7 +148,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    android:text="Number"
+                    android:text="@string/number"
                     android:textStyle="italic"/>
 
                 <TextView
@@ -157,7 +156,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    android:text="Text"
+                    android:text="@string/text"
                     android:textStyle="italic"/>
 
             </TableRow>
@@ -187,7 +186,7 @@
         android:id="@+id/button_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Poll"
+        android:text="@string/buttonCreatePoll"
         android:padding="10dp"
         android:layout_margin="10dp"
         android:gravity="center"

@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textCursorDrawable="@null"
-        android:hint="Answer Text"
+        android:hint="@string/hintAnswerText"
         android:maxLength="50"
         android:singleLine="true"
         android:layout_marginLeft="25dp"

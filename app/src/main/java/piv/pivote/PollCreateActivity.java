@@ -2,18 +2,22 @@ package piv.pivote;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,16 +139,16 @@ public class PollCreateActivity extends AppCompatActivity {
                 //Check if User has entered all attributes for the corresponding Poll
                 if (question.getText().toString().trim().isEmpty())
                 {
-                    question.setError("Please enter a question");
+                    question.setError(getString(R.string.createQuestionError));
                 }
                 else if (language.equals(resLanguages[0])){
-                    Toast.makeText(getApplicationContext(), "Please select a language", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.spinner_language_cp), getString(R.string.createLanguageError), Snackbar.LENGTH_LONG).show();
                 }
                 else if (category.equals(resCategories[0])){
-                    Toast.makeText(getApplicationContext(), "Please select a category", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.spinner_category_cp), getString(R.string.createCategoryError), Snackbar.LENGTH_LONG).show();
                 }
                 else if (!(answers.size() == createAnswersAdapter.getItemCount()) || numberOfAnswers == 0){
-                    Toast.makeText(getApplicationContext(), "Please fill out all answers", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.recycler_view_answers_cp), getString(R.string.createAnswersError), Snackbar.LENGTH_LONG).show();
                 }
                 else {
                     // Poll has all attributes and can be created

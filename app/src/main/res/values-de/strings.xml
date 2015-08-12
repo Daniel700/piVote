@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ToDo: Support multi Language (German) -->
+
+
+    <string name="category">Kategorie</string>
+    <string name="language">Sprache</string>
+    <string name="lastVote">Letzter Vote</string>
+    <string name="createdBy">Erstellt von</string>
+    <string name="creationDate">Erstellungsdatum</string>
+
+
+</resources>

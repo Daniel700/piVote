@@ -36,7 +36,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:background="@color/table_row_header"
-                        android:text="Votes:"
+                        android:text="@string/votes"
                         android:textStyle="bold"
                         android:gravity="center"
                         android:textSize="12sp"
@@ -48,7 +48,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/table_row_header"
                         android:gravity="center"
-                        android:text="Category:"
+                        android:text="@string/category"
                         android:textSize="12sp"
                         android:padding="3dp"
                         android:layout_weight="1"/>
@@ -58,7 +58,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/table_row_header"
                         android:gravity="center"
-                        android:text="Created By:"
+                        android:text="@string/createdBy"
                         android:textSize="12sp"
                         android:padding="3dp"
                         android:layout_weight="1"/>

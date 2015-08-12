@@ -28,7 +28,7 @@ public class DialogFilter extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_filter, null);
         builder.setView(view);
-        builder.setTitle("Filter");
+        builder.setTitle(getString(R.string.dialogTitle));
 
 
         Spinner spinnerLanguage = (Spinner) view.findViewById(R.id.spinner_filter_language);
@@ -59,7 +59,7 @@ public class DialogFilter extends DialogFragment {
 
 
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.dialogButtonPositive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 getActivity().getIntent().putExtra("language", language);
@@ -68,7 +68,7 @@ public class DialogFilter extends DialogFragment {
 
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.dialogButtonNegative), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

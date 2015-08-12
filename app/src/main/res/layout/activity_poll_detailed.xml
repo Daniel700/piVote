@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
-                android:text="Votes: "/>
+                android:text="@string/votes"/>
 
             <TextView
                 android:id="@+id/overallVotes_detailed"
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
-                android:text="Category: "/>
+                android:text="@string/category"/>
 
             <TextView
                 android:id="@+id/category_detailed"
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
-                android:text="Language: "/>
+                android:text="@string/language"/>
 
             <TextView
                 android:id="@+id/language_detailed"
@@ -86,7 +86,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
-                android:text="Last Vote: "/>
+                android:text="@string/lastVote"/>
 
             <TextView
                 android:id="@+id/lastVote_detailed"
@@ -107,7 +107,7 @@
                 android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:gravity="center_vertical"
-                android:text="Created By: "/>
+                android:text="@string/createdBy"/>
 
             <TextView
                 android:id="@+id/createdBy_detailed"
@@ -124,7 +124,7 @@
                 android:background="@drawable/grey_background_rounded"
                 android:padding="3dp"
                 android:gravity="center_vertical"
-                android:text="Creation Date: "/>
+                android:text="@string/creationDate"/>
 
             <TextView
                 android:id="@+id/creationDate_detailed"
@@ -157,7 +157,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Answer"
+                android:text="@string/answer"
                 android:textStyle="italic"/>
 
             <TextView
@@ -165,7 +165,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Votes"
+                android:text="@string/votes"
                 android:textStyle="italic"/>
 
             <TextView
@@ -173,7 +173,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Percentage"
+                android:text="@string/percentage"
                 android:textStyle="italic"/>
 
             <TextView
@@ -205,7 +205,7 @@
         android:id="@+id/button_vote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vote"
+        android:text="@string/buttonVote"
         android:padding="10dp"
         android:layout_margin="10dp"
         android:gravity="center"

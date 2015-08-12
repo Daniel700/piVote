@@ -95,7 +95,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                     setResult(RESULT_OK, returnIntent);
                     finish();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.selectAnswer), Toast.LENGTH_SHORT).show();
                 }
 
             }

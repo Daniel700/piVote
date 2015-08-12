@@ -1,14 +1,66 @@
 <resources>
     <string name="app_name">piVote</string>
-    <string name="action_settings">Settings</string>
+
+
+    <!-- ############### -->
+    <!-- STRINGS IN CODE -->
+    <!-- ############### -->
+
+
+    <!-- Launcher Activity -->
     <string name="open">drawerOpened</string>
     <string name="close">drawerClosed</string>
+    <string name="windowError">Window could not be created</string>
+    <string name="voteSubmit1">Your Vote - </string>
+    <string name="voteSubmit2"> - has been submitted</string>
 
-    <string name="activity_detailed_poll">Detailed Poll View</string>
+    <!-- DialogFilter -->
+    <string name="dialogTitle">Filter</string>
+    <string name="dialogButtonPositive">OK</string>
+    <string name="dialogButtonNegative">Cancel</string>
+
+    <!-- PollCreateActivity -->
     <string name="activity_create_poll">Create New Poll</string>
+    <string name="createQuestionError">Please enter a question</string>
+    <string name="createLanguageError">Please select a language</string>
+    <string name="createCategoryError">Please select a category</string>
+    <string name="createAnswersError">Please fill out all answers</string>
+
+    <!-- PollDetailedActivity -->
+    <string name="activity_detailed_poll">Detailed Poll View</string>
+    <string name="selectAnswer">Please select an answer</string>
 
 
-<!-- ToDo: Support multi Language and add all missing String resources -->
+    <!-- ################## -->
+    <!-- STRINGS IN LAYOUTS -->
+    <!-- ################## -->
+
+    <string name="votes">Votes</string>
+    <string name="category">Category</string>
+    <string name="language">Language</string>
+    <string name="lastVote">Last Vote</string>
+    <string name="createdBy">Created By</string>
+    <string name="creationDate">Creation Date</string>
+
+    <string name="answer">Answer</string>
+    <string name="percentage">Percentage</string>
+    <string name="buttonVote">Vote</string>
+
+    <string name="hintAnswerText">Answer Text</string>
+    <string name="createPollEnterQuestion">Enter your Question</string>
+    <string name="hintQuestionText">Question-Text</string>
+    <string name="yourName">Your Name</string>
+    <string name="hintAnonymous">Anonymous</string>
+    <string name="selectNumberOfAnswers">Select number of answers</string>
+    <string name="number">Number</string>
+    <string name="text">Text</string>
+    <string name="buttonCreatePoll">Create Poll</string>
+
+
+
+    <!-- ############# -->
+    <!-- String Arrays -->
+    <!-- ############# -->
 
     <string-array name="categories">
         <item>Select your Category</item>
