@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +29,7 @@ import adapter.CreateAnswersAdapter;
 public class PollCreateActivity extends AppCompatActivity {
 
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private CreateAnswersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     private String language;
@@ -120,7 +121,7 @@ public class PollCreateActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToDo: Create Poll Object in DB and redirect to MyPolls
+                //ToDo: Create Poll Object in DB and redirect to MyPolls, then refresh MyPolls with the newly created Poll
                 //ToDo: Limit creation to 3 Polls per hour
 
 

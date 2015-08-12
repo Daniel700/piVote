@@ -3,7 +3,6 @@ package piv.pivote;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -13,14 +12,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import fragments.FragmentAbout;
 import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
 import fragments.FragmentRecentlyVoted;
+import fragments.FragmentTopPolls;
 
 
 public class LauncherActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,36 +55,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
 
 
-
-
-        /*
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("All Polls"));
-        tabLayout.addTab(tabLayout.newTab().setText("My Polls"));
-        tabLayout.addTab(tabLayout.newTab().setText("Recently"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        */
     }
 
     private void navigate(final MenuItem menuItem) {
@@ -101,6 +71,12 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.nav_recently:
                 fragmentClass = FragmentRecentlyVoted.class;
+                break;
+            case R.id.nav_top_polls:
+                fragmentClass = FragmentTopPolls.class;
+                break;
+            case R.id.nav_about:
+                fragmentClass = FragmentAbout.class;
                 break;
             default:
                 fragmentClass = FragmentQuestionList.class;
@@ -139,6 +115,9 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
             }
             if (requestCode == 200) {
                 coordinatorLayout = findViewById(R.id.coordinatorLayoutMyPolls);
+            }
+            if (requestCode == 400) {
+                coordinatorLayout = findViewById(R.id.coordinatorLayoutTopPolls);
             }
             if (snackbarText != null && coordinatorLayout != null)
                 Snackbar.make(coordinatorLayout, "Your Vote - " + snackbarText + " - has been submitted", Snackbar.LENGTH_LONG).show();

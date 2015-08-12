@@ -1,8 +1,10 @@
-package piv.pivote;
+package dataObjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+
+import dataObjects.Answer;
 
 /**
  * Created by Daniel on 30.07.2015.

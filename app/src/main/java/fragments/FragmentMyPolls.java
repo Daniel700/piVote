@@ -12,14 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import adapter.MyPollAdapter;
-import piv.pivote.Poll;
 import piv.pivote.PollCreateActivity;
 import piv.pivote.R;
-import piv.pivote.TestData;
+import dataObjects.TestData;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -33,6 +29,7 @@ public class FragmentMyPolls extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //ToDo: Get Poll-IDs from local DB and request these Polls from remote DB
         mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
     }
 
@@ -43,8 +40,6 @@ public class FragmentMyPolls extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_my_polls, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_create_poll);
 
-        // 2.
-        // use a linear layout manager
         int scrollPosition = 0;
         if (mLayoutManager != null){
             scrollPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
@@ -52,8 +47,6 @@ public class FragmentMyPolls extends Fragment {
         else {
             mLayoutManager = new LinearLayoutManager(getActivity());
         }
-
-        // 3.
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.scrollToPosition(scrollPosition);
         recyclerView.setAdapter(mAdapter);

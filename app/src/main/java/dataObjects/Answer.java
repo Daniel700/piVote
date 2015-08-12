@@ -1,4 +1,4 @@
-package piv.pivote;
+package dataObjects;
 
 import java.io.Serializable;
 

@@ -78,6 +78,7 @@ public class CreateAnswersAdapter extends RecyclerView.Adapter<CreateAnswersAdap
             }
         });
 
+
     }
 
     @Override
@@ -89,4 +90,8 @@ public class CreateAnswersAdapter extends RecyclerView.Adapter<CreateAnswersAdap
     public ArrayList<String> getAnswers(){
         return answers;
     }
+
+
+
+
 }

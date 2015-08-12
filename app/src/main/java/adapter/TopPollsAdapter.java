@@ -16,9 +16,9 @@ import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
 
 /**
- * Created by Daniel on 29.07.2015.
+ * Created by Daniel on 12.08.2015.
  */
-public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.ViewHolder> {
+public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHolder> {
     private List<Poll> pollList;
 
     // Provide a reference to the views for each data item
@@ -26,29 +26,31 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
+        protected TextView vSortNumber;
         protected TextView vQuestion;
         protected TextView vOverallVotes;
         protected TextView vCategory;
         protected TextView vCreatedBy;
         public ViewHolder(View v) {
             super(v);
-            vQuestion =  (TextView) v.findViewById(R.id.question);
-            vOverallVotes = (TextView)  v.findViewById(R.id.overallVotes);
-            vCategory = (TextView)  v.findViewById(R.id.category);
-            vCreatedBy = (TextView) v.findViewById(R.id.createdBy);
+            vSortNumber = (TextView) v.findViewById(R.id.sortNumber_top_polls);
+            vQuestion =  (TextView) v.findViewById(R.id.question_top_polls);
+            vOverallVotes = (TextView)  v.findViewById(R.id.overallVotes_top_polls);
+            vCategory = (TextView)  v.findViewById(R.id.category_top_polls);
+            vCreatedBy = (TextView) v.findViewById(R.id.createdBy_top_polls);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public QuestionListAdapter(List<Poll> pollList) {
+    public TopPollsAdapter(List<Poll> pollList) {
         this.pollList = pollList;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public QuestionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TopPollsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_question_list, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_top_polls, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -59,6 +61,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final Poll plist = pollList.get(position);
+        holder.vSortNumber.setText(String.valueOf(position + 1));
         holder.vQuestion.setText(plist.getQuestion());
         holder.vOverallVotes.setText(String.valueOf(plist.getOverallVotes()));
         holder.vCategory.setText(plist.getCategory());
@@ -70,7 +73,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", plist);
-                ((Activity) context).startActivityForResult(intent, 100);
+                ((Activity) context).startActivityForResult(intent, 400);
             }
         });
 

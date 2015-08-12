@@ -13,28 +13,14 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_filter_list_white_24dp"
-        android:layout_marginBottom="@dimen/fab_button_margin_bottom"
-        android:layout_marginRight="@dimen/fab_button_margin_right"
-        android:layout_marginEnd="@dimen/fab_button_margin_right"
-        android:alpha="0.7"
-        app:backgroundTint="?attr/colorPrimary"
-        app:elevation="6dp"
-        app:layout_anchor="@id/recycler_view_question_list"
-        app:layout_anchorGravity="bottom|right|end"/>
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_refresh_white_24dp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginBottom="@dimen/fab_button_margin_bottom"
         android:layout_marginRight="@dimen/fab_button_margin_right"
         android:layout_marginEnd="@dimen/fab_button_margin_right"
-        android:alpha="0.7"
+        android:alpha="0.8"
         app:backgroundTint="?attr/colorPrimary"
         app:elevation="6dp"
         app:layout_anchor="@id/recycler_view_question_list"

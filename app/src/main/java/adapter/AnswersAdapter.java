@@ -1,15 +1,14 @@
 package adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import piv.pivote.Answer;
-import piv.pivote.Poll;
+import dataObjects.Answer;
+import dataObjects.Poll;
 import piv.pivote.R;
 
 /**

@@ -1,11 +1,7 @@
-package piv.pivote;
+package dataObjects;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import utils.Category;
 
 /**
  * Created by Daniel on 09.08.2015.

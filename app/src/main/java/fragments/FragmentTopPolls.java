@@ -1,23 +1,25 @@
 package fragments;
 
-
-
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import adapter.QuestionListAdapter;
-import piv.pivote.R;
+import adapter.TopPollsAdapter;
 import dataObjects.TestData;
+import piv.pivote.R;
 
 /**
- * Created by Daniel on 30.07.2015.
+ * Created by Daniel on 11.08.2015.
  */
-public class FragmentRecentlyVoted extends Fragment {
+public class FragmentTopPolls extends Fragment {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -26,14 +28,17 @@ public class FragmentRecentlyVoted extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //ToDo: Get Recently Voted Poll-IDs from local DB and request these from remote DB
-        mAdapter = new QuestionListAdapter(TestData.getInstance().recentlyVotedList);
+        //ToDo: Request Top 100 Polls from remote (sorted after number of Votes)
+        mAdapter = new TopPollsAdapter(TestData.getInstance().questionList);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recently_voted, container, false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_recently_voted);
+
+        View rootView = inflater.inflate(R.layout.fragment_top_polls, container, false);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_top_polls);
 
         int scrollPosition = 0;
         if (mLayoutManager != null){
@@ -42,6 +47,7 @@ public class FragmentRecentlyVoted extends Fragment {
         else {
             mLayoutManager = new LinearLayoutManager(getActivity());
         }
+
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.scrollToPosition(scrollPosition);
         recyclerView.setAdapter(mAdapter);
@@ -49,4 +55,5 @@ public class FragmentRecentlyVoted extends Fragment {
 
         return rootView;
     }
+
 }

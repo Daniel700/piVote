@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.List;
 
-import piv.pivote.Poll;
+import dataObjects.Poll;
 import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
 
