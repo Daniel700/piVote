@@ -24,11 +24,11 @@
     <string name="createQuestionError">Please enter a question</string>
     <string name="createLanguageError">Please select a language</string>
     <string name="createCategoryError">Please select a category</string>
-    <string name="createAnswersError">Please fill out all answers</string>
+    <string name="createAnswersError">Please fill out all answerBeans</string>
 
     <!-- PollDetailedActivity -->
     <string name="activity_detailed_poll">Detailed Poll View</string>
-    <string name="selectAnswer">Please select an answer</string>
+    <string name="selectAnswer">Please select an answerBean</string>
 
 
     <!-- ################## -->
@@ -42,7 +42,7 @@
     <string name="createdBy">Created By</string>
     <string name="creationDate">Creation Date</string>
 
-    <string name="answer">Answer</string>
+    <string name="answerBean">Answer</string>
     <string name="percentage">Percentage</string>
     <string name="buttonVote">Vote</string>
 
@@ -51,7 +51,7 @@
     <string name="hintQuestionText">Question-Text</string>
     <string name="yourName">Your Name</string>
     <string name="hintAnonymous">Anonymous</string>
-    <string name="selectNumberOfAnswers">Select number of answers</string>
+    <string name="selectNumberOfAnswers">Select number of answerBeans</string>
     <string name="number">Number</string>
     <string name="text">Text</string>
     <string name="buttonCreatePoll">Create Poll</string>

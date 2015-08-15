@@ -17,10 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import adapter.QuestionListAdapter;
+import model.ModelTransformer;
+import model.Poll;
+import model.pollBeanApi.model.PollBean;
 import piv.pivote.DialogFilter;
 import piv.pivote.R;
-import dataObjects.TestData;
+import model.TestData;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -37,7 +42,14 @@ public class FragmentQuestionList extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Request only Polls from Database on which the user hasn't yet voted / Alternatively color them grey in the Question-List
-        mAdapter = new QuestionListAdapter(TestData.getInstance().questionList);
+        ModelTransformer transformer = new ModelTransformer();
+        ArrayList<Poll> arrayList = new ArrayList<Poll>();
+
+        for (PollBean pollbean : TestData.getInstance().questionList) {
+            arrayList.add(transformer.transformPollBeanToPoll(pollbean));
+        }
+
+        mAdapter = new QuestionListAdapter(arrayList);
     }
 
     @Override

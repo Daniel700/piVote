@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import dataObjects.Answer;
-import dataObjects.Poll;
+
+import model.Answer;
+import model.Poll;
 import piv.pivote.R;
+
 
 /**
  * Created by Daniel on 06.08.2015.
@@ -105,6 +107,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     }
 
     public Answer getChosenAnswer() {
+
 
         for (Answer answer : myPoll.getAnswers()){
             if (answer.isSelected())

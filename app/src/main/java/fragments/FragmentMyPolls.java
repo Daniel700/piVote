@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import adapter.MyPollAdapter;
 import piv.pivote.PollCreateActivity;
 import piv.pivote.R;
-import dataObjects.TestData;
+import model.TestData;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -30,7 +30,7 @@ public class FragmentMyPolls extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Get Poll-IDs from local DB and request these Polls from remote DB
-        mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
+        //mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
     }
 
 

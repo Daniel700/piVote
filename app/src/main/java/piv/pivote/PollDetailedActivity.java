@@ -7,17 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.text.DateFormat;
+import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
-import dataObjects.Answer;
-import dataObjects.Poll;
+import model.Answer;
+import model.Poll;
+
 
 /**
  * Created by Daniel on 02.08.2015.
@@ -41,6 +45,7 @@ public class PollDetailedActivity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.activity_detailed_poll));
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
 
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
         poll = (Poll) getIntent().getSerializableExtra("Poll");

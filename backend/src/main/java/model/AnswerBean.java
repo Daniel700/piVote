@@ -1,24 +1,16 @@
-package dataObjects;
-
-import java.io.Serializable;
+package model;
 
 /**
  * Created by Daniel on 07.08.2015.
  */
-public class Answer implements Serializable {
+public class AnswerBean {
 
     private String answerText;
     private int answerVotes;
     private double percentage;
     private boolean selected;
 
-
-    public Answer(String answerText, int answerVotes) {
-        this.answerText = answerText;
-        this.answerVotes = answerVotes;
-        this.selected = false;
-        this.percentage = 0;
-    }
+//Todo: percentage and selected needed?
 
     public String getAnswerText() {
         return answerText;

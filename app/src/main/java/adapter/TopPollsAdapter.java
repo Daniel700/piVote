@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import dataObjects.Poll;
+
+import model.Poll;
 import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
 
@@ -72,7 +73,7 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
-                intent.putExtra("Poll", plist);
+               // intent.putExtra("Poll", plist);
                 ((Activity) context).startActivityForResult(intent, 400);
             }
         });

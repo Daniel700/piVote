@@ -1,11 +1,7 @@
 package fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import adapter.TopPollsAdapter;
-import dataObjects.TestData;
+import model.TestData;
 import piv.pivote.R;
 
 /**
@@ -29,7 +25,7 @@ public class FragmentTopPolls extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Request Top 100 Polls from remote DB (sorted after number of Votes)
-        mAdapter = new TopPollsAdapter(TestData.getInstance().questionList);
+        //mAdapter = new TopPollsAdapter(TestData.getInstance().questionList);
     }
 
 

@@ -1,7 +1,14 @@
-package dataObjects;
+package model;
+
+
+import com.google.api.client.util.DateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import model.pollBeanApi.model.AnswerBean;
+import model.pollBeanApi.model.PollBean;
+
 
 /**
  * Created by Daniel on 09.08.2015.
@@ -13,38 +20,48 @@ public class TestData {
         return ourInstance;
     }
 
-    public ArrayList<Poll> questionList;
-    public ArrayList<Poll> myPollsList;
-    public ArrayList<Poll> recentlyVotedList;
+    public ArrayList<PollBean> questionList;
+    public ArrayList<PollBean> myPollsList;
+    public ArrayList<PollBean> recentlyVotedList;
 
     private TestData() {
 
         questionList = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
-            Poll p = new Poll();
+            PollBean p = new PollBean();
             p.setQuestion("What's your favorite hero of the marvel comics?");
             p.setOverallVotes(2754);
             p.setCreatedBy("Anonymous");
             p.setCategory("Movies");
             p.setLanguage("English");
 
+
             Date date = new Date();
-            p.setLastVoted(date);
-            p.setCreationDate(date);
+            DateTime dateTime = new DateTime(date);
+            p.setLastVoted(dateTime);
+            p.setCreationDate(dateTime);
 
-            ArrayList<Answer> answers = new ArrayList<>();
-            answers.add(new Answer("Iron Man", 1021));
-            answers.add(new Answer("Hulk", 404));
-            answers.add(new Answer("Captain America", 210));
-            answers.add(new Answer("Thor", 766));
-            answers.add(new Answer("Ant Man", 353));
+            ArrayList<AnswerBean> answers = new ArrayList<>();
+            AnswerBean answer = new AnswerBean();
+            answer.setAnswerText("Iron Man");
+            answer.setAnswerVotes(643);
+            answer.setPercentage(0.0);
+            answer.setSelected(false);
+            answers.add(answer);
 
-            p.setAnswers(answers);
+            answer = new AnswerBean();
+            answer.setAnswerText("Hulk");
+            answer.setAnswerVotes(444);
+            answer.setPercentage(0.0);
+            answer.setSelected(false);
+            answers.add(answer);
+
+            p.setAnswerBeans(answers);
 
             questionList.add(p);
         }
 
-
+/*
         myPollsList = new ArrayList<>();
         for (int i = 0; i < 4; i++){
             Poll p = new Poll();
@@ -92,6 +109,6 @@ public class TestData {
             recentlyVotedList.add(p);
         }
 
-
+*/
     }
 }

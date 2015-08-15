@@ -1,19 +1,17 @@
-package dataObjects;
+package model;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
-
-import dataObjects.Answer;
 
 /**
  * Created by Daniel on 30.07.2015.
  */
-public class Poll implements Serializable {
+public class PollBean {
 
     private String questionID;
     private String question;
-    private ArrayList<Answer> answers;
+    private ArrayList<AnswerBean> answerBeans;
     private int overallVotes;
     private String language;
     private String category;
@@ -39,12 +37,12 @@ public class Poll implements Serializable {
         this.question = question;
     }
 
-    public ArrayList<Answer> getAnswers() {
-        return answers;
+    public ArrayList<AnswerBean> getAnswerBeans() {
+        return answerBeans;
     }
 
-    public void setAnswers(ArrayList<Answer> answers) {
-        this.answers = answers;
+    public void setAnswerBeans(ArrayList<AnswerBean> answerBeans) {
+        this.answerBeans = answerBeans;
     }
 
     public int getOverallVotes() {
