@@ -42,14 +42,7 @@ public class FragmentQuestionList extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Request only Polls from Database on which the user hasn't yet voted / Alternatively color them grey in the Question-List
-        ModelTransformer transformer = new ModelTransformer();
-        ArrayList<Poll> arrayList = new ArrayList<Poll>();
-
-        for (PollBean pollbean : TestData.getInstance().questionList) {
-            arrayList.add(transformer.transformPollBeanToPoll(pollbean));
-        }
-
-        mAdapter = new QuestionListAdapter(arrayList);
+        mAdapter = new QuestionListAdapter(TestData.getInstance().questionList);
     }
 
     @Override

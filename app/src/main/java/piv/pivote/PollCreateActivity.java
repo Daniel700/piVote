@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import adapter.CreateAnswersAdapter;
+import database.DatabaseEndpoint;
+import model.TestData;
+import model.pollBeanApi.model.PollBean;
 
 /**
  * Created by Daniel on 07.08.2015.
@@ -149,6 +153,14 @@ public class PollCreateActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), String.valueOf(answers.size()), Toast.LENGTH_SHORT).show();
                 }
+
+                PollBean pollBean = new PollBean();
+                pollBean.setQuestion(question.getText().toString().trim());
+                pollBean.setLanguage(language);
+                pollBean.setCategory(category);
+
+
+                new DatabaseEndpoint().execute(TestData.getInstance().questionList.get(0));
 
             }
         });

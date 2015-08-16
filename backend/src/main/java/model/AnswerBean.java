@@ -1,8 +1,12 @@
 package model;
 
+import com.googlecode.objectify.annotation.Entity;
+
 /**
  * Created by Daniel on 07.08.2015.
  */
+
+@Entity
 public class AnswerBean {
 
     private String answerText;

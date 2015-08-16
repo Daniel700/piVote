@@ -27,7 +27,7 @@ public class FragmentRecentlyVoted extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Get Recently Voted Poll-IDs from local DB and request these from remote DB
-        //mAdapter = new QuestionListAdapter(TestData.getInstance().recentlyVotedList);
+        mAdapter = new QuestionListAdapter(TestData.getInstance().recentlyVotedList);
     }
 
     @Override

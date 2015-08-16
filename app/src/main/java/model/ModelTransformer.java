@@ -59,12 +59,28 @@ public class ModelTransformer {
         pollBean.setOverallVotes(poll.getOverallVotes());
         pollBean.setCreatedBy(poll.getCreatedBy());
 
-        //ToDo: finish transformMethod
+
         //Answers
+        ArrayList<AnswerBean> answers = new ArrayList<>();
+        for (Answer answer: poll.getAnswers()) {
+
+            AnswerBean answerBean = new AnswerBean();
+            answerBean.setAnswerText(answer.getAnswerText());
+            answerBean.setAnswerVotes(answer.getAnswerVotes());
+            answerBean.setSelected(answer.isSelected());
+            answerBean.setPercentage(answer.getPercentage());
+            answers.add(answerBean);
+        }
+        pollBean.setAnswerBeans(answers);
+
 
         //CreationDate
+        DateTime dateTime = new DateTime(poll.getCreationDate());
+        pollBean.setCreationDate(dateTime);
 
         //LastVoted
+        DateTime dateTime1 = new DateTime(poll.getLastVoted());
+        pollBean.setLastVoted(dateTime1);
 
 
         return pollBean;

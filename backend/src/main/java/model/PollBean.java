@@ -1,12 +1,16 @@
 package model;
 
 
+import com.googlecode.objectify.annotation.Entity;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Daniel on 30.07.2015.
  */
+
+@Entity
 public class PollBean {
 
     private String questionID;

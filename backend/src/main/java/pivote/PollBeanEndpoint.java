@@ -3,12 +3,18 @@ package pivote;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.repackaged.com.google.datastore.v1.Datastore;
 
 import java.util.logging.Logger;
 
 import javax.inject.Named;
 
 import model.PollBean;
+
+import static pivote.OfyService.ofy;
 
 /**
  * An endpoint class we are exposing
@@ -49,6 +55,12 @@ public class PollBeanEndpoint {
     @ApiMethod(name = "insertPollBean")
     public PollBean insertPollBean(PollBean pollBean) {
         // TODO: Implement this function
+
+        Entity e = new Entity("Poll");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(e);
+
+        ofy().save().entity(pollBean);
         logger.info("Calling insertPollBean method");
         return pollBean;
     }

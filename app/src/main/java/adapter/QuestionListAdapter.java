@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import model.ModelTransformer;
 import model.Poll;
+import model.pollBeanApi.model.PollBean;
 import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
 
@@ -22,7 +24,7 @@ import piv.pivote.R;
  * Created by Daniel on 29.07.2015.
  */
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.ViewHolder> {
-    private List<Poll> pollList;
+    private List<PollBean> pollList;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -43,7 +45,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public QuestionListAdapter(List<Poll> pollList) {
+    public QuestionListAdapter(List<PollBean> pollList) {
         this.pollList = pollList;
     }
 
@@ -61,18 +63,21 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final Poll plist = pollList.get(position);
-        holder.vQuestion.setText(plist.getQuestion());
-        holder.vOverallVotes.setText(String.valueOf(plist.getOverallVotes()));
-        holder.vCategory.setText(plist.getCategory());
-        holder.vCreatedBy.setText(plist.getCreatedBy());
+
+        final PollBean pollBean = pollList.get(position);
+        holder.vQuestion.setText(pollBean.getQuestion());
+        holder.vOverallVotes.setText(String.valueOf(pollBean.getOverallVotes()));
+        holder.vCategory.setText(pollBean.getCategory());
+        holder.vCreatedBy.setText(pollBean.getCreatedBy());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ModelTransformer modelTransformer = new ModelTransformer();
+                Poll poll = modelTransformer.transformPollBeanToPoll(pollBean);
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
-                intent.putExtra("Poll", plist);
+                intent.putExtra("Poll", poll);
                 ((Activity) context).startActivityForResult(intent, 100);
             }
         });

@@ -30,7 +30,7 @@ public class FragmentMyPolls extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Get Poll-IDs from local DB and request these Polls from remote DB
-        //mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
+        mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
     }
 
 
