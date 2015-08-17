@@ -41,9 +41,7 @@ public class DatabaseEndpoint extends AsyncTask <PollBean, Void, Void> {
 
 
         try {
-            Log.e("Bean", params[0].toString());
-            myApiService.insertPollBean(params[0]);
-            Log.e("Bean", "finished");
+            myApiService.insertPollBean(params[0]).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

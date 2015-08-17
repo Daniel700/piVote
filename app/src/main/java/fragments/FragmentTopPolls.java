@@ -25,7 +25,7 @@ public class FragmentTopPolls extends Fragment {
         super.onCreate(savedInstanceState);
 
         //ToDo: Request Top 100 Polls from remote DB (sorted after number of Votes)
-        //mAdapter = new TopPollsAdapter(TestData.getInstance().questionList);
+        mAdapter = new TopPollsAdapter(TestData.getInstance().questionList);
     }
 
 

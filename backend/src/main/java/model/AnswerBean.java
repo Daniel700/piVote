@@ -1,20 +1,21 @@
 package model;
 
+import com.googlecode.objectify.annotation.Container;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Subclass;
+
 
 /**
  * Created by Daniel on 07.08.2015.
  */
 
-@Entity
+
 public class AnswerBean {
 
     private String answerText;
     private int answerVotes;
-    private double percentage;
-    private boolean selected;
 
-//Todo: percentage and selected needed?
 
     public String getAnswerText() {
         return answerText;
@@ -32,19 +33,4 @@ public class AnswerBean {
         this.answerVotes = answerVotes;
     }
 
-    public double getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(double percentage) {
-        this.percentage = percentage;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
 }

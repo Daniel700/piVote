@@ -54,7 +54,7 @@ public class CreateAnswersAdapter extends RecyclerView.Adapter<CreateAnswersAdap
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                String answer = holder.answerText.getText().toString();
+                String answer = holder.answerText.getText().toString().trim();
 
                 if (answers.contains(answer))
                     answers.remove(answer);
@@ -69,7 +69,7 @@ public class CreateAnswersAdapter extends RecyclerView.Adapter<CreateAnswersAdap
             @Override
             public void afterTextChanged(Editable s) {
 
-                String answer = holder.answerText.getText().toString();
+                String answer = holder.answerText.getText().toString().trim();
                 if (!answer.isEmpty())
                     answers.add(answer);
 

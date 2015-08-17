@@ -2,9 +2,12 @@ package model;
 
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 
 /**
  * Created by Daniel on 30.07.2015.
@@ -13,24 +16,31 @@ import java.util.Date;
 @Entity
 public class PollBean {
 
-    private String questionID;
+    @Id
+    private Long id;
+    @Index
+    private String UUID;
     private String question;
     private ArrayList<AnswerBean> answerBeans;
+    @Index
     private int overallVotes;
+    @Index
     private String language;
+    @Index
     private String category;
     private String createdBy;
+    @Index
     private Date creationDate;
     private Date lastVoted;
 
 
 
-    public String getQuestionID() {
-        return questionID;
+    public String getUUID() {
+        return UUID;
     }
 
-    public void setQuestionID(String questionID) {
-        this.questionID = questionID;
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 
     public String getQuestion() {

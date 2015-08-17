@@ -26,12 +26,13 @@ public class ModelTransformer {
         poll.setOverallVotes(pollBean.getOverallVotes());
         poll.setLanguage(pollBean.getLanguage());
         poll.setCreatedBy(pollBean.getCreatedBy());
-        poll.setQuestionID(pollBean.getQuestionID());
+        poll.setQuestionID(pollBean.getUuid());
 
         //Set Answers in Poll
         ArrayList<Answer> answers = new ArrayList<Answer>();
         for (AnswerBean answerBean: pollBean.getAnswerBeans()) {
-            answers.add(new Answer(answerBean.getAnswerText(), answerBean.getAnswerVotes(), answerBean.getSelected(), answerBean.getPercentage()));
+            //ToDo: Check if correct? selected and percentage?
+            answers.add(new Answer(answerBean.getAnswerText(), answerBean.getAnswerVotes(), false, 0));
         }
         poll.setAnswers(answers);
 
@@ -52,7 +53,7 @@ public class ModelTransformer {
     public PollBean transformFromPollToPollBean(Poll poll){
 
         PollBean pollBean = new PollBean();
-        pollBean.setQuestionID(poll.getQuestionID());
+        pollBean.setUuid(poll.getQuestionID());
         pollBean.setQuestion(poll.getQuestion());
         pollBean.setCategory(poll.getCategory());
         pollBean.setLanguage(poll.getLanguage());
@@ -67,8 +68,6 @@ public class ModelTransformer {
             AnswerBean answerBean = new AnswerBean();
             answerBean.setAnswerText(answer.getAnswerText());
             answerBean.setAnswerVotes(answer.getAnswerVotes());
-            answerBean.setSelected(answer.isSelected());
-            answerBean.setPercentage(answer.getPercentage());
             answers.add(answerBean);
         }
         pollBean.setAnswerBeans(answers);

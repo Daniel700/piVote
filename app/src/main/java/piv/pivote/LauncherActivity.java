@@ -1,6 +1,7 @@
 package piv.pivote;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,9 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.UUID;
 
 import fragments.FragmentAbout;
 import fragments.FragmentMyPolls;
@@ -32,6 +36,9 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        verifyInstallation();
+
         setContentView(R.layout.activity_launcher);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -158,6 +165,26 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void verifyInstallation(){
+
+        boolean uuid_exists;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("InstallSettings", MODE_PRIVATE);
+        uuid_exists = sharedPreferences.getBoolean("UUID_Exists", false);
+
+        //Create UUID if it doesn't exist yet
+        if (!uuid_exists) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            String uuid = java.util.UUID.randomUUID().toString();
+            editor.putString("UUID", uuid);
+            editor.putBoolean("UUID_Exists", true);
+            editor.apply();
+        }
+
     }
 
 }

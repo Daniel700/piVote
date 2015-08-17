@@ -29,7 +29,7 @@ public class FragmentMyPolls extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //ToDo: Get Poll-IDs from local DB and request these Polls from remote DB
+        //ToDo: Request Polls where UUID is the same as in the application
         mAdapter = new MyPollAdapter(TestData.getInstance().myPollsList);
     }
 

@@ -7,14 +7,19 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.repackaged.com.google.datastore.v1.Datastore;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.VoidWork;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Named;
 
+import model.AnswerBean;
 import model.PollBean;
 
 import static pivote.OfyService.ofy;
+
 
 /**
  * An endpoint class we are exposing
@@ -42,6 +47,7 @@ public class PollBeanEndpoint {
     @ApiMethod(name = "getPollBean")
     public PollBean getPollBean(@Named("id") Long id) {
         // TODO: Implement this function
+
         logger.info("Calling getPollBean method");
         return null;
     }
@@ -53,15 +59,17 @@ public class PollBeanEndpoint {
      * @return The object to be added.
      */
     @ApiMethod(name = "insertPollBean")
-    public PollBean insertPollBean(PollBean pollBean) {
-        // TODO: Implement this function
+    public PollBean insertPollBean(final PollBean pollBean) {
 
-        Entity e = new Entity("Poll");
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(e);
+        ObjectifyService.run(new VoidWork() {
+            @Override
+            public void vrun() {
+                ofy().save().entity(pollBean).now();
+            }
+        });
 
-        ofy().save().entity(pollBean);
         logger.info("Calling insertPollBean method");
+
         return pollBean;
     }
 }

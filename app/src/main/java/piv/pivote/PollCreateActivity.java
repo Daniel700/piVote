@@ -1,5 +1,6 @@
 package piv.pivote;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -16,11 +17,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.api.client.util.DateTime;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import adapter.CreateAnswersAdapter;
 import database.DatabaseEndpoint;
 import model.TestData;
+import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 
 /**
@@ -151,16 +156,38 @@ public class PollCreateActivity extends AppCompatActivity {
                     if (name.getText().toString().trim().isEmpty())
                         name.setText("Anonymous");
 
-                    Toast.makeText(getApplicationContext(), String.valueOf(answers.size()), Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("InstallSettings", MODE_PRIVATE);
+                    String uuid = sharedPreferences.getString("UUID", "no id available");
+
+                    PollBean pollBean = new PollBean();
+
+                    pollBean.setUuid(uuid);
+                    pollBean.setQuestion(question.getText().toString().trim());
+                    pollBean.setLanguage(language);
+                    pollBean.setCategory(category);
+                    pollBean.setCreatedBy(name.getText().toString().trim());
+                    pollBean.setOverallVotes(0);
+
+                    pollBean.setCreationDate(new DateTime(new Date()));
+                    pollBean.setLastVoted(new DateTime(new Date()));
+
+                    ArrayList<AnswerBean> answerBeans = new ArrayList<AnswerBean>();
+                    for (String answer: answers) {
+                        AnswerBean bean = new AnswerBean();
+                        bean.setAnswerText(answer);
+                        bean.setAnswerVotes(0);
+                        answerBeans.add(bean);
+                    }
+                    pollBean.setAnswerBeans(answerBeans);
+
+                    new DatabaseEndpoint().execute(pollBean);
+
+                    finish();
                 }
 
-                PollBean pollBean = new PollBean();
-                pollBean.setQuestion(question.getText().toString().trim());
-                pollBean.setLanguage(language);
-                pollBean.setCategory(category);
 
 
-                new DatabaseEndpoint().execute(TestData.getInstance().questionList.get(0));
 
             }
         });

@@ -19,7 +19,6 @@ public final class OfyService {
 
     static {
         factory().register(PollBean.class);
-        factory().register(AnswerBean.class);
     }
 
     /**

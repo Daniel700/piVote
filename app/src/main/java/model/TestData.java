@@ -24,7 +24,6 @@ public class TestData {
     public ArrayList<PollBean> myPollsList;
     public ArrayList<PollBean> recentlyVotedList;
 
-    //ToDo: AnswerBean attributes selected and percentage needed in database???
 
     private TestData() {
 
@@ -47,15 +46,11 @@ public class TestData {
             AnswerBean answer = new AnswerBean();
             answer.setAnswerText("Iron Man");
             answer.setAnswerVotes(643);
-            answer.setPercentage(0.0);
-            answer.setSelected(false);
             answers.add(answer);
 
             answer = new AnswerBean();
             answer.setAnswerText("Hulk");
             answer.setAnswerVotes(444);
-            answer.setPercentage(0.0);
-            answer.setSelected(false);
             answers.add(answer);
 
             p.setAnswerBeans(answers);
@@ -83,14 +78,10 @@ public class TestData {
             AnswerBean answerBean = new AnswerBean();
             answerBean.setAnswerText("Yes");
             answerBean.setAnswerVotes(714);
-            answerBean.setSelected(false);
-            answerBean.setPercentage(0.0);
 
             AnswerBean answerBean1 = new AnswerBean();
             answerBean1.setAnswerText("No");
             answerBean1.setAnswerVotes(600);
-            answerBean1.setSelected(false);
-            answerBean1.setPercentage(0.0);
 
             ArrayList<AnswerBean> arrayList = new ArrayList<>();
             arrayList.add(answerBean);
@@ -122,26 +113,18 @@ public class TestData {
             AnswerBean answerBean = new AnswerBean();
             answerBean.setAnswerText("Homer");
             answerBean.setAnswerVotes(914);
-            answerBean.setPercentage(0.0);
-            answerBean.setSelected(false);
 
             AnswerBean answerBean1 = new AnswerBean();
             answerBean1.setAnswerText("Marge");
             answerBean1.setAnswerVotes(210);
-            answerBean1.setPercentage(0.0);
-            answerBean1.setSelected(false);
 
             AnswerBean answerBean2 = new AnswerBean();
             answerBean2.setAnswerText("Bart");
             answerBean2.setAnswerVotes(566);
-            answerBean2.setPercentage(0.0);
-            answerBean2.setSelected(false);
 
             AnswerBean answerBean3 = new AnswerBean();
             answerBean3.setAnswerText("Lisa");
             answerBean3.setAnswerVotes(344);
-            answerBean3.setPercentage(0.0);
-            answerBean3.setSelected(false);
 
 
             answers.add(answerBean);
