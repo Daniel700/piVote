@@ -126,9 +126,7 @@ public class PollCreateActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToDo: Create Poll Object in DB and redirect to MyPolls, then refresh MyPolls with the newly created Poll
                 //ToDo: Limit creation to 3 Polls per hour
-
 
                 //################# Conduct validation of all input fields ########################
                 CreateAnswersAdapter createAnswersAdapter = ((CreateAnswersAdapter) mAdapter);
@@ -181,13 +179,12 @@ public class PollCreateActivity extends AppCompatActivity {
                     }
                     pollBean.setAnswerBeans(answerBeans);
 
-                    new DatabaseEndpoint().execute(pollBean);
+                    DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+                    databaseEndpoint.insertTask(pollBean);
 
+                    setResult(RESULT_OK);
                     finish();
                 }
-
-
-
 
             }
         });
@@ -202,6 +199,7 @@ public class PollCreateActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                setResult(RESULT_CANCELED);
                 finish();
                 return true;
         }

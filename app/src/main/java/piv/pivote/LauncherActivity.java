@@ -13,12 +13,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import java.util.UUID;
 
 import fragments.FragmentAbout;
 import fragments.FragmentMyPolls;
@@ -62,9 +58,9 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void navigate(final MenuItem menuItem) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = null;
 
+        Fragment fragment = null;
+/*
         Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_all_polls:
@@ -95,7 +91,104 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = this.getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragmentClass.getName()).commit();
+        */
+
+        //ToDo: Error sometimes: "java.lang.NullPointerException: Attempt to write to field 'int android.support.v4.app.Fragment.mNextAnim' on a null object reference" ------- Tritt auf bei Reihenfolge: Start -> Filter -> myPolls
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        switch(menuItem.getItemId()){
+            case R.id.nav_all_polls:
+                    if (fragmentManager.getFragments() != null) {
+                        for (Fragment fra: fragmentManager.getFragments()) {
+                            fragmentManager.beginTransaction().detach(fra).commit();
+                        }
+                    }
+                    if (fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName()) == null){
+                        fragment = new FragmentQuestionList();
+                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentQuestionList.class.getName()).commit();
+                    }
+                    else {
+                        fragment = fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName());
+                        fragmentManager.beginTransaction().attach(fragment).commit();
+                    }
+                break;
+            case R.id.nav_my_polls:
+                    if (fragmentManager.getFragments() != null) {
+                        for (Fragment fra: fragmentManager.getFragments()) {
+                            fragmentManager.beginTransaction().detach(fra).commit();
+                        }
+                    }
+                    if (fragmentManager.findFragmentByTag(FragmentMyPolls.class.getName()) == null){
+                        fragment = new FragmentMyPolls();
+                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentMyPolls.class.getName()).commit();
+                    }
+                    else {
+                        fragment = fragmentManager.findFragmentByTag(FragmentMyPolls.class.getName());
+                        fragmentManager.beginTransaction().attach(fragment).commit();
+                    }
+                break;
+            case R.id.nav_recently:
+                    if (fragmentManager.getFragments() != null) {
+                        for (Fragment fra: fragmentManager.getFragments()) {
+                            fragmentManager.beginTransaction().detach(fra).commit();
+                        }
+                    }
+                    if (fragmentManager.findFragmentByTag(FragmentRecentlyVoted.class.getName()) == null){
+                        fragment = new FragmentRecentlyVoted();
+                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentRecentlyVoted.class.getName()).commit();
+                    }
+                    else {
+                        fragment = fragmentManager.findFragmentByTag(FragmentRecentlyVoted.class.getName());
+                        fragmentManager.beginTransaction().attach(fragment).commit();
+                    }
+                break;
+            case R.id.nav_top_polls:
+                    if (fragmentManager.getFragments() != null) {
+                        for (Fragment fra: fragmentManager.getFragments()) {
+                            fragmentManager.beginTransaction().detach(fra).commit();
+                        }
+                    }
+                    if (fragmentManager.findFragmentByTag(FragmentTopPolls.class.getName()) == null){
+                        fragment = new FragmentTopPolls();
+                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentTopPolls.class.getName()).commit();
+                    }
+                    else {
+                        fragment = fragmentManager.findFragmentByTag(FragmentTopPolls.class.getName());
+                        fragmentManager.beginTransaction().attach(fragment).commit();
+                    }
+                break;
+            case R.id.nav_about:
+                    if (fragmentManager.getFragments() != null) {
+                        for (Fragment fra: fragmentManager.getFragments()) {
+                            fragmentManager.beginTransaction().detach(fra).commit();
+                        }
+                    }
+                    if (fragmentManager.findFragmentByTag(FragmentAbout.class.getName()) == null){
+                        fragment = new FragmentAbout();
+                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentAbout.class.getName()).commit();
+                    }
+                    else {
+                        fragment = fragmentManager.findFragmentByTag(FragmentAbout.class.getName());
+                        fragmentManager.beginTransaction().attach(fragment).commit();
+                    }
+                break;
+            default:
+                if (fragmentManager.getFragments() != null) {
+                    for (Fragment fra: fragmentManager.getFragments()) {
+                        fragmentManager.beginTransaction().detach(fra).commit();
+                    }
+                }
+                if (fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName()) == null){
+                    fragment = new FragmentQuestionList();
+                    fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentQuestionList.class.getName()).commit();
+                }
+                else {
+                    fragment = fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName());
+                    fragmentManager.beginTransaction().attach(fragment).commit();
+                }
+        }
+
 
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);

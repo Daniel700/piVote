@@ -96,6 +96,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                 try {
                     Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
                     //ToDo: save selected answer locally
+                    //ToDo: Vote Update can get lost due to eventual consistency
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("snackbarDetailed", a.getAnswerText());
                     setResult(RESULT_OK, returnIntent);

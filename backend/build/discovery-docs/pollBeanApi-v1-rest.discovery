@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/d0v4dgs0gwWyijUgc1P-GPpUv2g\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Mtk3nFBy0O00zmgsbd-eat_s4IY\"",
  "discoveryVersion": "v1",
  "id": "pollBeanApi:v1",
  "name": "pollBeanApi",
@@ -124,9 +124,42 @@
      "type": "string"
     }
    }
+  },
+  "PollBeanCollection": {
+   "id": "PollBeanCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "PollBean"
+     }
+    }
+   }
   }
  },
  "methods": {
+  "getMyPollBeans": {
+   "id": "pollBeanApi.getMyPollBeans",
+   "path": "myPolls",
+   "httpMethod": "GET",
+   "parameters": {
+    "uuid": {
+     "type": "string",
+     "required": true,
+     "location": "query"
+    }
+   },
+   "parameterOrder": [
+    "uuid"
+   ],
+   "response": {
+    "$ref": "PollBeanCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "getPollBean": {
    "id": "pollBeanApi.getPollBean",
    "path": "pollbean/{id}",
@@ -149,9 +182,20 @@
     "https://www.googleapis.com/auth/userinfo.email"
    ]
   },
+  "getTop100PollBeans": {
+   "id": "pollBeanApi.getTop100PollBeans",
+   "path": "top100Polls",
+   "httpMethod": "GET",
+   "response": {
+    "$ref": "PollBeanCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "insertPollBean": {
    "id": "pollBeanApi.insertPollBean",
-   "path": "pollbean",
+   "path": "insertPoll",
    "httpMethod": "POST",
    "request": {
     "$ref": "PollBean",

@@ -1,12 +1,14 @@
 package fragments;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,15 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import adapter.QuestionListAdapter;
-import model.ModelTransformer;
-import model.Poll;
-import model.pollBeanApi.model.PollBean;
+import model.TestData;
 import piv.pivote.DialogFilter;
 import piv.pivote.R;
-import model.TestData;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -40,7 +37,6 @@ public class FragmentQuestionList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //ToDo: Request only Polls from Database on which the user hasn't yet voted / Alternatively color them grey in the Question-List
         mAdapter = new QuestionListAdapter(TestData.getInstance().questionList);
     }
@@ -49,28 +45,34 @@ public class FragmentQuestionList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_question_list);
-
-
-        int scrollPosition = 0;
-        if (mLayoutManager != null){
-            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-        }
-        else {
-            mLayoutManager = new LinearLayoutManager(getActivity());
-        }
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.scrollToPosition(scrollPosition);
         mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(rootView.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        int scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        mRecyclerView.scrollToPosition(scrollPosition);
 
-
+        //ToDo: Check if swipeRefreshLayout is needed here?
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_question_list);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(rootView.getContext(), "refreshing all polls", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 5000);
+            }
+        });
 
         final FloatingActionButton fabRefresh = (FloatingActionButton) rootView.findViewById(R.id.fab_refresh);
         fabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), v.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), v.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -109,7 +111,10 @@ public class FragmentQuestionList extends Fragment {
                 dialogFilter.setTargetFragment(FragmentQuestionList.this, 1);
                 dialogFilter.show(getFragmentManager(), "dFilter");
 
-                return false;
+                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawers();
+
+                return true;
             }
         });
 
@@ -123,9 +128,9 @@ public class FragmentQuestionList extends Fragment {
         if (requestCode == 1){
             Toast.makeText(getActivity(), data.getStringExtra("language"), Toast.LENGTH_SHORT).show();
             Toast.makeText(getActivity(), data.getStringExtra("category"), Toast.LENGTH_LONG).show();
-        }
 
-        //ToDo: Filter SQL Queries here and refresh the FragmentView
+            //ToDo: Filter SQL Queries here and refresh the adapter
+        }
 
     }
 }

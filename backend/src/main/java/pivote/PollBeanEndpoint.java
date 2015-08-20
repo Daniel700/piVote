@@ -3,19 +3,16 @@ package pivote;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.repackaged.com.google.datastore.v1.Datastore;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
+import com.googlecode.objectify.Work;
 
-import java.util.logging.Level;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Named;
 
-import model.AnswerBean;
+
 import model.PollBean;
 
 import static pivote.OfyService.ofy;
@@ -58,9 +55,8 @@ public class PollBeanEndpoint {
      * @param pollBean The object to be added.
      * @return The object to be added.
      */
-    @ApiMethod(name = "insertPollBean")
+    @ApiMethod(name = "insertPollBean", path = "insertPoll")
     public PollBean insertPollBean(final PollBean pollBean) {
-
         ObjectifyService.run(new VoidWork() {
             @Override
             public void vrun() {
@@ -69,7 +65,47 @@ public class PollBeanEndpoint {
         });
 
         logger.info("Calling insertPollBean method");
-
         return pollBean;
     }
+
+
+    @ApiMethod(name = "getTop100PollBeans", path = "top100Polls")
+    public List<PollBean> getTop100PollBean(){
+        List<PollBean> topList;
+
+        topList = ObjectifyService.run(new Work<List<PollBean>>() {
+            @Override
+            public List<PollBean> run() {
+                List<PollBean> top100List = ofy().load().type(PollBean.class).order("-overallVotes").limit(100).list();
+                return top100List;
+            }
+        });
+        return topList;
+    }
+
+
+    @ApiMethod(name = "getMyPollBeans", path = "myPolls")
+    public List<PollBean> getMyPollBeans(@Named("uuid") final String uuid){
+        List<PollBean> myPolls;
+
+        myPolls = ObjectifyService.run(new Work<List<PollBean>>() {
+            @Override
+            public List<PollBean> run() {
+                List<PollBean> myPolls = ofy().load().type(PollBean.class).filter("UUID =", uuid).order("-creationDate").list();
+                return myPolls;
+            }
+        });
+        return myPolls;
+    }
+
+
+    @ApiMethod(name = "updatePollBean", path = "updatePoll")
+    public void updatePollBean(){
+
+
+    }
+
+
+
+
 }
