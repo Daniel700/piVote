@@ -19,8 +19,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
+import database.DatabaseEndpoint;
 import model.Answer;
+import model.ModelTransformer;
 import model.Poll;
+import model.pollBeanApi.model.AnswerBean;
+import model.pollBeanApi.model.PollBean;
 
 
 /**
@@ -96,7 +100,20 @@ public class PollDetailedActivity extends AppCompatActivity {
                 try {
                     Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
                     //ToDo: save selected answer locally
-                    //ToDo: Vote Update can get lost due to eventual consistency
+                    //ToDo: Vote Update can get lost due to eventual consistency + request current votes of db again for consistent data
+
+                    ModelTransformer modelTransformer = new ModelTransformer();
+                    PollBean pollBean = modelTransformer.transformFromPollToPollBean(poll);
+
+                    for (AnswerBean bean: pollBean.getAnswerBeans()){
+                        if (bean.getAnswerText().equals(a.getAnswerText()))
+                            bean.setAnswerVotes(bean.getAnswerVotes()+1);
+                    }
+                    pollBean.setOverallVotes(pollBean.getOverallVotes()+1);
+
+                    DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+                    databaseEndpoint.insertTask(pollBean);
+
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("snackbarDetailed", a.getAnswerText());
                     setResult(RESULT_OK, returnIntent);

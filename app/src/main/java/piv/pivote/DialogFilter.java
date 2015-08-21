@@ -20,6 +20,8 @@ public class DialogFilter extends DialogFragment {
     private String language = null;
     private String category = null;
 
+    //ToDo: Check correct implementation of dialogFragment (Fragment doesn't get deleted from the FragmentBackStack) // Probably save state of selected Filter options
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -71,7 +73,7 @@ public class DialogFilter extends DialogFragment {
         builder.setNegativeButton(getString(R.string.dialogButtonNegative), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                    dismiss();
             }
         });
 

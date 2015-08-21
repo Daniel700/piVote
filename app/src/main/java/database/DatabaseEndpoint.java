@@ -19,7 +19,7 @@ import model.pollBeanApi.model.PollBean;
  * Created by Daniel on 16.08.2015.
  */
 
-//ToDo: create inner classes for each method accessing the database  ---   (GetAllPolls)  (GetCertainPoll (1) for recently voted) (UpdatePollAfterVote)
+//ToDo: create inner classes for each method accessing the database  ---   (GetAllPolls) (GetAllPollsFilter)
 public class DatabaseEndpoint {
 
     private static PollBeanApi myApiService = null;
@@ -87,11 +87,44 @@ public class DatabaseEndpoint {
             }
 
 
+            class GetPollTask extends AsyncTask<Long, Void, PollBean> {
+                @Override
+                protected PollBean doInBackground(Long... params) {
+
+                    PollBean pollBean = null;
+
+                    try {
+                        pollBean = myApiService.getPollBean(params[0]).execute();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return pollBean;
+                }
+            }
+
+
 
 
     /*
     Accessing Tasks from outside of this class
      */
+
+    public PollBean getPollTask(Long id){
+
+        PollBean pollBean = null;
+
+        try {
+            pollBean = new GetPollTask().execute(id).get();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return pollBean;
+    }
+
 
     public List<PollBean> getMyPollsTask(String uuid){
 

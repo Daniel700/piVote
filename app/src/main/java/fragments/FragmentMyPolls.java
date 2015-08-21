@@ -44,8 +44,6 @@ public class FragmentMyPolls extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("onCreateView - MyPolls", "Fragments saved in Manager: " + String.valueOf(getFragmentManager().getFragments().size()));
-
         final View rootView = inflater.inflate(R.layout.fragment_my_polls, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_create_poll);
 

@@ -105,6 +105,7 @@
 
     <string-array name="languages">
         <item>Select your Language</item>
+        <item>English</item>
         <item>Arabic</item>
         <item>Bulgarian</item>
         <item>Catalan</item>
@@ -113,7 +114,6 @@
         <item>Czech</item>
         <item>Danish</item>
         <item>Dutch</item>
-        <item>English</item>
         <item>Finnish</item>
         <item>French</item>
         <item>German</item>
@@ -146,6 +146,7 @@
 
     <string-array name="languages_filter">
         <item>All</item>
+        <item>English</item>
         <item>Arabic</item>
         <item>Bulgarian</item>
         <item>Catalan</item>
@@ -154,7 +155,6 @@
         <item>Czech</item>
         <item>Danish</item>
         <item>Dutch</item>
-        <item>English</item>
         <item>Finnish</item>
         <item>French</item>
         <item>German</item>

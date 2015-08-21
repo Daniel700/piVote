@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Mtk3nFBy0O00zmgsbd-eat_s4IY\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/mhiWxA_zF6BFSPU2H4og7bMPNko\"",
  "discoveryVersion": "v1",
  "id": "pollBeanApi:v1",
  "name": "pollBeanApi",
@@ -104,6 +104,10 @@
      "type": "string",
      "format": "date-time"
     },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
     "language": {
      "type": "string"
     },
@@ -199,6 +203,12 @@
    "returns": {
     "$ref": "PollBean"
    },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "pollBeanApi.updatePollBean": {
+   "id": "pollBeanApi.updatePollBean",
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]

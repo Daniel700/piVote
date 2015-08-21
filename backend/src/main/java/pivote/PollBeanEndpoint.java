@@ -41,12 +41,17 @@ public class PollBeanEndpoint {
      * @param id The id of the object to be returned.
      * @return The <code>PollBean</code> associated with <code>id</code>.
      */
-    @ApiMethod(name = "getPollBean")
-    public PollBean getPollBean(@Named("id") Long id) {
-        // TODO: Implement this function
+    @ApiMethod(name = "getPollBean", path = "getPoll")
+    public PollBean getPollBean(@Named("id") final Long id) {
+        PollBean pollBean;
 
-        logger.info("Calling getPollBean method");
-        return null;
+        pollBean = ObjectifyService.run(new Work<PollBean>() {
+            @Override
+            public PollBean run() {
+                return ofy().load().type(PollBean.class).id(id).now();
+            }
+        });
+        return pollBean;
     }
 
     /**
@@ -98,12 +103,6 @@ public class PollBeanEndpoint {
         return myPolls;
     }
 
-
-    @ApiMethod(name = "updatePollBean", path = "updatePoll")
-    public void updatePollBean(){
-
-
-    }
 
 
 

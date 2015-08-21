@@ -6,6 +6,7 @@ import com.google.api.client.util.DateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
+import database.DatabaseEndpoint;
 import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 
@@ -20,123 +21,120 @@ public class TestData {
         return ourInstance;
     }
 
-    public ArrayList<PollBean> questionList;
-    public ArrayList<PollBean> myPollsList;
-    public ArrayList<PollBean> recentlyVotedList;
+
+    public ArrayList<PollBean> backendList;
 
 
     private TestData() {
 
-        questionList = new ArrayList<>();
-        for (int i = 0; i < 25; i++) {
-            PollBean p = new PollBean();
-            p.setQuestion("What's your favorite hero of the marvel comics?");
-            p.setOverallVotes(2754);
-            p.setCreatedBy("Anonymous");
-            p.setCategory("Movies");
-            p.setLanguage("English");
+        backendList = new ArrayList<>();
 
-
-            Date date = new Date();
-            DateTime dateTime = new DateTime(date);
-            p.setLastVoted(dateTime);
-            p.setCreationDate(dateTime);
-
-            ArrayList<AnswerBean> answers = new ArrayList<>();
-            AnswerBean answer = new AnswerBean();
-            answer.setAnswerText("Iron Man");
-            answer.setAnswerVotes(643);
-            answers.add(answer);
-
-            answer = new AnswerBean();
-            answer.setAnswerText("Hulk");
-            answer.setAnswerVotes(444);
-            answers.add(answer);
-
-            p.setAnswerBeans(answers);
-
-            questionList.add(p);
+        for (int i = 0; i < 4; i++){
+            backendList.add(Poll1());
+            backendList.add(Poll2());
+            backendList.add(Poll3());
         }
 
+        /*
+        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+        for (PollBean p: backendList) {
+            databaseEndpoint.insertTask(p);
+        }
+        */
 
-        myPollsList = new ArrayList<>();
-        for (int i = 0; i < 4; i++){
-            PollBean p = new PollBean();
-            p.setQuestion("Should Society spend more money on science?");
-            p.setOverallVotes(1314);
-            p.setCreatedBy("Anonymous");
-            p.setCategory("Society");
-            p.setLanguage("English");
-
-
-            Date date = new Date();
-            DateTime dateTime = new DateTime(date);
-            p.setLastVoted(dateTime);
-            p.setCreationDate(dateTime);
+    }
 
 
+
+
+    public PollBean Poll1(){
+        Date date = new Date();
+        DateTime dateTime = new DateTime(date);
+
+        PollBean poll = new PollBean();
+        poll.setQuestion("What's your favorite hero of the marvel comics?");
+        poll.setOverallVotes(2754);
+        poll.setCreatedBy("Anonymous");
+        poll.setCategory("Movies");
+        poll.setLanguage("English");
+        poll.setLastVoted(dateTime);
+        poll.setCreationDate(dateTime);
+            AnswerBean answer1 = new AnswerBean();
+            answer1.setAnswerText("Iron Man");
+            answer1.setAnswerVotes(643);
+            AnswerBean answer2 = new AnswerBean();
+            answer2.setAnswerText("Hulk");
+            answer2.setAnswerVotes(444);
+            ArrayList<AnswerBean> answers = new ArrayList<>();
+            answers.add(answer1);
+            answers.add(answer2);
+        poll.setAnswerBeans(answers);
+
+        return poll;
+    }
+
+
+
+    public PollBean Poll2(){
+        Date date = new Date();
+        DateTime dateTime = new DateTime(date);
+
+        PollBean poll1 = new PollBean();
+        poll1.setQuestion("Should Society spend more money on science?");
+        poll1.setOverallVotes(1314);
+        poll1.setCreatedBy("Anonymous");
+        poll1.setCategory("Society");
+        poll1.setLanguage("English");
+        poll1.setLastVoted(dateTime);
+        poll1.setCreationDate(dateTime);
             AnswerBean answerBean = new AnswerBean();
             answerBean.setAnswerText("Yes");
             answerBean.setAnswerVotes(714);
-
             AnswerBean answerBean1 = new AnswerBean();
             answerBean1.setAnswerText("No");
             answerBean1.setAnswerVotes(600);
-
             ArrayList<AnswerBean> arrayList = new ArrayList<>();
             arrayList.add(answerBean);
             arrayList.add(answerBean1);
+        poll1.setAnswerBeans(arrayList);
+
+        return poll1;
+    }
 
 
-            p.setAnswerBeans(arrayList);
 
-            myPollsList.add(p);
-        }
+    public PollBean Poll3(){
+        Date date = new Date();
+        DateTime dateTime = new DateTime(date);
 
-
-        recentlyVotedList = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
-            PollBean p = new PollBean();
-            p.setQuestion("Which character of the Simpsons do you like the most?");
-            p.setOverallVotes(2034);
-            p.setCreatedBy("Anonymous");
-            p.setCategory("Movies");
-            p.setLanguage("English");
-
-            Date date = new Date();
-            DateTime dateTime = new DateTime(date);
-            p.setLastVoted(dateTime);
-            p.setCreationDate(dateTime);
-
-            ArrayList<AnswerBean> answers = new ArrayList<>();
-
+        PollBean poll = new PollBean();
+        poll.setQuestion("Which character of the Simpsons do you like the most?");
+        poll.setOverallVotes(2034);
+        poll.setCreatedBy("Anonymous");
+        poll.setCategory("Movies");
+        poll.setLanguage("English");
+        poll.setLastVoted(dateTime);
+        poll.setCreationDate(dateTime);
             AnswerBean answerBean = new AnswerBean();
             answerBean.setAnswerText("Homer");
             answerBean.setAnswerVotes(914);
-
             AnswerBean answerBean1 = new AnswerBean();
             answerBean1.setAnswerText("Marge");
             answerBean1.setAnswerVotes(210);
-
             AnswerBean answerBean2 = new AnswerBean();
             answerBean2.setAnswerText("Bart");
             answerBean2.setAnswerVotes(566);
-
             AnswerBean answerBean3 = new AnswerBean();
             answerBean3.setAnswerText("Lisa");
             answerBean3.setAnswerVotes(344);
-
-
+            ArrayList<AnswerBean> answers = new ArrayList<>();
             answers.add(answerBean);
-            answers.add(answerBean1);
+        answers.add(answerBean1);
             answers.add(answerBean2);
             answers.add(answerBean3);
+        poll.setAnswerBeans(answers);
 
-            p.setAnswerBeans(answers);
-
-            recentlyVotedList.add(p);
-        }
-
-
+        return poll;
     }
+
 }

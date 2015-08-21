@@ -24,6 +24,8 @@ import java.util.Date;
 
 import adapter.CreateAnswersAdapter;
 import database.DatabaseEndpoint;
+import layoutManager.DividerItemDecoration;
+import layoutManager.MyLinearLayoutManager;
 import model.TestData;
 import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
@@ -33,7 +35,8 @@ import model.pollBeanApi.model.PollBean;
  */
 public class PollCreateActivity extends AppCompatActivity {
 
-    private RecyclerView.LayoutManager mLayoutManager;
+    //private RecyclerView.LayoutManager mLayoutManager;
+    private MyLinearLayoutManager mLayoutManager;
     private CreateAnswersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
@@ -66,9 +69,11 @@ public class PollCreateActivity extends AppCompatActivity {
         if (mLayoutManager != null) {
             scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         } else {
-            mLayoutManager = new LinearLayoutManager(PollCreateActivity.this);
+            mLayoutManager = new MyLinearLayoutManager(this, MyLinearLayoutManager.VERTICAL, false);
+            //mLayoutManager = new LinearLayoutManager(PollCreateActivity.this);
         }
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null));
         mRecyclerView.scrollToPosition(scrollPosition);
 
 
@@ -106,11 +111,8 @@ public class PollCreateActivity extends AppCompatActivity {
 
                         mAdapter = new CreateAnswersAdapter(arrayList);
                         mRecyclerView.setAdapter(mAdapter);
-
-                        //Update RecyclerView Height
-                        //ToDo: Calculate correct Height for Answers
-                        mRecyclerView.getLayoutParams().height = 100 * numberOfAnswers;
-
+                        //Update RecyclerView Height (only with standard layoutManager)
+                        // mRecyclerView.getLayoutParams().height = 100 * numberOfAnswers;
                     }
 
                     @Override

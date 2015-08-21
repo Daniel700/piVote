@@ -34,6 +34,13 @@ public class PollBean {
     private Date lastVoted;
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUUID() {
         return UUID;

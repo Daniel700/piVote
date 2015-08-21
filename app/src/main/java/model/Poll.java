@@ -15,7 +15,8 @@ import java.util.Date;
  */
 public class Poll implements Serializable {
 
-    private String questionID;
+    private Long id;
+    private String uuid;
     private String question;
     private ArrayList<Answer> answers;
     private int overallVotes;
@@ -90,11 +91,19 @@ public class Poll implements Serializable {
         this.question = question;
     }
 
-    public String getQuestionID() {
-        return questionID;
+    public Long getId() {
+        return id;
     }
 
-    public void setQuestionID(String questionID) {
-        this.questionID = questionID;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

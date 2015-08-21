@@ -3,12 +3,10 @@ package fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +36,7 @@ public class FragmentQuestionList extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //ToDo: Request only Polls from Database on which the user hasn't yet voted / Alternatively color them grey in the Question-List
-        mAdapter = new QuestionListAdapter(TestData.getInstance().questionList);
+        mAdapter = new QuestionListAdapter(TestData.getInstance().backendList);
     }
 
     @Override
@@ -52,21 +50,6 @@ public class FragmentQuestionList extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         int scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         mRecyclerView.scrollToPosition(scrollPosition);
-
-        //ToDo: Check if swipeRefreshLayout is needed here?
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_question_list);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(rootView.getContext(), "refreshing all polls", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 5000);
-            }
-        });
 
         final FloatingActionButton fabRefresh = (FloatingActionButton) rootView.findViewById(R.id.fab_refresh);
         fabRefresh.setOnClickListener(new View.OnClickListener() {

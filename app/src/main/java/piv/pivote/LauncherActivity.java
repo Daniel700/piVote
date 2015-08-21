@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -94,16 +95,11 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         fragmentManager.beginTransaction().replace(R.id.content, fragment, fragmentClass.getName()).commit();
         */
 
-        //ToDo: Error sometimes: "java.lang.NullPointerException: Attempt to write to field 'int android.support.v4.app.Fragment.mNextAnim' on a null object reference" ------- Tritt auf bei Reihenfolge: Start -> Filter -> myPolls
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         switch(menuItem.getItemId()){
             case R.id.nav_all_polls:
-                    if (fragmentManager.getFragments() != null) {
-                        for (Fragment fra: fragmentManager.getFragments()) {
-                            fragmentManager.beginTransaction().detach(fra).commit();
-                        }
-                    }
+                    detachNavigationDrawerFragments();
                     if (fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName()) == null){
                         fragment = new FragmentQuestionList();
                         fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentQuestionList.class.getName()).commit();
@@ -114,11 +110,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                     }
                 break;
             case R.id.nav_my_polls:
-                    if (fragmentManager.getFragments() != null) {
-                        for (Fragment fra: fragmentManager.getFragments()) {
-                            fragmentManager.beginTransaction().detach(fra).commit();
-                        }
-                    }
+                    detachNavigationDrawerFragments();
                     if (fragmentManager.findFragmentByTag(FragmentMyPolls.class.getName()) == null){
                         fragment = new FragmentMyPolls();
                         fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentMyPolls.class.getName()).commit();
@@ -129,11 +121,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                     }
                 break;
             case R.id.nav_recently:
-                    if (fragmentManager.getFragments() != null) {
-                        for (Fragment fra: fragmentManager.getFragments()) {
-                            fragmentManager.beginTransaction().detach(fra).commit();
-                        }
-                    }
+                    detachNavigationDrawerFragments();
                     if (fragmentManager.findFragmentByTag(FragmentRecentlyVoted.class.getName()) == null){
                         fragment = new FragmentRecentlyVoted();
                         fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentRecentlyVoted.class.getName()).commit();
@@ -144,11 +132,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                     }
                 break;
             case R.id.nav_top_polls:
-                    if (fragmentManager.getFragments() != null) {
-                        for (Fragment fra: fragmentManager.getFragments()) {
-                            fragmentManager.beginTransaction().detach(fra).commit();
-                        }
-                    }
+                    detachNavigationDrawerFragments();
                     if (fragmentManager.findFragmentByTag(FragmentTopPolls.class.getName()) == null){
                         fragment = new FragmentTopPolls();
                         fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentTopPolls.class.getName()).commit();
@@ -159,11 +143,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                     }
                 break;
             case R.id.nav_about:
-                    if (fragmentManager.getFragments() != null) {
-                        for (Fragment fra: fragmentManager.getFragments()) {
-                            fragmentManager.beginTransaction().detach(fra).commit();
-                        }
-                    }
+                    detachNavigationDrawerFragments();
                     if (fragmentManager.findFragmentByTag(FragmentAbout.class.getName()) == null){
                         fragment = new FragmentAbout();
                         fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentAbout.class.getName()).commit();
@@ -174,11 +154,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                     }
                 break;
             default:
-                if (fragmentManager.getFragments() != null) {
-                    for (Fragment fra: fragmentManager.getFragments()) {
-                        fragmentManager.beginTransaction().detach(fra).commit();
-                    }
-                }
+                detachNavigationDrawerFragments();
                 if (fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName()) == null){
                     fragment = new FragmentQuestionList();
                     fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentQuestionList.class.getName()).commit();
@@ -194,6 +170,33 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawers();
+    }
+
+    public void detachNavigationDrawerFragments(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment frag;
+
+        if (fragmentManager.getFragments() != null) {
+            for (Fragment fra: fragmentManager.getFragments()) {
+                Log.e("Launcher detach:", "Fragments in Manager: " + String.valueOf(fragmentManager.getFragments().size()));
+            }
+        }
+
+        if ((frag = fragmentManager.findFragmentByTag(FragmentMyPolls.class.getName())) != null)
+            fragmentManager.beginTransaction().detach(frag).commit();
+
+        if ((frag = fragmentManager.findFragmentByTag(FragmentQuestionList.class.getName())) != null)
+            fragmentManager.beginTransaction().detach(frag).commit();
+
+        if ((frag = fragmentManager.findFragmentByTag(FragmentRecentlyVoted.class.getName())) != null)
+            fragmentManager.beginTransaction().detach(frag).commit();
+
+        if ((frag = fragmentManager.findFragmentByTag(FragmentTopPolls.class.getName())) != null)
+            fragmentManager.beginTransaction().detach(frag).commit();
+
+        if ((frag = fragmentManager.findFragmentByTag(FragmentAbout.class.getName())) != null)
+            fragmentManager.beginTransaction().detach(frag).commit();
+
     }
 
 
@@ -260,7 +263,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         return super.onOptionsItemSelected(item);
     }
 
-
+    //ToDo: onResume() refresh Fragments after closing and reopening the application
 
     public void verifyInstallation(){
 
