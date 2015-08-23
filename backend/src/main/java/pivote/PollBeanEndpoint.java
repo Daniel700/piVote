@@ -3,6 +3,9 @@ package pivote;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
 import com.googlecode.objectify.Work;
@@ -13,7 +16,9 @@ import java.util.logging.Logger;
 import javax.inject.Named;
 
 
+import model.AnswerBean;
 import model.PollBean;
+import model.ShardedCounter;
 
 import static pivote.OfyService.ofy;
 
@@ -76,6 +81,7 @@ public class PollBeanEndpoint {
 
     @ApiMethod(name = "getTop100PollBeans", path = "top100Polls")
     public List<PollBean> getTop100PollBean(){
+
         List<PollBean> topList;
 
         topList = ObjectifyService.run(new Work<List<PollBean>>() {
@@ -86,6 +92,7 @@ public class PollBeanEndpoint {
             }
         });
         return topList;
+
     }
 
 
@@ -104,6 +111,40 @@ public class PollBeanEndpoint {
     }
 
 
+    @ApiMethod(name = "updatePollBean", path = "updatePoll")
+    public void updatePollBean(final PollBean pollBean, @Named("selectedAnswer") final String selectedAnswer){
+
+        ObjectifyService.run(new VoidWork() {
+            @Override
+            public void vrun() {
+
+                ofy().transactNew(new VoidWork() {
+                    @Override
+                    public void vrun() {
+                        PollBean poll;
+
+                        //ToDo: setLastVoted
+                        //Load Poll again to make sure updating the current vote amount
+                        poll = ofy().load().type(PollBean.class).id(pollBean.getId()).now();
+
+                        //Increment the related AnswerVotes and OverallVotes
+                        for (AnswerBean bean : poll.getAnswerBeans()) {
+                            if (bean.getAnswerText().equals(selectedAnswer))
+                                bean.setAnswerVotes(bean.getAnswerVotes() + 1);
+                        }
+                        poll.setOverallVotes(poll.getOverallVotes() + 1);
+
+                        //Save entity with the new amount of votes
+                        ofy().save().entity(poll).now();
+
+                    }
+                });
+
+            }
+        });
+
+
+    }
 
 
 

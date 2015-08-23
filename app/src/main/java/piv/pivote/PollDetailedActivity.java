@@ -1,6 +1,7 @@
 package piv.pivote;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
 import database.DatabaseEndpoint;
+import database.SQLiteAccess;
 import model.Answer;
 import model.ModelTransformer;
 import model.Poll;
@@ -75,9 +77,7 @@ public class PollDetailedActivity extends AppCompatActivity {
         }
 
 
-        //ToDo: Disable voting on Poll if already voted - also mark the voted answer as true
-
-        mAdapter = new AnswersAdapter(poll);
+        mAdapter = new AnswersAdapter(poll, false);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_answers_detailed);
 
         int scrollPosition = 0;
@@ -99,20 +99,19 @@ public class PollDetailedActivity extends AppCompatActivity {
 
                 try {
                     Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
-                    //ToDo: save selected answer locally
-                    //ToDo: Vote Update can get lost due to eventual consistency + request current votes of db again for consistent data
+
+                    //Save Poll in local SQLite Database
+                    SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
+                    dbAccess.insertPoll(poll, a.getAnswerText());
+                    dbAccess.printAllPolls();
+                    dbAccess.close();
 
                     ModelTransformer modelTransformer = new ModelTransformer();
                     PollBean pollBean = modelTransformer.transformFromPollToPollBean(poll);
 
-                    for (AnswerBean bean: pollBean.getAnswerBeans()){
-                        if (bean.getAnswerText().equals(a.getAnswerText()))
-                            bean.setAnswerVotes(bean.getAnswerVotes()+1);
-                    }
-                    pollBean.setOverallVotes(pollBean.getOverallVotes()+1);
-
+                    //ToDo: Check if sharding is needed and possible?
                     DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                    databaseEndpoint.insertTask(pollBean);
+                    databaseEndpoint.updatePollTask(pollBean, a.getAnswerText());
 
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("snackbarDetailed", a.getAnswerText());
@@ -125,6 +124,27 @@ public class PollDetailedActivity extends AppCompatActivity {
             }
         });
 
+
+
+        //ToDo: Disable voting on Poll if already voted - also mark the voted answer as true
+        boolean alreadyVoted = getIntent().getBooleanExtra("Voted", false);
+        String selectedAnswer = getIntent().getStringExtra("selectedAnswer");
+
+        if (alreadyVoted){
+            button.setEnabled(false);
+
+            for (Answer answer: poll.getAnswers()) {
+                if (answer.getAnswerText().equals(selectedAnswer))
+                {
+                    answer.setSelected(true);
+                }
+
+            }
+
+            mAdapter = new AnswersAdapter(poll, true);
+            mRecyclerView.setAdapter(mAdapter);
+
+        }
 
 
 

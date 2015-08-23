@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/mhiWxA_zF6BFSPU2H4og7bMPNko\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/Caxm7BBHcKnAS6G4ZE9oK2AthbU\"",
  "discoveryVersion": "v1",
  "id": "pollBeanApi:v1",
  "name": "pollBeanApi",
@@ -216,6 +216,20 @@
    "id": "pollBeanApi.updatePollBean",
    "path": "updatePoll",
    "httpMethod": "PUT",
+   "parameters": {
+    "selectedAnswer": {
+     "type": "string",
+     "required": true,
+     "location": "query"
+    }
+   },
+   "parameterOrder": [
+    "selectedAnswer"
+   ],
+   "request": {
+    "$ref": "PollBean",
+    "parameterName": "resource"
+   },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]

@@ -1,8 +1,8 @@
-<!-- Indices written at Fri, 21 Aug 2015 19:12:53 CEST -->
+<!-- Indices written at Sun, 23 Aug 2015 01:47:52 CEST -->
 
 <datastore-indexes>
 
-    <!-- Used 10 times in query history -->
+    <!-- Used 4 times in query history -->
     <datastore-index kind="PollBean" ancestor="false" source="auto">
         <property name="UUID" direction="asc"/>
         <property name="creationDate" direction="desc"/>

@@ -11,9 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import adapter.TopPollsAdapter;
 import database.DatabaseEndpoint;
+import model.ModelTransformer;
+import model.Poll;
 import model.TestData;
+import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
 
 /**
@@ -27,9 +33,7 @@ public class FragmentTopPolls extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-        mAdapter = new TopPollsAdapter(databaseEndpoint.getTop100PollsTask());
-
+        mAdapter = new TopPollsAdapter(getCurrentPollList(), getActivity().getApplicationContext());
     }
 
 
@@ -43,8 +47,7 @@ public class FragmentTopPolls extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                mAdapter = new TopPollsAdapter(databaseEndpoint.getTop100PollsTask());
+                mAdapter = new TopPollsAdapter(getCurrentPollList(),getActivity().getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -60,6 +63,20 @@ public class FragmentTopPolls extends Fragment {
 
 
         return rootView;
+    }
+
+    public List<Poll> getCurrentPollList(){
+        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+        List<PollBean> pollBeanList = databaseEndpoint.getTop100PollsTask();
+
+        ModelTransformer transformer = new ModelTransformer();
+        List<Poll> pollList = new ArrayList<>();
+
+        for (PollBean pollBean: pollBeanList) {
+            pollList.add(transformer.transformPollBeanToPoll(pollBean));
+        }
+
+        return pollList;
     }
 
 }

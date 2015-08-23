@@ -28,7 +28,7 @@
             android:id="@+id/question_top_polls"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/top_polls_question_background"
+            android:background="@drawable/question_background_gradient"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="14sp"

@@ -1,6 +1,7 @@
 package adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
 
     private Poll myPoll;
     private int lastPosition = -1;
+    private boolean answersLocked;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -38,8 +40,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     }
 
 
-    public AnswersAdapter(Poll myPoll) {
+    public AnswersAdapter(Poll myPoll, boolean locked) {
         this.myPoll = myPoll;
+        this.answersLocked = locked;
     }
 
 
@@ -78,25 +81,34 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         holder.answerVotes.setText(String.valueOf((int) answerVote));
         holder.answerPercentage.setText(String.valueOf(percentage));
         holder.answerChecked.setChecked(false);
-        myPoll.getAnswers().get(position).setSelected(false);
+        //myPoll.getAnswers().get(position).setSelected(false);
 
-        holder.answerChecked.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (lastPosition != position) {
-                    notifyItemChanged(lastPosition);
-                    myPoll.getAnswers().get(position).setSelected(true);
-                } else {
-                    if (holder.answerChecked.isChecked()) {
+        if (answersLocked){
+            holder.answerChecked.setEnabled(false);
+            holder.answerChecked.setChecked(myPoll.getAnswers().get(position).isSelected());
+        }
+        else
+        {
+
+            holder.answerChecked.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (lastPosition != position) {
+                        notifyItemChanged(lastPosition);
                         myPoll.getAnswers().get(position).setSelected(true);
                     } else {
-                        myPoll.getAnswers().get(position).setSelected(false);
+                        if (holder.answerChecked.isChecked()) {
+                            myPoll.getAnswers().get(position).setSelected(true);
+                        } else {
+                            myPoll.getAnswers().get(position).setSelected(false);
+                        }
                     }
-                }
 
-                lastPosition = position;
-            }
-        });
+                    lastPosition = position;
+                }
+            });
+
+        }
 
 
     }
@@ -107,7 +119,6 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
     }
 
     public Answer getChosenAnswer() {
-
 
         for (Answer answer : myPoll.getAnswers()){
             if (answer.isSelected())

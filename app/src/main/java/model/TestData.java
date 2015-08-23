@@ -35,12 +35,12 @@ public class TestData {
             backendList.add(Poll3());
         }
 
-        /*
+
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
         for (PollBean p: backendList) {
             databaseEndpoint.insertTask(p);
         }
-        */
+
 
     }
 

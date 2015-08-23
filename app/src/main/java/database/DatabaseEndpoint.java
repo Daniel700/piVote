@@ -2,6 +2,7 @@ package database;
 
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -91,6 +92,7 @@ public class DatabaseEndpoint {
                 @Override
                 protected PollBean doInBackground(Long... params) {
 
+                    instantiateConnection();
                     PollBean pollBean = null;
 
                     try {
@@ -105,11 +107,47 @@ public class DatabaseEndpoint {
             }
 
 
+            class UpdatePollTask extends AsyncTask<Pair<PollBean, String>, Void, Void> {
+                @Override
+                protected Void doInBackground(Pair<PollBean, String>... params) {
+
+                    instantiateConnection();
+                    PollBean pollBean = params[0].first;
+                    String answer = params[0].second;
+
+                    try {
+                        myApiService.updatePollBean(answer, pollBean).execute();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    return null;
+                }
+            }
+
+
 
 
     /*
     Accessing Tasks from outside of this class
      */
+
+
+    public void updatePollTask(PollBean pollBean, String answer){
+
+        Pair pair = Pair.create(pollBean, answer);
+
+        try {
+            new UpdatePollTask().execute(pair);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     public PollBean getPollTask(Long id){
 
