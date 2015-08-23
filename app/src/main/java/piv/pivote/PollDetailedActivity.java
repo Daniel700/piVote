@@ -103,7 +103,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                     //Save Poll in local SQLite Database
                     SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
                     dbAccess.insertPoll(poll, a.getAnswerText());
-                    dbAccess.printAllPolls();
+                    //dbAccess.printAllPolls();
                     dbAccess.close();
 
                     ModelTransformer modelTransformer = new ModelTransformer();
@@ -118,15 +118,14 @@ public class PollDetailedActivity extends AppCompatActivity {
                     setResult(RESULT_OK, returnIntent);
                     finish();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.selectAnswer), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Vote couldn't be submitted, please try again later", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
 
-
-        //ToDo: Disable voting on Poll if already voted - also mark the voted answer as true
+        // if already voted enable locking on the answerList and mark the question red as well as the answer checked
         boolean alreadyVoted = getIntent().getBooleanExtra("Voted", false);
         String selectedAnswer = getIntent().getStringExtra("selectedAnswer");
 

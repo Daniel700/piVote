@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
 import model.pollBeanApi.model.PollBean;
@@ -24,7 +26,8 @@ import piv.pivote.R;
  * Created by Daniel on 29.07.2015.
  */
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.ViewHolder> {
-    private List<PollBean> pollList;
+    private List<Poll> pollList;
+    private Context context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -45,8 +48,9 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public QuestionListAdapter(List<PollBean> pollList) {
+    public QuestionListAdapter(List<Poll> pollList, Context context) {
         this.pollList = pollList;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -64,20 +68,38 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        final PollBean pollBean = pollList.get(position);
-        holder.vQuestion.setText(pollBean.getQuestion());
-        holder.vOverallVotes.setText(String.valueOf(pollBean.getOverallVotes()));
-        holder.vCategory.setText(pollBean.getCategory());
-        holder.vCreatedBy.setText(pollBean.getCreatedBy());
+        final Poll poll = pollList.get(position);
 
+
+        //Color question red if already voted
+        SQLiteAccess dbAccess = new SQLiteAccess(context);
+        //dbAccess.printAllPolls();
+        Pair<Boolean, String> pair = dbAccess.findPoll(poll);
+        boolean found = pair.first;
+        final String selectedAnswer = pair.second;
+        dbAccess.close();
+        if (found)
+            holder.vQuestion.setBackgroundResource(R.drawable.question_background_negative_gradient);
+        else
+            holder.vQuestion.setBackgroundResource(R.drawable.question_background_gradient);
+
+
+
+        holder.vQuestion.setText(poll.getQuestion());
+        holder.vOverallVotes.setText(String.valueOf(poll.getOverallVotes()));
+        holder.vCategory.setText(poll.getCategory());
+        holder.vCreatedBy.setText(poll.getCreatedBy());
+
+
+        final boolean tmpFound = found;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModelTransformer modelTransformer = new ModelTransformer();
-                Poll poll = modelTransformer.transformPollBeanToPoll(pollBean);
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", poll);
+                intent.putExtra("Voted", tmpFound);
+                intent.putExtra("selectedAnswer", selectedAnswer);
                 ((Activity) context).startActivityForResult(intent, 100);
             }
         });
@@ -89,5 +111,6 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     public int getItemCount() {
         return pollList.size();
     }
+
 
 }

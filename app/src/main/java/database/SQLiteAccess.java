@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Poll;
 
 /**
@@ -29,6 +32,7 @@ public class SQLiteAccess extends SQLiteOpenHelper {
     private static final String COLUMN_POLLID = "PollId";
     private static final String COLUMN_ANSWERTEXT = "AnswerText";
     private static final String COLUMN_VOTEDATE = "VoteDate";
+    private static final String[] allColumns = {COLUMN_ID, COLUMN_POLLID, COLUMN_ANSWERTEXT, COLUMN_VOTEDATE};
 
 
     private static final String CREATE_TABLE =
@@ -78,22 +82,39 @@ public class SQLiteAccess extends SQLiteOpenHelper {
 
     public Pair<Boolean, String> findPoll(Poll poll){
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT  * FROM " + TABLE_POLLS + " WHERE " + COLUMN_POLLID + " = " + poll.getId();
 
-        String[] columns = {COLUMN_ID, COLUMN_POLLID, COLUMN_ANSWERTEXT, COLUMN_VOTEDATE};
+        // String selectQuery = "SELECT  * FROM " + TABLE_POLLS + " WHERE " + COLUMN_POLLID + " = " + poll.getId();
+        // Cursor c = db.rawQuery(selectQuery, null);
 
-        //ToDo: fix QUERY
-       // Cursor c = db.rawQuery(selectQuery, null);
-        Cursor c = db.query(TABLE_POLLS, columns, COLUMN_POLLID + " = " + poll.getId(), null, null, null, null, null);
-        if (c!= null && c.getCount() > 0){
-            Log.e("AnswerSQL", c.getString(2));
-            Pair<Boolean, String> tmp = Pair.create(true, "Hulk");
-            c.close();
+        Cursor curs = db.query(TABLE_POLLS, allColumns, COLUMN_POLLID + " = " + poll.getId(), null, null, null, null, null);
+
+        if (curs.getCount() > 0){
+            curs.moveToFirst();
+            Pair<Boolean, String> tmp = Pair.create(true, curs.getString(2));
+            curs.close();
             return tmp;
-
         }
 
         return Pair.create(false, " ");
+    }
+
+    public List<Long> getRecentPolls(){
+        List<Long> recentIDs = new ArrayList<Long>();
+        final String LIMIT = "25";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] tmp = {COLUMN_ID, COLUMN_POLLID};
+        Cursor cursor = db.query(TABLE_POLLS, tmp, null, null, null, null, COLUMN_ID + " DESC", LIMIT);
+        //Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_POLLS, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            recentIDs.add(cursor.getLong(1));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return recentIDs;
     }
 
     public void deleteEntry(Integer id){
@@ -109,7 +130,7 @@ public class SQLiteAccess extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
-        Log.e("CursorSize", String.valueOf(cursor.getCount()));
+        Log.e("PRINT POLLS", " Cursor Size: " + String.valueOf(cursor.getCount()));
         while (!cursor.isAfterLast()) {
             Log.e("PRINT POLLS", COLUMN_ID + "  " + cursor.getString(0) + "     " +
                                  COLUMN_POLLID + "  " + cursor.getString(1) + "     " +

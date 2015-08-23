@@ -81,7 +81,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         holder.answerVotes.setText(String.valueOf((int) answerVote));
         holder.answerPercentage.setText(String.valueOf(percentage));
         holder.answerChecked.setChecked(false);
-        //myPoll.getAnswers().get(position).setSelected(false);
+
 
         if (answersLocked){
             holder.answerChecked.setEnabled(false);
@@ -89,7 +89,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.ViewHold
         }
         else
         {
-
+            myPoll.getAnswers().get(position).setSelected(false);
             holder.answerChecked.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

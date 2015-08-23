@@ -6,10 +6,12 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.repackaged.com.google.api.client.util.DateTime;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
 import com.googlecode.objectify.Work;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -123,9 +125,13 @@ public class PollBeanEndpoint {
                     public void vrun() {
                         PollBean poll;
 
-                        //ToDo: setLastVoted
                         //Load Poll again to make sure updating the current vote amount
                         poll = ofy().load().type(PollBean.class).id(pollBean.getId()).now();
+
+                        Date date = new Date();
+                        poll.setLastVoted(date);
+                        logger.info(date.toString());
+                        logger.info(poll.getId().toString());
 
                         //Increment the related AnswerVotes and OverallVotes
                         for (AnswerBean bean : poll.getAnswerBeans()) {

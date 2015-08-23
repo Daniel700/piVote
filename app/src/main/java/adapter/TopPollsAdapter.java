@@ -29,6 +29,7 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
     private List<Poll> pollList;
     private Context context;
 
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -72,9 +73,10 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
 
         final Poll poll = pollList.get(position);
 
+
         //Color question red if already voted
             SQLiteAccess dbAccess = new SQLiteAccess(context);
-            dbAccess.printAllPolls();
+            //dbAccess.printAllPolls();
             Pair<Boolean, String> pair = dbAccess.findPoll(poll);
             boolean found = pair.first;
             final String selectedAnswer = pair.second;

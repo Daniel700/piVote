@@ -16,8 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import adapter.MyPollAdapter;
 import database.DatabaseEndpoint;
+import model.ModelTransformer;
+import model.Poll;
+import model.pollBeanApi.model.PollBean;
 import piv.pivote.PollCreateActivity;
 import piv.pivote.R;
 
@@ -37,8 +43,7 @@ public class FragmentMyPolls extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("InstallSettings", Context.MODE_PRIVATE);
         uuid = sharedPreferences.getString("UUID", "no id available");
-        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-        mAdapter = new MyPollAdapter(databaseEndpoint.getMyPollsTask(uuid));
+        mAdapter = new MyPollAdapter(getCurrentPollList(), getActivity().getApplicationContext());
     }
 
 
@@ -58,8 +63,7 @@ public class FragmentMyPolls extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                mAdapter = new MyPollAdapter(databaseEndpoint.getMyPollsTask(uuid));
+                mAdapter = new MyPollAdapter(getCurrentPollList(), getActivity().getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -85,24 +89,27 @@ public class FragmentMyPolls extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 50 && resultCode == Activity.RESULT_OK)
         {
-            /*
-            // Reload current fragment (starts onCreateView)
-            Fragment frg = null;
-            frg = getFragmentManager().findFragmentByTag(FragmentMyPolls.class.getName());
-            final FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(frg);
-            ft.attach(frg);
-            ft.commit();
-            */
-
-            DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-            mAdapter = new MyPollAdapter(databaseEndpoint.getMyPollsTask(uuid));
+            mAdapter = new MyPollAdapter(getCurrentPollList(), getActivity().getApplicationContext());
             recyclerView.setAdapter(mAdapter);
         }
-
     }
+
+
+    public List<Poll> getCurrentPollList(){
+        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+        List<PollBean> pollBeanList = databaseEndpoint.getMyPollsTask(uuid);
+
+        ModelTransformer transformer = new ModelTransformer();
+        List<Poll> pollList = new ArrayList<>();
+
+        for (PollBean pollBean: pollBeanList) {
+            pollList.add(transformer.transformPollBeanToPoll(pollBean));
+        }
+
+        return pollList;
+    }
+
 
 }

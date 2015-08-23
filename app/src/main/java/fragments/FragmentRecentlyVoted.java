@@ -13,7 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import adapter.QuestionListAdapter;
+import database.DatabaseEndpoint;
+import database.SQLiteAccess;
+import model.ModelTransformer;
+import model.Poll;
+import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
 import model.TestData;
 
@@ -28,14 +36,18 @@ public class FragmentRecentlyVoted extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //ToDo: Get Recently Voted Poll-IDs from local DB and request these from remote DB
-        mAdapter = new QuestionListAdapter(TestData.getInstance().backendList);
+        try {
+            mAdapter = new QuestionListAdapter(getCurrentPollList(), getActivity().getApplicationContext());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_recently_voted, container, false);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_recently_voted);
+        final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_recently_voted);
 
         recyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(rootView.getContext());
@@ -47,17 +59,49 @@ public class FragmentRecentlyVoted extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(rootView.getContext(), "refreshing recently voted polls", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 5000);
+                try {
+                    mAdapter = new QuestionListAdapter(getCurrentPollList(), getActivity().getApplicationContext());
+                    recyclerView.setAdapter(mAdapter);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                finally {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
 
         return rootView;
     }
+
+
+    public List<Poll> getCurrentPollList(){
+
+        SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());
+        List<Long> list = dbAccess.getRecentPolls();
+        dbAccess.printAllPolls();
+        dbAccess.close();
+
+        List<PollBean> pollBeanList = new ArrayList<>();
+        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+
+        //ToDo: Check if BatchRequest is of advantage?
+        //Request every Poll that is in SQLite DB and remote DB
+        for (Long value: list) {
+            pollBeanList.add(databaseEndpoint.getPollTask(value));
+        }
+
+        ModelTransformer transformer = new ModelTransformer();
+        List<Poll> pollList = new ArrayList<>();
+
+        for (PollBean pollBean: pollBeanList) {
+            pollList.add(transformer.transformPollBeanToPoll(pollBean));
+        }
+
+        return pollList;
+    }
+
+
 }
