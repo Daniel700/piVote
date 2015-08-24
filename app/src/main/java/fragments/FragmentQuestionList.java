@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,13 +38,15 @@ public class FragmentQuestionList extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-
+    private String language = null;
+    private String category = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //ToDo: Request only Polls from Database on which the user hasn't yet voted / Alternatively color them grey in the Question-List
-        mAdapter = new QuestionListAdapter(getCurrentPollList(), getActivity().getApplicationContext());
+        language = getResources().getStringArray(R.array.languages_filter)[0];
+        category = getResources().getStringArray(R.array.categories_filter)[0];
+        mAdapter = new QuestionListAdapter(getCurrentPollList(language, category), getActivity().getApplicationContext());
     }
 
     @Override
@@ -62,7 +65,8 @@ public class FragmentQuestionList extends Fragment {
         fabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), v.toString(), Toast.LENGTH_SHORT).show();
+                mAdapter = new QuestionListAdapter(getCurrentPollList(language, category), getActivity().getApplicationContext());
+                mRecyclerView.setAdapter(mAdapter);
             }
         });
 
@@ -116,21 +120,22 @@ public class FragmentQuestionList extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1){
-            Toast.makeText(getActivity(), data.getStringExtra("language"), Toast.LENGTH_SHORT).show();
-            Toast.makeText(getActivity(), data.getStringExtra("category"), Toast.LENGTH_LONG).show();
-
-            //ToDo: Filter SQL Queries here and refresh the adapter
+            language = data.getStringExtra("language");
+            category = data.getStringExtra("category");
+            mAdapter = new QuestionListAdapter(getCurrentPollList(language, category), getActivity().getApplicationContext());
+            mRecyclerView.setAdapter(mAdapter);
         }
     }
 
 
-    public List<Poll> getCurrentPollList(){
+    public List<Poll> getCurrentPollList(String language, String category){
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-        List<PollBean> pollBeanList = TestData.getInstance().backendList;
+        List<PollBean> pollBeanList = databaseEndpoint.getRandomPollsTask(language, category);
 
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();
 
+        if (pollBeanList != null)
         for (PollBean pollBean: pollBeanList) {
             pollList.add(transformer.transformPollBeanToPoll(pollBean));
         }

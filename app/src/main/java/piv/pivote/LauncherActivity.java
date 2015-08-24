@@ -22,6 +22,7 @@ import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
 import fragments.FragmentRecentlyVoted;
 import fragments.FragmentTopPolls;
+import model.TestData;
 
 
 public class LauncherActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,7 +55,8 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         //Navigate to the initial fragment
         navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
 
-
+        //Create some Test Data
+        TestData.getInstance();
 
     }
 

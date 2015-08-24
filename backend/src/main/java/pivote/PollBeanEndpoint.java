@@ -42,6 +42,37 @@ public class PollBeanEndpoint {
 
     private static final Logger logger = Logger.getLogger(PollBeanEndpoint.class.getName());
 
+
+    //ToDo: change Request to get 200 random Polls
+    @ApiMethod(name = "getRandomPollBeans", path = "randomPolls")
+    public List<PollBean> getRandomPollBeans(@Named("language") final String language, @Named("category") final String category){
+
+        List<PollBean> randoms;
+        randoms = ObjectifyService.run(new Work<List<PollBean>>() {
+            @Override
+            public List<PollBean> run() {
+                List<PollBean> list;
+                if (!language.equals("All") && category.equals("All"))
+                {
+                    list = ofy().load().type(PollBean.class).filter("language =", language).list();
+                    return list;
+                }
+                if (language.equals("All") && !category.equals("All")){
+                    list = ofy().load().type(PollBean.class).filter("category =", category).list();
+                    return list;
+                }
+                if (!language.equals("All") && !category.equals("All")){
+                    list = ofy().load().type(PollBean.class).filter("language =", language).filter("category =", category).list();
+                    return list;
+                }
+                list = ofy().load().type(PollBean.class).list();
+                return list;
+            }
+        });
+        return randoms;
+    }
+
+
     /**
      * This method gets the <code>PollBean</code> object associated with the specified <code>id</code>.
      *
@@ -125,9 +156,8 @@ public class PollBeanEndpoint {
                     public void vrun() {
                         PollBean poll;
 
-                        //Load Poll again to make sure updating the current vote amount
+                        //Load Poll again to make sure updating the current vote amount + lastVote Date
                         poll = ofy().load().type(PollBean.class).id(pollBean.getId()).now();
-
                         Date date = new Date();
                         poll.setLastVoted(date);
                         logger.info(date.toString());

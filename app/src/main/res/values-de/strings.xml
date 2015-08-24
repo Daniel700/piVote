@@ -11,4 +11,24 @@
     <string name="creationDate">Erstellungsdatum</string>
 
 
+    <string-array name="categories_filter">
+        <item>Alle</item>
+        <item>Economy</item>
+        <item>Environment</item>
+        <item>Fashion</item>
+        <item>Food</item>
+        <item>Fun</item>
+        <item>Health</item>
+        <item>Miscellaneous</item>
+        <item>Movies/TV</item>
+        <item>Music</item>
+        <item>Politics</item>
+        <item>Science</item>
+        <item>Society</item>
+        <item>Sports</item>
+        <item>Technology</item>
+        <item>World</item>
+    </string-array>
+
+
 </resources>

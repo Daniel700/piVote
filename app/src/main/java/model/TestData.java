@@ -29,7 +29,7 @@ public class TestData {
 
         backendList = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 40; i++){
             backendList.add(Poll1());
             backendList.add(Poll2());
             backendList.add(Poll3());

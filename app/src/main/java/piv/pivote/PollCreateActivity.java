@@ -111,7 +111,7 @@ public class PollCreateActivity extends AppCompatActivity {
 
                         mAdapter = new CreateAnswersAdapter(arrayList);
                         mRecyclerView.setAdapter(mAdapter);
-                        //Update RecyclerView Height (only with standard layoutManager)
+                        // Update RecyclerView Height (only with standard layoutManager)
                         // mRecyclerView.getLayoutParams().height = 100 * numberOfAnswers;
                     }
 

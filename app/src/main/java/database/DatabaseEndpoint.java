@@ -11,6 +11,7 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.pollBeanApi.PollBeanApi;
@@ -20,11 +21,10 @@ import model.pollBeanApi.model.PollBean;
  * Created by Daniel on 16.08.2015.
  */
 
-//ToDo: create inner classes for each method accessing the database  ---   (GetAllPolls) (GetAllPollsFilter)
+
 public class DatabaseEndpoint {
 
     private static PollBeanApi myApiService = null;
-
 
 
             class InsertTask extends AsyncTask<PollBean, Void, Void> {
@@ -60,11 +60,6 @@ public class DatabaseEndpoint {
                     }
 
                     return beans;
-                }
-
-                @Override
-                protected void onPostExecute(List<PollBean> pollBeans) {
-                    super.onPostExecute(pollBeans);
                 }
             }
 
@@ -128,11 +123,55 @@ public class DatabaseEndpoint {
             }
 
 
+            class GetRandomPollsTask extends AsyncTask<Void, Void, List<PollBean>> {
+                private String language;
+                private String category;
+
+                GetRandomPollsTask(String lang, String cat){
+                    this.language = lang;
+                    this.category = cat;
+                }
+
+                @Override
+                protected List<PollBean> doInBackground(Void... params) {
+
+                    instantiateConnection();
+                    List<PollBean> beans = null;
+
+                    try {
+                        beans = myApiService.getRandomPollBeans(category, language).execute().getItems();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    return beans;
+                }
+            }
+
+
 
 
     /*
-    Accessing Tasks from outside of this class
+    ###############################################################################################
+                   Methods for accessing these Tasks from outside of the class
+    ###############################################################################################
      */
+
+
+
+    public List<PollBean> getRandomPollsTask(String language, String category){
+        List<PollBean> beans = null;
+
+        try {
+            beans = new GetRandomPollsTask(language, category).execute().get();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return beans;
+    }
 
 
     public void updatePollTask(PollBean pollBean, String answer){
