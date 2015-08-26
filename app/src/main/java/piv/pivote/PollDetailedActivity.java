@@ -3,6 +3,7 @@ package piv.pivote;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -103,7 +104,6 @@ public class PollDetailedActivity extends AppCompatActivity {
                     //Save Poll in local SQLite Database
                     SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
                     dbAccess.insertPoll(poll, a.getAnswerText());
-                    //dbAccess.printAllPolls();
                     dbAccess.close();
 
                     ModelTransformer modelTransformer = new ModelTransformer();
@@ -126,8 +126,11 @@ public class PollDetailedActivity extends AppCompatActivity {
 
 
         // if already voted enable locking on the answerList and mark the question red as well as the answer checked
-        boolean alreadyVoted = getIntent().getBooleanExtra("Voted", false);
-        String selectedAnswer = getIntent().getStringExtra("selectedAnswer");
+        SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
+        Pair<Boolean, String> pair = dbAccess.findPoll(poll);
+        boolean alreadyVoted = pair.first;
+        String selectedAnswer = pair.second;
+        dbAccess.close();
 
         if (alreadyVoted){
             button.setEnabled(false);
@@ -139,12 +142,9 @@ public class PollDetailedActivity extends AppCompatActivity {
                 }
 
             }
-
             mAdapter = new AnswersAdapter(poll, true);
             mRecyclerView.setAdapter(mAdapter);
-
         }
-
 
 
     }

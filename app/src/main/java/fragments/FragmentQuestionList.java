@@ -4,6 +4,7 @@ package fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -38,15 +39,13 @@ public class FragmentQuestionList extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-    private String language = null;
-    private String category = null;
+    private int languagePosition = 0;
+    private int categoryPosition = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        language = getResources().getStringArray(R.array.languages_filter)[0];
-        category = getResources().getStringArray(R.array.categories_filter)[0];
-        mAdapter = new QuestionListAdapter(getCurrentPollList(language, category), getActivity().getApplicationContext());
+        mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
     }
 
     @Override
@@ -65,8 +64,9 @@ public class FragmentQuestionList extends Fragment {
         fabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter = new QuestionListAdapter(getCurrentPollList(language, category), getActivity().getApplicationContext());
+                mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);
+                Snackbar.make(rootView, "Found " + String.valueOf(mAdapter.getItemCount()) + " Polls", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -120,17 +120,18 @@ public class FragmentQuestionList extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1){
-            language = data.getStringExtra("language");
-            category = data.getStringExtra("category");
-            mAdapter = new QuestionListAdapter(getCurrentPollList(language, category), getActivity().getApplicationContext());
+            languagePosition = data.getIntExtra("language", 0);
+            categoryPosition = data.getIntExtra("category", 0);
+            mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
+            Snackbar.make(getView(), "Found " + String.valueOf(mAdapter.getItemCount()) + " Polls", Snackbar.LENGTH_LONG).show();
         }
     }
 
 
-    public List<Poll> getCurrentPollList(String language, String category){
+    public List<Poll> getCurrentPollList(int languagePosition, int categoryPosition){
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-        List<PollBean> pollBeanList = databaseEndpoint.getRandomPollsTask(language, category);
+        List<PollBean> pollBeanList = databaseEndpoint.getRandomPollsTask(languagePosition, categoryPosition);
 
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();

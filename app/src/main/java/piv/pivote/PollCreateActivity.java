@@ -128,7 +128,6 @@ public class PollCreateActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToDo: Limit creation to 3 Polls per hour
 
                 //################# Conduct validation of all input fields ########################
                 CreateAnswersAdapter createAnswersAdapter = ((CreateAnswersAdapter) mAdapter);

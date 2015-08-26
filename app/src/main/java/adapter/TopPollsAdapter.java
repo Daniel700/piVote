@@ -75,12 +75,10 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
 
 
         //Color question red if already voted
-            SQLiteAccess dbAccess = new SQLiteAccess(context);
-            //dbAccess.printAllPolls();
-            Pair<Boolean, String> pair = dbAccess.findPoll(poll);
-            boolean found = pair.first;
-            final String selectedAnswer = pair.second;
-            dbAccess.close();
+        SQLiteAccess dbAccess = new SQLiteAccess(context);
+        Pair<Boolean, String> pair = dbAccess.findPoll(poll);
+        boolean found = pair.first;
+        dbAccess.close();
         if (found)
             holder.vQuestion.setBackgroundResource(R.drawable.question_background_negative_gradient);
         else
@@ -93,15 +91,13 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
         holder.vCategory.setText(poll.getCategory());
         holder.vCreatedBy.setText(poll.getCreatedBy());
 
-        final boolean tmpFound = found;
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
                 Intent intent = new Intent(context, PollDetailedActivity.class);
                 intent.putExtra("Poll", poll);
-                intent.putExtra("Voted", tmpFound);
-                intent.putExtra("selectedAnswer", selectedAnswer);
                 ((Activity) context).startActivityForResult(intent, 400);
             }
         });

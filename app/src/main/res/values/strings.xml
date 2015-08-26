@@ -28,7 +28,6 @@
 
     <!-- PollDetailedActivity -->
     <string name="activity_detailed_poll">Detailed Poll View</string>
-    <string name="selectAnswer">Please select an answer</string>
 
 
     <!-- ################## -->
@@ -81,6 +80,8 @@
         <item>World</item>
     </string-array>
 
+
+    <!-- The items must be the same as in FilterOptions in the backend and have to be in the same order-->
     <string-array name="categories_filter">
         <item>All</item>
         <item>Economy</item>
@@ -99,8 +100,6 @@
         <item>Technology</item>
         <item>World</item>
     </string-array>
-
-
 
 
     <string-array name="languages">
@@ -144,6 +143,8 @@
         <item>Vietnamese</item>
     </string-array>
 
+
+    <!-- The items must be the same as in FilterOptions in the backend and have to be in the same order-->
     <string-array name="languages_filter">
         <item>All</item>
         <item>English</item>

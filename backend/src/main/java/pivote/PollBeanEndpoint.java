@@ -13,6 +13,7 @@ import com.googlecode.objectify.Work;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.inject.Named;
@@ -45,7 +46,11 @@ public class PollBeanEndpoint {
 
     //ToDo: change Request to get 200 random Polls
     @ApiMethod(name = "getRandomPollBeans", path = "randomPolls")
-    public List<PollBean> getRandomPollBeans(@Named("language") final String language, @Named("category") final String category){
+    public List<PollBean> getRandomPollBeans(@Named("language") final int languagePos, @Named("category") final int categoryPos){
+
+        final String language = FilterOptions.languages[languagePos];
+        final String category = FilterOptions.categories[categoryPos];
+
 
         List<PollBean> randoms;
         randoms = ObjectifyService.run(new Work<List<PollBean>>() {
@@ -73,6 +78,21 @@ public class PollBeanEndpoint {
     }
 
 
+
+    @ApiMethod(name = "getRecentlyVotedPollBeans", path = "getRecentPolls")
+    public Map<Long, PollBean> getRecentlyVotedPollBeans(@Named("ids") final List<Long> ids){
+        Map<Long, PollBean> pollBeanMap;
+
+        pollBeanMap = ObjectifyService.run(new Work<Map<Long, PollBean>>() {
+            @Override
+            public Map<Long, PollBean> run() {
+                return ofy().load().type(PollBean.class).ids(ids);
+            }
+        });
+        return pollBeanMap;
+    }
+
+
     /**
      * This method gets the <code>PollBean</code> object associated with the specified <code>id</code>.
      *
@@ -91,6 +111,7 @@ public class PollBeanEndpoint {
         });
         return pollBean;
     }
+
 
     /**
      * This inserts a new <code>PollBean</code> object.

@@ -29,7 +29,7 @@ public class TestData {
 
         backendList = new ArrayList<>();
 
-        for (int i = 0; i < 40; i++){
+        for (int i = 0; i < 7; i++){
             backendList.add(Poll1());
             backendList.add(Poll2());
             backendList.add(Poll3());
@@ -55,7 +55,7 @@ public class TestData {
         poll.setQuestion("What's your favorite hero of the marvel comics?");
         poll.setOverallVotes(2754);
         poll.setCreatedBy("Anonymous");
-        poll.setCategory("Movies");
+        poll.setCategory("Movies/TV");
         poll.setLanguage("English");
         poll.setLastVoted(dateTime);
         poll.setCreationDate(dateTime);
@@ -111,7 +111,7 @@ public class TestData {
         poll.setQuestion("Which character of the Simpsons do you like the most?");
         poll.setOverallVotes(2034);
         poll.setCreatedBy("Anonymous");
-        poll.setCategory("Movies");
+        poll.setCategory("Movies/TV");
         poll.setLanguage("English");
         poll.setLastVoted(dateTime);
         poll.setCreationDate(dateTime);

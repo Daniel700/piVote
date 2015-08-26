@@ -13,8 +13,10 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import model.pollBeanApi.PollBeanApi;
+import model.pollBeanApi.model.JsonMap;
 import model.pollBeanApi.model.PollBean;
 
 /**
@@ -124,10 +126,10 @@ public class DatabaseEndpoint {
 
 
             class GetRandomPollsTask extends AsyncTask<Void, Void, List<PollBean>> {
-                private String language;
-                private String category;
+                private int language;
+                private int category;
 
-                GetRandomPollsTask(String lang, String cat){
+                GetRandomPollsTask(int lang, int cat){
                     this.language = lang;
                     this.category = cat;
                 }
@@ -149,6 +151,28 @@ public class DatabaseEndpoint {
                 }
             }
 
+/*
+            class GetRecentlyVotedPollTask extends AsyncTask<List<Long>, Void, Map<Long, PollBean>> {
+                @Override
+                protected Map<Long, PollBean> doInBackground(List<Long>... params) {
+
+                    instantiateConnection();
+                    Map<Long, PollBean> polls = null;
+                    JsonMap jsonMap = null;
+                    List<Long> ids = params[0];
+
+                    try {
+                        polls = myApiService.getRecentlyVotedPollBeans(ids).execute();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+                    return polls;
+                }
+            }
+*/
 
 
 
@@ -157,14 +181,27 @@ public class DatabaseEndpoint {
                    Methods for accessing these Tasks from outside of the class
     ###############################################################################################
      */
+/*
+    public Map<Long, PollBean> getRecentlyVotedPollTask(List<Long> ids){
 
+        Map<Long, PollBean> pollBean = null;
 
+        try {
+            pollBean = new GetRecentlyVotedPollTask().execute(ids).get();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
-    public List<PollBean> getRandomPollsTask(String language, String category){
+        return pollBean;
+    }
+*/
+
+    public List<PollBean> getRandomPollsTask(int languagePos, int categoryPos){
         List<PollBean> beans = null;
 
         try {
-            beans = new GetRandomPollsTask(language, category).execute().get();
+            beans = new GetRandomPollsTask(languagePos, categoryPos).execute().get();
         }
         catch (Exception e){
             e.printStackTrace();
