@@ -121,6 +121,7 @@ public class FragmentTopPolls extends Fragment {
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();
 
+        if (pollBeanList != null)
         for (PollBean pollBean: pollBeanList) {
             pollList.add(transformer.transformPollBeanToPoll(pollBean));
         }

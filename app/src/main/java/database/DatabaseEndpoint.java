@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.pollBeanApi.PollBeanApi;
-import model.pollBeanApi.model.JsonMap;
 import model.pollBeanApi.model.PollBean;
 
 /**
@@ -151,28 +150,30 @@ public class DatabaseEndpoint {
                 }
             }
 
-/*
-            class GetRecentlyVotedPollTask extends AsyncTask<List<Long>, Void, Map<Long, PollBean>> {
+
+            class GetRecentlyVotedPollTask extends AsyncTask<Void, Void, List<PollBean>> {
+
+                private List<Long> ids;
+                GetRecentlyVotedPollTask(List<Long> ids){
+                    this.ids = ids;
+                }
                 @Override
-                protected Map<Long, PollBean> doInBackground(List<Long>... params) {
+                protected List<PollBean> doInBackground(Void... params) {
 
                     instantiateConnection();
-                    Map<Long, PollBean> polls = null;
-                    JsonMap jsonMap = null;
-                    List<Long> ids = params[0];
+                    List<PollBean> polls = null;
 
                     try {
-                        polls = myApiService.getRecentlyVotedPollBeans(ids).execute();
+                        polls = myApiService.getBatchPollBeans(ids).execute().getItems();
                     }
                     catch (Exception e){
                         e.printStackTrace();
                     }
 
-
                     return polls;
                 }
             }
-*/
+
 
 
 
@@ -181,21 +182,19 @@ public class DatabaseEndpoint {
                    Methods for accessing these Tasks from outside of the class
     ###############################################################################################
      */
-/*
-    public Map<Long, PollBean> getRecentlyVotedPollTask(List<Long> ids){
 
-        Map<Long, PollBean> pollBean = null;
 
+    public List<PollBean> getRecentlyVotedPollTask(List<Long> ids){
+        List<PollBean> pollBean = null;
         try {
-            pollBean = new GetRecentlyVotedPollTask().execute(ids).get();
+            pollBean = new GetRecentlyVotedPollTask(ids).execute().get();
         }
         catch (Exception e){
             e.printStackTrace();
         }
-
         return pollBean;
     }
-*/
+
 
     public List<PollBean> getRandomPollsTask(int languagePos, int categoryPos){
         List<PollBean> beans = null;

@@ -56,7 +56,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
 
         //Create some Test Data
-        //TestData.getInstance();
+        TestData.getInstance();
 
     }
 

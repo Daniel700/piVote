@@ -3,14 +3,18 @@ package pivote;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.repackaged.com.google.api.client.util.DateTime;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
 import com.googlecode.objectify.Work;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +48,23 @@ public class PollBeanEndpoint {
     private static final Logger logger = Logger.getLogger(PollBeanEndpoint.class.getName());
 
 
-    //ToDo: change Request to get 200 random Polls
+    /**
+     * This method requests 200 random PollBeans of the backend.
+     * Working internally with requesting a key-list that matches your filter options.
+     * Then shuffling the key-list per Collections.shuffle method and requesting the desired amount of PollBeans (200 max.) per BatchRequest
+     * @param languagePos Required for the corresponding language in <code>FilterOptions</code>
+     * @param categoryPos Required for the corresponding category in <code>FilterOptions</code>
+     * @return A list of 200 random PollBeans at maximum, less if there are not enough found matching your filter options.
+     */
     @ApiMethod(name = "getRandomPollBeans", path = "randomPolls")
     public List<PollBean> getRandomPollBeans(@Named("language") final int languagePos, @Named("category") final int categoryPos){
+
+        // Random Polls, Lade komplette Liste mit Keys only und wähle dann zufällig 200 keys aus dieser liste aus, anschließend batch load
+        // Wahrscheinlich nur effizient bis ca. 1000 Entities
+        // Andere Möglichkeit: beim speichern eines Polls den zuletzt gespeicherten laden und ein attribut des neuen Polls inkrementieren und abspeichern (alles in transaktion)
+        // anschließend range query ( von random bis count-1) [count-1 deshalb da auf das letzte eh oft zugegriffen wird)
+        // ofy().load().type(PollBean.class).reverse().first().now();
+        // ofy().load().type(PollBean.class).startAt().list();
 
         final String language = FilterOptions.languages[languagePos];
         final String category = FilterOptions.categories[categoryPos];
@@ -56,22 +74,48 @@ public class PollBeanEndpoint {
         randoms = ObjectifyService.run(new Work<List<PollBean>>() {
             @Override
             public List<PollBean> run() {
-                List<PollBean> list;
+                List<Key<PollBean>> keyList;
+                List<Long> ids = new ArrayList<Long>();
+
                 if (!language.equals("All") && category.equals("All"))
                 {
-                    list = ofy().load().type(PollBean.class).filter("language =", language).list();
-                    return list;
+                    //list = ofy().load().type(PollBean.class).filter("language =", language).list();
+                    keyList = ofy().load().type(PollBean.class).filter("language =", language).keys().list();
+
+                    Collections.shuffle(keyList);
+                    for (int i = 0; i < (keyList.size() < 200 ? keyList.size() : 200); i++){
+                        ids.add(keyList.get(i).getId());
+                    }
+                    return getBatchPollBeans(ids);
                 }
                 if (language.equals("All") && !category.equals("All")){
-                    list = ofy().load().type(PollBean.class).filter("category =", category).list();
-                    return list;
+                    //list = ofy().load().type(PollBean.class).filter("category =", category).list();
+                    keyList = ofy().load().type(PollBean.class).filter("category =", category).keys().list();
+
+                    Collections.shuffle(keyList);
+                    for (int i = 0; i < (keyList.size() < 200 ? keyList.size() : 200); i++){
+                        ids.add(keyList.get(i).getId());
+                    }
+                    return getBatchPollBeans(ids);
                 }
                 if (!language.equals("All") && !category.equals("All")){
-                    list = ofy().load().type(PollBean.class).filter("language =", language).filter("category =", category).list();
-                    return list;
+                    //list = ofy().load().type(PollBean.class).filter("language =", language).filter("category =", category).list();
+                    keyList = ofy().load().type(PollBean.class).filter("language =", language).filter("category =", category).keys().list();
+
+                    Collections.shuffle(keyList);
+                    for (int i = 0; i < (keyList.size() < 200 ? keyList.size() : 200); i++){
+                        ids.add(keyList.get(i).getId());
+                    }
+                    return getBatchPollBeans(ids);
                 }
-                list = ofy().load().type(PollBean.class).list();
-                return list;
+
+                keyList = ofy().load().type(PollBean.class).keys().list();
+                Collections.shuffle(keyList);
+                for (int i = 0; i < (keyList.size() < 200 ? keyList.size() : 200); i++){
+                    ids.add(keyList.get(i).getId());
+                }
+                return getBatchPollBeans(ids);
+
             }
         });
         return randoms;
@@ -79,17 +123,23 @@ public class PollBeanEndpoint {
 
 
 
-    @ApiMethod(name = "getRecentlyVotedPollBeans", path = "getRecentPolls")
-    public Map<Long, PollBean> getRecentlyVotedPollBeans(@Named("ids") final List<Long> ids){
+    @ApiMethod(name = "getBatchPollBeans", path = "getBatchPolls")
+    public List<PollBean> getBatchPollBeans(@Named("ids") final List<Long> ids){
         Map<Long, PollBean> pollBeanMap;
 
+        //Batch request
         pollBeanMap = ObjectifyService.run(new Work<Map<Long, PollBean>>() {
             @Override
             public Map<Long, PollBean> run() {
                 return ofy().load().type(PollBean.class).ids(ids);
             }
         });
-        return pollBeanMap;
+        //transform into PollBean List
+        List<PollBean> beanList = new ArrayList<>();
+        for (PollBean pollBean: pollBeanMap.values()) {
+            beanList.add(pollBean);
+        }
+        return beanList;
     }
 
 
@@ -121,6 +171,7 @@ public class PollBeanEndpoint {
      */
     @ApiMethod(name = "insertPollBean", path = "insertPoll")
     public PollBean insertPollBean(final PollBean pollBean) {
+
         ObjectifyService.run(new VoidWork() {
             @Override
             public void vrun() {
@@ -149,7 +200,11 @@ public class PollBeanEndpoint {
 
     }
 
-
+    /**
+     * This method requests a list of the last 100 PollBeans which a user has created.
+     * @param uuid The unique user id for whom the PollBeans are requested
+     * @return A list of PollBeans that belongs to a certain user
+     */
     @ApiMethod(name = "getMyPollBeans", path = "myPolls")
     public List<PollBean> getMyPollBeans(@Named("uuid") final String uuid){
         List<PollBean> myPolls;
@@ -157,7 +212,7 @@ public class PollBeanEndpoint {
         myPolls = ObjectifyService.run(new Work<List<PollBean>>() {
             @Override
             public List<PollBean> run() {
-                List<PollBean> myPolls = ofy().load().type(PollBean.class).filter("UUID =", uuid).order("-creationDate").list();
+                List<PollBean> myPolls = ofy().load().type(PollBean.class).filter("UUID =", uuid).order("-creationDate").limit(100).list();
                 return myPolls;
             }
         });

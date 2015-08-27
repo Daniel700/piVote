@@ -132,18 +132,13 @@ public class FragmentRecentlyVoted extends Fragment {
         dbAccess.printAllPolls();
         dbAccess.close();
 
-        List<PollBean> pollBeanList = new ArrayList<>();
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-
-        //ToDo: Check if BatchRequest is of advantage? yes
-        //Request every Poll that is in SQLite DB and remote DB
-        for (Long value: list) {
-            pollBeanList.add(databaseEndpoint.getPollTask(value));
-        }
+        List<PollBean> pollBeanList = databaseEndpoint.getRecentlyVotedPollTask(list);
 
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();
 
+        if (pollBeanList != null)
         for (PollBean pollBean: pollBeanList) {
             pollList.add(transformer.transformPollBeanToPoll(pollBean));
         }

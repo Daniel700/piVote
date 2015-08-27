@@ -86,6 +86,7 @@ public class FragmentMyPolls extends Fragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //ToDo: if app is closed and reopened the counter is reset / fix
                 //Creation of Polls is limited to 2 per hour
                 if (limitCounter < 2) {
                     Context context = v.getContext();
@@ -185,6 +186,7 @@ public class FragmentMyPolls extends Fragment {
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();
 
+        if (pollBeanList != null)
         for (PollBean pollBean: pollBeanList) {
             pollList.add(transformer.transformPollBeanToPoll(pollBean));
         }
