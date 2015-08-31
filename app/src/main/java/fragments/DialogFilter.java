@@ -1,4 +1,4 @@
-package piv.pivote;
+package fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import piv.pivote.R;
 
 /**
  * Created by Daniel on 03.08.2015.

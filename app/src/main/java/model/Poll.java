@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Daniel on 15.08.2015.
  *
  * Poll class is needed for handling the data internally in the app.
- * Remote ModelBeans cannot be Serializable (needed for passing the data between activities)
+ * Remote PollBeans cannot be Serializable (this is needed for passing the data between activities)
  * and the Date Format is automatically transformed into Google DateTime. In addition there are
  * only the standard constructors available.
  * Therefore we need our own model class directly in the app.

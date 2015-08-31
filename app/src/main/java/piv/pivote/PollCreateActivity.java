@@ -24,6 +24,7 @@ import java.util.Date;
 
 import adapter.CreateAnswersAdapter;
 import database.DatabaseEndpoint;
+import database.FilterOptions;
 import layoutManager.DividerItemDecoration;
 import layoutManager.MyLinearLayoutManager;
 import model.TestData;
@@ -80,7 +81,7 @@ public class PollCreateActivity extends AppCompatActivity {
                 spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        language = parent.getSelectedItem().toString();
+                        language = FilterOptions.languages.get(position);
                     }
 
                     @Override
@@ -91,7 +92,7 @@ public class PollCreateActivity extends AppCompatActivity {
                 spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        category = parent.getSelectedItem().toString();
+                        category = FilterOptions.categories.get(position);
                     }
 
                     @Override
@@ -133,18 +134,14 @@ public class PollCreateActivity extends AppCompatActivity {
                 CreateAnswersAdapter createAnswersAdapter = ((CreateAnswersAdapter) mAdapter);
                 ArrayList<String> answers = createAnswersAdapter.getAnswers();
 
-                String[] resLanguages = getResources().getStringArray(R.array.languages);
-                String[] resCategories = getResources().getStringArray(R.array.categories);
-
                 //Check if User has entered all attributes for the corresponding Poll
-                if (question.getText().toString().trim().isEmpty())
-                {
+                if (question.getText().toString().trim().isEmpty()) {
                     question.setError(getString(R.string.createQuestionError));
                 }
-                else if (language.equals(resLanguages[0])){
+                else if (language.equals(FilterOptions.languages.get(0))){
                     Snackbar.make(findViewById(R.id.spinner_language_cp), getString(R.string.createLanguageError), Snackbar.LENGTH_LONG).show();
                 }
-                else if (category.equals(resCategories[0])){
+                else if (category.equals(FilterOptions.categories.get(0))){
                     Snackbar.make(findViewById(R.id.spinner_category_cp), getString(R.string.createCategoryError), Snackbar.LENGTH_LONG).show();
                 }
                 else if (!(answers.size() == createAnswersAdapter.getItemCount()) || numberOfAnswers == 0){

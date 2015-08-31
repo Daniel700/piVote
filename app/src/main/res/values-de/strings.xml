@@ -1,14 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ToDo: Support multi Language (German) -->
+    <string name="tabTitle1">Alle Umfragen</string>
+    <string name="tabTitle2">Meine Umfragen</string>
+    <string name="tabTitle3">Kürzlich abgestimmt</string>
+    <string name="tabTitle4">Top 100 Umfragen</string>
+    <string name="tabTitle5">About</string>
+
+    <!-- ############### -->
+    <!-- STRINGS IN CODE -->
+    <!-- ############### -->
 
 
+    <!-- Launcher Activity -->
+    <string name="windowError">Ansicht konnte nicht erzeugt werden</string>
+    <string name="voteSubmit1">Deine Auswahl - </string>
+    <string name="voteSubmit2"> - wurde übertragen</string>
+
+    <!-- DialogFilter -->
+    <string name="dialogTitle">Filter</string>
+    <string name="dialogButtonPositive">OK</string>
+    <string name="dialogButtonNegative">Abbrechen</string>
+
+    <!-- PollCreateActivity -->
+    <string name="activity_create_poll">Neue Umfrage erstellen</string>
+    <string name="createQuestionError">Bitte Frage eingeben</string>
+    <string name="createLanguageError">Bitte Sprache auswählen</string>
+    <string name="createCategoryError">Bitte Kategorie auswählen</string>
+    <string name="createAnswersError">Bitte alle Antwortmöglichkeiten ausfüllen</string>
+
+    <!-- PollDetailedActivity -->
+    <string name="activity_detailed_poll">Detaillierte Ansicht</string>
+    <string name="voteSubmitError">Deine Abstimmung konnte nicht übertragen werden, bitte später nochmal versuchen</string>
+
+    <!-- FragmentQuestionList -->
+    <string name="refresh1">Es wurden</string>
+    <string name="refresh2">Umfragen gefunden</string>
+
+    <!-- FragmentMyPolls -->
+    <string name="createMorePolls">Mehr Umfragen können erstellt werden in: </string>
+
+
+    <!-- ################## -->
+    <!-- STRINGS IN LAYOUTS -->
+    <!-- ################## -->
+
+    <string name="votes">Stimmen</string>
     <string name="category">Kategorie</string>
     <string name="language">Sprache</string>
-    <string name="lastVote">Letzter Vote</string>
+    <string name="lastVote">Letzte Abstimmung</string>
     <string name="createdBy">Erstellt von</string>
     <string name="creationDate">Erstellungsdatum</string>
+
+    <string name="answerBean">Antwort</string>
+    <string name="percentage">Prozent</string>
+    <string name="buttonVote">Abstimmen</string>
+
+    <string name="hintAnswerText">Antworttext</string>
+    <string name="createPollEnterQuestion">Frage eingeben</string>
+    <string name="hintQuestionText">Bitte Frage eingeben</string>
+    <string name="yourName">Dein Name</string>
+    <string name="hintAnonymous">Anonym</string>
+    <string name="selectNumberOfAnswers">Anzahl an Antworten auswählen</string>
+    <string name="number">Nummer</string>
+    <string name="text">Text</string>
+    <string name="buttonCreatePoll">Umfrage erstellen</string>
+
+
+
+    <!-- ############# -->
+    <!-- String Arrays -->
+    <!-- ############# -->
+
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
+    <string-array name="categories">
+        <item>Kategorie auswählen</item>
+        <item>Wirtschaft</item>
+        <item>Umwelt</item>
+        <item>Mode</item>
+        <item>Essen</item>
+        <item>Spaß</item>
+        <item>Gesundheit</item>
+        <item>Sonstiges</item>
+        <item>Filme/TV</item>
+        <item>Musik</item>
+        <item>Politik</item>
+        <item>Wissenschaft</item>
+        <item>Gesellschaft</item>
+        <item>Sport</item>
+        <item>Technologie</item>
+        <item>Welt</item>
+    </string-array>
+
+
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
+    <string-array name="categories_filter">
+        <item>Alle</item>
+        <item>Wirtschaft</item>
+        <item>Umwelt</item>
+        <item>Mode</item>
+        <item>Essen</item>
+        <item>Spaß</item>
+        <item>Gesundheit</item>
+        <item>Sonstiges</item>
+        <item>Filme/TV</item>
+        <item>Musik</item>
+        <item>Politik</item>
+        <item>Wissenschaft</item>
+        <item>Gesellschaft</item>
+        <item>Sport</item>
+        <item>Technologie</item>
+        <item>Welt</item>
+    </string-array>
+
+
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
+    <string-array name="languages">
+        <item>Sprache auswählen</item>
+        <item>Englisch</item>
+        <item>Arabisch</item>
+        <item>Bulgarisch</item>
+        <item>Katalanisch</item>
+        <item>Chinesisch</item>
+        <item>Kroatisch</item>
+        <item>Tschechisch</item>
+        <item>Dänisch</item>
+        <item>Niederländisch</item>
+        <item>Finnisch</item>
+        <item>Französisch</item>
+        <item>Deutsch</item>
+        <item>Griechisch</item>
+        <item>Hebräisch</item>
+        <item>Hindi</item>
+        <item>Ungarisch</item>
+        <item>Indonesisch</item>
+        <item>Italienisch</item>
+        <item>Japanisch</item>
+        <item>Koreanisch</item>
+        <item>Lettisch</item>
+        <item>Litauisch</item>
+        <item>Norwegisch</item>
+        <item>Polnisch</item>
+        <item>Portugiesisch</item>
+        <item>Rumänisch</item>
+        <item>Russisch</item>
+        <item>Serbisch</item>
+        <item>Slowakisch</item>
+        <item>Slowenisch</item>
+        <item>Spanisch</item>
+        <item>Schwedisch</item>
+        <item>Tagalog</item>
+        <item>Thailändisch</item>
+        <item>Türkisch</item>
+        <item>Ukrainisch</item>
+        <item>Vietnamesisch</item>
+    </string-array>
+
+
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
+    <string-array name="languages_filter">
+        <item>Alle</item>
+        <item>Englisch</item>
+        <item>Arabisch</item>
+        <item>Bulgarisch</item>
+        <item>Katalanisch</item>
+        <item>Chinesisch</item>
+        <item>Kroatisch</item>
+        <item>Tschechisch</item>
+        <item>Dänisch</item>
+        <item>Niederländisch</item>
+        <item>Finnisch</item>
+        <item>Französisch</item>
+        <item>Deutsch</item>
+        <item>Griechisch</item>
+        <item>Hebräisch</item>
+        <item>Hindi</item>
+        <item>Ungarisch</item>
+        <item>Indonesisch</item>
+        <item>Italienisch</item>
+        <item>Japanisch</item>
+        <item>Koreanisch</item>
+        <item>Lettisch</item>
+        <item>Litauisch</item>
+        <item>Norwegisch</item>
+        <item>Polnisch</item>
+        <item>Portugiesisch</item>
+        <item>Rumänisch</item>
+        <item>Russisch</item>
+        <item>Serbisch</item>
+        <item>Slowakisch</item>
+        <item>Slowenisch</item>
+        <item>Spanisch</item>
+        <item>Schwedisch</item>
+        <item>Tagalog</item>
+        <item>Thailändisch</item>
+        <item>Türkisch</item>
+        <item>Ukrainisch</item>
+        <item>Vietnamesisch</item>
+    </string-array>
 
 
 </resources>

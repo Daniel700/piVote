@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 
+import database.FilterOptions;
 import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
@@ -28,6 +29,7 @@ import piv.pivote.R;
 public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHolder> {
     private List<Poll> pollList;
     private Context context;
+    private String[] resCategories;
 
 
     // Provide a reference to the views for each data item
@@ -60,6 +62,7 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
     @Override
     public TopPollsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
+        resCategories = parent.getResources().getStringArray(R.array.categories);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_top_polls, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -88,7 +91,10 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
         holder.vSortNumber.setText(String.valueOf(position + 1));
         holder.vQuestion.setText(poll.getQuestion());
         holder.vOverallVotes.setText(String.valueOf(poll.getOverallVotes()));
-        holder.vCategory.setText(poll.getCategory());
+
+        int pos = FilterOptions.categories.indexOf(poll.getCategory());
+        holder.vCategory.setText(resCategories[pos]);
+
         holder.vCreatedBy.setText(poll.getCreatedBy());
 
 

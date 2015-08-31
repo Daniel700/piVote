@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import model.logBeanApi.LogBeanApi;
 import model.pollBeanApi.PollBeanApi;
 import model.pollBeanApi.model.PollBean;
 
@@ -23,9 +24,12 @@ import model.pollBeanApi.model.PollBean;
  */
 
 
+//ToDo: handle exceptions (Log.e() and/or send msg to server)
+
 public class DatabaseEndpoint {
 
     private static PollBeanApi myApiService = null;
+    private static LogBeanApi myLogApiService = null;
 
 
             class InsertTask extends AsyncTask<PollBean, Void, Void> {
@@ -118,17 +122,16 @@ public class DatabaseEndpoint {
                         e.printStackTrace();
                     }
 
-
                     return null;
                 }
             }
 
 
             class GetRandomPollsTask extends AsyncTask<Void, Void, List<PollBean>> {
-                private int language;
-                private int category;
+                private String language;
+                private String category;
 
-                GetRandomPollsTask(int lang, int cat){
+                GetRandomPollsTask(String lang, String cat){
                     this.language = lang;
                     this.category = cat;
                 }
@@ -151,10 +154,10 @@ public class DatabaseEndpoint {
             }
 
 
-            class GetRecentlyVotedPollTask extends AsyncTask<Void, Void, List<PollBean>> {
+            class GetBatchPollTask extends AsyncTask<Void, Void, List<PollBean>> {
 
                 private List<Long> ids;
-                GetRecentlyVotedPollTask(List<Long> ids){
+                GetBatchPollTask(List<Long> ids){
                     this.ids = ids;
                 }
                 @Override
@@ -184,10 +187,10 @@ public class DatabaseEndpoint {
      */
 
 
-    public List<PollBean> getRecentlyVotedPollTask(List<Long> ids){
+    public List<PollBean> getBatchPollTask(List<Long> ids){
         List<PollBean> pollBean = null;
         try {
-            pollBean = new GetRecentlyVotedPollTask(ids).execute().get();
+            pollBean = new GetBatchPollTask(ids).execute().get();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -199,8 +202,11 @@ public class DatabaseEndpoint {
     public List<PollBean> getRandomPollsTask(int languagePos, int categoryPos){
         List<PollBean> beans = null;
 
+        String language = FilterOptions.languages.get(languagePos);
+        String category = FilterOptions.categories.get(categoryPos);
+
         try {
-            beans = new GetRandomPollsTask(languagePos, categoryPos).execute().get();
+            beans = new GetRandomPollsTask(language, category).execute().get();
         }
         catch (Exception e){
             e.printStackTrace();

@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 
+import database.FilterOptions;
 import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
@@ -30,6 +31,7 @@ import piv.pivote.R;
 public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder> {
     private List<Poll> pollList;
     private Context context;
+    private String[] resCategories;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
@@ -53,6 +55,7 @@ public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder
 
     @Override
     public MyPollAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        resCategories = parent.getResources().getStringArray(R.array.categories);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_my_poll, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -79,7 +82,10 @@ public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder
 
         holder.vQuestion.setText(poll.getQuestion());
         holder.vOverallVotes.setText(String.valueOf(poll.getOverallVotes()));
-        holder.vCategory.setText(poll.getCategory());
+
+        int pos = FilterOptions.categories.indexOf(poll.getCategory());
+        holder.vCategory.setText(resCategories[pos]);
+
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
         holder.vlastVote.setText(df.format(poll.getLastVoted()));
 

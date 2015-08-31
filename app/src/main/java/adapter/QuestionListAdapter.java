@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import database.FilterOptions;
 import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
@@ -28,6 +30,7 @@ import piv.pivote.R;
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.ViewHolder> {
     private List<Poll> pollList;
     private Context context;
+    private String[] resCategories;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -57,6 +60,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     @Override
     public QuestionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
+        resCategories = parent.getResources().getStringArray(R.array.categories);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_question_list, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -85,7 +89,11 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
 
         holder.vQuestion.setText(poll.getQuestion());
         holder.vOverallVotes.setText(String.valueOf(poll.getOverallVotes()));
-        holder.vCategory.setText(poll.getCategory());
+
+        int pos = FilterOptions.categories.indexOf(poll.getCategory());
+        holder.vCategory.setText(resCategories[pos]);
+
+
         holder.vCreatedBy.setText(poll.getCreatedBy());
 
 
@@ -107,5 +115,16 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         return pollList.size();
     }
 
+
+    public List<Long> getIdList() {
+
+        List<Long> ids = new ArrayList<>();
+
+        for (Poll poll: pollList) {
+            ids.add(poll.getId());
+        }
+
+        return ids;
+    }
 
 }

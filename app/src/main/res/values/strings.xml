@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">piVote</string>
 
+    <string name="tabTitle1">All Polls</string>
+    <string name="tabTitle2">My Polls</string>
+    <string name="tabTitle3">Recently Voted</string>
+    <string name="tabTitle4">Top 100 Polls</string>
+    <string name="tabTitle5">About</string>
 
     <!-- ############### -->
     <!-- STRINGS IN CODE -->
@@ -28,6 +33,14 @@
 
     <!-- PollDetailedActivity -->
     <string name="activity_detailed_poll">Detailed Poll View</string>
+    <string name="voteSubmitError">Your vote couldn\'t be submitted, please try again later</string>
+
+    <!-- FragmentQuestionList -->
+    <string name="refresh1">Found</string>
+    <string name="refresh2">Polls</string>
+
+    <!-- FragmentMyPolls -->
+    <string name="createMorePolls">You can create more Polls in: </string>
 
 
     <!-- ################## -->
@@ -47,7 +60,7 @@
 
     <string name="hintAnswerText">Answer Text</string>
     <string name="createPollEnterQuestion">Enter your Question</string>
-    <string name="hintQuestionText">Question-Text</string>
+    <string name="hintQuestionText">Question Text</string>
     <string name="yourName">Your Name</string>
     <string name="hintAnonymous">Anonymous</string>
     <string name="selectNumberOfAnswers">Select number of answers</string>

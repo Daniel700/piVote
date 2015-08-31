@@ -52,12 +52,12 @@ public class PollBeanEndpoint {
      * This method requests 200 random PollBeans of the backend.
      * Working internally with requesting a key-list that matches your filter options.
      * Then shuffling the key-list per Collections.shuffle method and requesting the desired amount of PollBeans (200 max.) per BatchRequest
-     * @param languagePos Required for the corresponding language in <code>FilterOptions</code>
-     * @param categoryPos Required for the corresponding category in <code>FilterOptions</code>
+     * @param language The language to filter for
+     * @param category The category to filter for
      * @return A list of 200 random PollBeans at maximum, less if there are not enough found matching your filter options.
      */
     @ApiMethod(name = "getRandomPollBeans", path = "randomPolls")
-    public List<PollBean> getRandomPollBeans(@Named("language") final int languagePos, @Named("category") final int categoryPos){
+    public List<PollBean> getRandomPollBeans(@Named("language") final String language, @Named("category") final String category){
 
         // Random Polls, Lade komplette Liste mit Keys only und wähle dann zufällig 200 keys aus dieser liste aus, anschließend batch load
         // Wahrscheinlich nur effizient bis ca. 1000 Entities
@@ -65,9 +65,6 @@ public class PollBeanEndpoint {
         // anschließend range query ( von random bis count-1) [count-1 deshalb da auf das letzte eh oft zugegriffen wird)
         // ofy().load().type(PollBean.class).reverse().first().now();
         // ofy().load().type(PollBean.class).startAt().list();
-
-        final String language = FilterOptions.languages[languagePos];
-        final String category = FilterOptions.categories[categoryPos];
 
 
         List<PollBean> randoms;

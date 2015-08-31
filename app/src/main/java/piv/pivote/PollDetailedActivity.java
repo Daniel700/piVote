@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
 import database.DatabaseEndpoint;
+import database.FilterOptions;
 import database.SQLiteAccess;
 import model.Answer;
 import model.ModelTransformer;
@@ -62,10 +63,17 @@ public class PollDetailedActivity extends AppCompatActivity {
             tv.setText(poll.getQuestion());
             tv = (TextView) findViewById(R.id.overallVotes_detailed);
             tv.setText(String.valueOf(poll.getOverallVotes()));
+
             tv = (TextView) findViewById(R.id.category_detailed);
-            tv.setText(poll.getCategory());
+            String[] cat = getResources().getStringArray(R.array.categories);
+            int catPos = FilterOptions.categories.indexOf(poll.getCategory());
+            tv.setText(cat[catPos]);
+
             tv = (TextView) findViewById(R.id.language_detailed);
-            tv.setText(poll.getLanguage());
+            String[] lang = getResources().getStringArray(R.array.languages);
+            int langPos = FilterOptions.languages.indexOf(poll.getLanguage());
+            tv.setText(lang[langPos]);
+
             tv = (TextView) findViewById(R.id.lastVote_detailed);
             tv.setText(df.format(poll.getLastVoted()));
             tv = (TextView) findViewById(R.id.createdBy_detailed);
@@ -118,7 +126,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                     setResult(RESULT_OK, returnIntent);
                     finish();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Vote couldn't be submitted, please try again later", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.voteSubmitError), Toast.LENGTH_SHORT).show();
                 }
 
             }

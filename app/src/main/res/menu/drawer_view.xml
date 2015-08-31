@@ -5,23 +5,23 @@
         <item
             android:id="@+id/nav_all_polls"
             android:icon="@drawable/ic_poll_white_24dp"
-            android:title="All Polls" />
+            android:title="@string/tabTitle1" />
         <item
             android:id="@+id/nav_my_polls"
             android:icon="@drawable/ic_create_white_24dp"
-            android:title="My Polls" />
+            android:title="@string/tabTitle2" />
         <item
             android:id="@+id/nav_recently"
             android:icon="@drawable/ic_visibility_white_24dp"
-            android:title="Recently Voted" />
+            android:title="@string/tabTitle3" />
         <item
             android:id="@+id/nav_top_polls"
             android:icon="@drawable/ic_trending_up_white_24dp"
-            android:title="Top 100 Polls" />
+            android:title="@string/tabTitle4" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info_outline_white_24dp"
-            android:title="About" />
+            android:title="@string/tabTitle5" />
     </group>
 
 </menu>

@@ -8,16 +8,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +25,7 @@ import adapter.QuestionListAdapter;
 import database.DatabaseEndpoint;
 import model.ModelTransformer;
 import model.Poll;
-import model.TestData;
 import model.pollBeanApi.model.PollBean;
-import piv.pivote.DialogFilter;
 import piv.pivote.R;
 
 /**
@@ -38,7 +35,7 @@ public class FragmentQuestionList extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private QuestionListAdapter mAdapter;
     private int languagePosition = 0;
     private int categoryPosition = 0;
 
@@ -66,7 +63,7 @@ public class FragmentQuestionList extends Fragment {
             public void onClick(View v) {
                 mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);
-                Snackbar.make(rootView, "Found " + String.valueOf(mAdapter.getItemCount()) + " Polls", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootView, getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -85,6 +82,34 @@ public class FragmentQuestionList extends Fragment {
             }
         });
 
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_question_list);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+
+                    DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
+                    List<PollBean> beans = databaseEndpoint.getBatchPollTask(mAdapter.getIdList());
+
+                    ModelTransformer transformer = new ModelTransformer();
+                    List<Poll> pollList = new ArrayList<>();
+
+                    if (beans != null)
+                        for (PollBean pollBean: beans) {
+                            pollList.add(transformer.transformPollBeanToPoll(pollBean));
+                        }
+
+                    mAdapter = new QuestionListAdapter(pollList, getActivity().getApplicationContext());
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                finally {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
 
         return rootView;
     }
@@ -124,7 +149,7 @@ public class FragmentQuestionList extends Fragment {
             categoryPosition = data.getIntExtra("category", 0);
             mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
-            Snackbar.make(getView(), "Found " + String.valueOf(mAdapter.getItemCount()) + " Polls", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
         }
     }
 
