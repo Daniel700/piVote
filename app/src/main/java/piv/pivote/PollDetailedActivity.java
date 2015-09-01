@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import adapter.AnswersAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import database.FilterOptions;
 import database.SQLiteAccess;
 import model.Answer;
@@ -82,6 +83,8 @@ public class PollDetailedActivity extends AppCompatActivity {
             tv.setText(df.format(poll.getCreationDate()));
         }
         catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("PollDetailedActivity - Views", e.getMessage());
             e.printStackTrace();
         }
 
@@ -126,6 +129,8 @@ public class PollDetailedActivity extends AppCompatActivity {
                     setResult(RESULT_OK, returnIntent);
                     finish();
                 } catch (Exception e) {
+                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                    endpoint.insertLogTask("PollDetailedActivity - button_vote", e.getMessage());
                     Toast.makeText(getApplicationContext(), getString(R.string.voteSubmitError), Toast.LENGTH_SHORT).show();
                 }
 

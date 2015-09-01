@@ -23,6 +23,7 @@ import java.util.List;
 
 import adapter.QuestionListAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import model.ModelTransformer;
 import model.Poll;
 import model.pollBeanApi.model.PollBean;
@@ -103,6 +104,8 @@ public class FragmentQuestionList extends Fragment {
                     mRecyclerView.setAdapter(mAdapter);
                 }
                 catch (Exception e){
+                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                    endpoint.insertLogTask("FragmentQuestionList - swipeRefresh", e.getMessage());
                     e.printStackTrace();
                 }
                 finally {

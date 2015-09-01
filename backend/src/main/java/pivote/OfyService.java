@@ -5,6 +5,7 @@ import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 import model.AnswerBean;
+import model.LogBean;
 import model.PollBean;
 
 /**
@@ -19,6 +20,7 @@ public final class OfyService {
 
     static {
         factory().register(PollBean.class);
+        factory().register(LogBean.class);
     }
 
     /**

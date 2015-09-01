@@ -100,13 +100,12 @@ public class SQLiteAccess extends SQLiteOpenHelper {
 
     public List<Long> getRecentPolls(){
         List<Long> recentIDs = new ArrayList<Long>();
-        final String LIMIT = "25";
+        final String LIMIT = "75";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] tmp = {COLUMN_ID, COLUMN_POLLID};
         Cursor cursor = db.query(TABLE_POLLS, tmp, null, null, null, null, COLUMN_ID + " DESC", LIMIT);
-        //Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_POLLS, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
             recentIDs.add(cursor.getLong(1));

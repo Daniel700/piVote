@@ -14,6 +14,7 @@ import piv.pivote.R;
  */
 public class FragmentAbout extends Fragment {
 
+    //ToDo: change to FragmentFavorites
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

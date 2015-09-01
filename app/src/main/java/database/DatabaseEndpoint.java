@@ -24,13 +24,10 @@ import model.pollBeanApi.model.PollBean;
  */
 
 
-//ToDo: handle exceptions (Log.e() and/or send msg to server)
 
 public class DatabaseEndpoint {
 
     private static PollBeanApi myApiService = null;
-    private static LogBeanApi myLogApiService = null;
-
 
             class InsertTask extends AsyncTask<PollBean, Void, Void> {
                 @Override
@@ -42,6 +39,8 @@ public class DatabaseEndpoint {
                             myApiService.insertPollBean(params[0]).execute();
                         }
                         catch (IOException e) {
+                            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                            endpoint.insertLogTask("InsertTask - Async", e.getMessage());
                             e.printStackTrace();
                         }
 
@@ -61,6 +60,8 @@ public class DatabaseEndpoint {
                        beans = myApiService.getTop100PollBeans().execute().getItems();
                     }
                     catch (IOException e) {
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertLogTask("GetTop100PollsTask - Async", e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -80,6 +81,8 @@ public class DatabaseEndpoint {
                         beans = myApiService.getMyPollBeans(params[0]).execute().getItems();
                     }
                     catch (Exception e) {
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertLogTask("GetMyPollsTask - Async", e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -99,6 +102,8 @@ public class DatabaseEndpoint {
                         pollBean = myApiService.getPollBean(params[0]).execute();
                     }
                     catch (Exception e) {
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertLogTask("GetPollTask - Async", e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -119,6 +124,8 @@ public class DatabaseEndpoint {
                         myApiService.updatePollBean(answer, pollBean).execute();
                     }
                     catch (Exception e) {
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertLogTask("UpdatePollTask - Async", e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -146,6 +153,8 @@ public class DatabaseEndpoint {
                         beans = myApiService.getRandomPollBeans(category, language).execute().getItems();
                     }
                     catch (IOException e) {
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertLogTask("GetRandomPollsTask - Async", e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -170,6 +179,8 @@ public class DatabaseEndpoint {
                         polls = myApiService.getBatchPollBeans(ids).execute().getItems();
                     }
                     catch (Exception e){
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertLogTask("GetBatchPollTask - Async", e.getMessage());
                         e.printStackTrace();
                     }
 
@@ -193,6 +204,8 @@ public class DatabaseEndpoint {
             pollBean = new GetBatchPollTask(ids).execute().get();
         }
         catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("GetBatchPollTask", e.getMessage());
             e.printStackTrace();
         }
         return pollBean;
@@ -209,6 +222,8 @@ public class DatabaseEndpoint {
             beans = new GetRandomPollsTask(language, category).execute().get();
         }
         catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("GetRandomPollsTask", e.getMessage());
             e.printStackTrace();
         }
 
@@ -224,6 +239,8 @@ public class DatabaseEndpoint {
             new UpdatePollTask().execute(pair);
         }
         catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("UpdatePollTask", e.getMessage());
             e.printStackTrace();
         }
 
@@ -238,6 +255,8 @@ public class DatabaseEndpoint {
             pollBean = new GetPollTask().execute(id).get();
         }
         catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("GetPollTask", e.getMessage());
             e.printStackTrace();
         }
 
@@ -253,6 +272,8 @@ public class DatabaseEndpoint {
             beans = new GetMyPollsTask().execute(uuid).get();
         }
         catch (Exception e) {
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("GetMyPollsTask", e.getMessage());
             e.printStackTrace();
         }
 
@@ -268,6 +289,8 @@ public class DatabaseEndpoint {
             beans = new GetTop100PollsTask().execute().get();
         }
         catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertLogTask("GetTop100PollsTask", e.getMessage());
             e.printStackTrace();
         }
 

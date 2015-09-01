@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinatorLayoutMyPolls"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical" >
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_create_poll"
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="This list shows your last 100 created Polls"
+    android:gravity="center"
+    android:textStyle="italic"
+    android:layout_margin="5dp"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayoutMyPolls"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_create_poll"
-            android:scrollbars="vertical"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_create_poll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_create_poll"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_white_24dp"
-        android:layout_marginBottom="@dimen/fab_button_margin_bottom"
-        android:layout_marginRight="@dimen/fab_button_margin_right"
-        android:layout_marginEnd="@dimen/fab_button_margin_right"
-        android:alpha="0.8"
-        app:backgroundTint="?attr/colorPrimary"
-        app:elevation="6dp"
-        app:layout_anchor="@id/recycler_view_create_poll"
-        app:layout_anchorGravity="bottom|right|end"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            android:layout_marginBottom="@dimen/fab_button_margin_bottom"
+            android:layout_marginRight="@dimen/fab_button_margin_right"
+            android:layout_marginEnd="@dimen/fab_button_margin_right"
+            android:alpha="0.8"
+            app:backgroundTint="?attr/colorPrimary"
+            app:elevation="6dp"
+            app:layout_anchor="@id/recycler_view_create_poll"
+            app:layout_anchorGravity="bottom|right|end"/>
 
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
