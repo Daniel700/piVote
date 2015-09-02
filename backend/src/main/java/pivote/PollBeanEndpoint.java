@@ -3,11 +3,6 @@ package pivote;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.repackaged.com.google.api.client.util.DateTime;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
@@ -22,10 +17,8 @@ import java.util.logging.Logger;
 
 import javax.inject.Named;
 
-
 import model.AnswerBean;
 import model.PollBean;
-import model.ShardedCounter;
 
 import static pivote.OfyService.ofy;
 
@@ -120,9 +113,11 @@ public class PollBeanEndpoint {
 
 
 
-    @ApiMethod(name = "getBatchPollBeans", path = "getBatchPolls")
+    @ApiMethod(name = "getBatchPollBeans", path = "getBatchPolls", httpMethod = ApiMethod.HttpMethod.POST)
     public List<PollBean> getBatchPollBeans(@Named("ids") final List<Long> ids){
         Map<Long, PollBean> pollBeanMap;
+
+        logger.info("BatchRequest IDs from LIST: " + String.valueOf(ids.size()));
 
         //Batch request
         pollBeanMap = ObjectifyService.run(new Work<Map<Long, PollBean>>() {

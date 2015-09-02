@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/uwmL0j8XvycNGJjebmPCPDWRemw\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/QYnlxctZbk73xug3BYxj0rWHpr4\"",
  "discoveryVersion": "v1",
  "id": "pollBeanApi:v1",
  "name": "pollBeanApi",
@@ -143,7 +143,6 @@
  "methods": {
   "pollBeanApi.getBatchPollBeans": {
    "id": "pollBeanApi.getBatchPollBeans",
-   "allowGet": true,
    "parameters": {
     "ids": {
      "type": "string",

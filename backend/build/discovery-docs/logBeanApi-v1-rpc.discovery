@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/fV_gaYZ9TQrVN30GptRgLx2mKpE\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/B_IiJrujhsQcwavmSkm5UEM0p9o\"",
  "discoveryVersion": "v1",
  "id": "logBeanApi:v1",
  "name": "logBeanApi",
@@ -96,50 +96,16 @@
   }
  },
  "methods": {
-  "logBeanApi.get": {
-   "id": "logBeanApi.get",
-   "allowGet": true,
+  "logBeanApi.insertLogBean": {
+   "id": "logBeanApi.insertLogBean",
    "parameters": {
-    "id": {
-     "type": "string",
-     "required": true,
-     "format": "int64"
+    "resource": {
+     "$ref": "LogBean"
     }
    },
    "parameterOrder": [
-    "id"
+    "resource"
    ],
-   "returns": {
-    "$ref": "LogBean"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "logBeanApi.insert": {
-   "id": "logBeanApi.insert",
-   "parameters": {
-    "errorPath": {
-     "type": "string",
-     "required": true
-    },
-    "errorText": {
-     "type": "string",
-     "required": true
-    },
-    "uuid": {
-     "type": "string",
-     "required": true
-    }
-   },
-   "parameterOrder": [
-    "errorPath",
-    "errorText",
-    "uuid"
-   ],
-   "returns": {
-    "$ref": "LogBean"
-   },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]

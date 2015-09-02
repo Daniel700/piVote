@@ -9,10 +9,14 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.google.api.client.util.DateTime;
 
 import java.io.IOException;
+import java.util.Date;
 
 import model.logBeanApi.LogBeanApi;
+import model.logBeanApi.model.LogBean;
+
 
 /**
  * Created by Daniel on 01.09.2015.
@@ -20,38 +24,34 @@ import model.logBeanApi.LogBeanApi;
 public class DatabaseLogEndpoint extends Application {
 
     private static LogBeanApi myApiService = null;
+    private static String uuid;
 
 
-    class InsertLogTask extends AsyncTask<Void, Void, Void> {
-
-        private String errorPath;
-        private String errorText;
-        private String uuid;
-
-        InsertLogTask(String path, String text, String uuid){
-            this.errorPath = path;
-            this.errorText = text;
-            this.uuid = uuid;
-        }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("InstallSettings", MODE_PRIVATE);
+        uuid = sharedPreferences.getString("UUID", "no id available");
+    }
 
 
+
+    class InsertTask extends AsyncTask<LogBean, Void, Void> {
         @Override
-        protected Void doInBackground(Void... params) {
-
+        protected Void doInBackground(LogBean... params) {
             instantiateConnection();
 
             try {
-                myApiService.insert(errorPath, errorText, uuid).execute();
+                myApiService.insertLogBean(params[0]).execute();
             }
             catch (Exception e){
                 e.printStackTrace();
             }
 
+
             return null;
         }
     }
-
-
 
       /*
     ###############################################################################################
@@ -60,12 +60,14 @@ public class DatabaseLogEndpoint extends Application {
      */
 
 
-    public void insertLogTask(String path, String text){
-        SharedPreferences sharedPreferences = getSharedPreferences("InstallSettings", MODE_PRIVATE);
-        String uuid = sharedPreferences.getString("UUID", "no id available");
-        new InsertLogTask(path, text, uuid).execute();
+    public void insertTask(String errorPath, String errorText){
+        LogBean logBean = new LogBean();
+        logBean.setErrorPath(errorPath);
+        logBean.setErrorText(errorText);
+        logBean.setUuid(uuid);
+        logBean.setInsertDate(new DateTime(new Date()));
+        new InsertTask().execute(logBean);
     }
-
 
 
 
@@ -82,7 +84,7 @@ public class DatabaseLogEndpoint extends Application {
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });
-            Log.e("DB ENDPOINT", "Creating myApiService");
+            Log.e("DB ENDPOINT", "Creating Log myApiService");
             myApiService = builder.build();
         }
     }

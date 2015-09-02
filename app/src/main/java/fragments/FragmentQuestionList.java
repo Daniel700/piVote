@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import database.DatabaseEndpoint;
 import database.DatabaseLogEndpoint;
 import model.ModelTransformer;
 import model.Poll;
+import model.logBeanApi.model.LogBean;
 import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
 
@@ -96,19 +98,17 @@ public class FragmentQuestionList extends Fragment {
                     List<Poll> pollList = new ArrayList<>();
 
                     if (beans != null)
-                        for (PollBean pollBean: beans) {
+                        for (PollBean pollBean : beans) {
                             pollList.add(transformer.transformPollBeanToPoll(pollBean));
                         }
 
                     mAdapter = new QuestionListAdapter(pollList, getActivity().getApplicationContext());
                     mRecyclerView.setAdapter(mAdapter);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertLogTask("FragmentQuestionList - swipeRefresh", e.getMessage());
+                    endpoint.insertTask("FragmentQuestionList - swipeRefresh", e.getMessage());
                     e.printStackTrace();
-                }
-                finally {
+                } finally {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
