@@ -5,7 +5,7 @@
     <string name="tabTitle2">My Polls</string>
     <string name="tabTitle3">Recently Voted</string>
     <string name="tabTitle4">Top 100 Polls</string>
-    <string name="tabTitle5">About</string>
+    <string name="tabTitle5">Observe Polls</string>
 
     <!-- ############### -->
     <!-- STRINGS IN CODE -->
@@ -74,47 +74,44 @@
     <!-- String Arrays -->
     <!-- ############# -->
 
+
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
     <string-array name="categories">
         <item>Select your Category</item>
-        <item>Economy</item>
-        <item>Environment</item>
-        <item>Fashion</item>
+        <item>Economy/Finance</item>
+        <item>Fashion/Beauty</item>
         <item>Food</item>
-        <item>Fun</item>
         <item>Health</item>
         <item>Miscellaneous</item>
         <item>Movies/TV</item>
         <item>Music</item>
         <item>Politics</item>
-        <item>Science</item>
         <item>Society</item>
         <item>Sports</item>
-        <item>Technology</item>
-        <item>World</item>
+        <item>Technology/Science</item>
+        <item>World/Environment</item>
     </string-array>
 
 
-    <!-- The items must be the same as in FilterOptions in the backend and have to be in the same order-->
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
     <string-array name="categories_filter">
         <item>All</item>
-        <item>Economy</item>
-        <item>Environment</item>
-        <item>Fashion</item>
+        <item>Economy/Finance</item>
+        <item>Fashion/Beauty</item>
         <item>Food</item>
-        <item>Fun</item>
         <item>Health</item>
         <item>Miscellaneous</item>
         <item>Movies/TV</item>
         <item>Music</item>
         <item>Politics</item>
-        <item>Science</item>
         <item>Society</item>
         <item>Sports</item>
-        <item>Technology</item>
-        <item>World</item>
+        <item>Technology/Science</item>
+        <item>World/Environment</item>
     </string-array>
 
 
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
     <string-array name="languages">
         <item>Select your Language</item>
         <item>English</item>
@@ -157,7 +154,7 @@
     </string-array>
 
 
-    <!-- The items must be the same as in FilterOptions in the backend and have to be in the same order-->
+    <!-- The items must be the same as in FilterOptions and have to be in the same order-->
     <string-array name="languages_filter">
         <item>All</item>
         <item>English</item>

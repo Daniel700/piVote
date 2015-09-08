@@ -20,20 +20,16 @@ public class SQLiteAccess extends SQLiteOpenHelper {
 
     // Database Name
     public static String DATABASE_NAME = "internalDB";
-
     // Current version of database
     private static final int DATABASE_VERSION = 1;
 
-    // Name of table
+    // Table for recently voted Polls
     private static final String TABLE_POLLS = "votedPolls";
-
-    // All Columns of the table
     private static final String COLUMN_ID = "Id";
     private static final String COLUMN_POLLID = "PollId";
     private static final String COLUMN_ANSWERTEXT = "AnswerText";
     private static final String COLUMN_VOTEDATE = "VoteDate";
     private static final String[] allColumns = {COLUMN_ID, COLUMN_POLLID, COLUMN_ANSWERTEXT, COLUMN_VOTEDATE};
-
 
     private static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_POLLS + "(" +
@@ -41,6 +37,16 @@ public class SQLiteAccess extends SQLiteOpenHelper {
             COLUMN_POLLID + " INTEGER NOT NULL, " +
             COLUMN_ANSWERTEXT + " TEXT NOT NULL, " +
             COLUMN_VOTEDATE + " TEXT NOT NULL);";
+
+    // Table for favorite Polls
+    private static final String TABLE_FAVORITES = "myFavorites";
+    private static final String FAV_COLUMN_ID = "Id";
+    private static final String FAV_COLUMN_POLLID = "PollId";
+
+    private static final String CREATE_FAV_TABLE =
+            "CREATE TABLE " + TABLE_FAVORITES + "(" +
+            FAV_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            FAV_COLUMN_POLLID + " INTEGER NOT NULL);";
 
 
     public SQLiteAccess(Context context) {
@@ -52,13 +58,90 @@ public class SQLiteAccess extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.e("SQLITE", "Table created");
         db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_FAV_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_POLLS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
         onCreate(db);
     }
+
+
+
+    //##############################################################################################
+    //                            Methods for recently voted Polls Table
+    //##############################################################################################
+
+
+    public void insertFavoritePoll(Poll poll){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FAV_COLUMN_POLLID, poll.getId());
+
+        db.insert(TABLE_FAVORITES, null, values);
+        db.close();
+    }
+
+
+    public void deleteFavoritePoll(Poll poll){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FAVORITES, FAV_COLUMN_POLLID + " = " + poll.getId(), null);
+        db.close();
+    }
+
+
+    public void deleteAllFavoritePolls(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FAVORITES, null, null);
+        db.close();
+    }
+
+
+    public List<Long> getAllFavoritePolls(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Long> favoriteIDs = new ArrayList<Long>();
+
+        String[] tmp = {FAV_COLUMN_ID, FAV_COLUMN_POLLID};
+        Cursor cursor = db.query(TABLE_FAVORITES, tmp, null, null, null, null, FAV_COLUMN_ID + " DESC", null);
+
+        cursor.moveToFirst();
+        Log.e("PRINT FAVORITE POLLS", " Cursor Size: " + String.valueOf(cursor.getCount()));
+        while (!cursor.isAfterLast()) {
+            Log.e("PRINT FAVORITE POLLS", FAV_COLUMN_ID + "  " + cursor.getString(0) + "     " +
+                    FAV_COLUMN_POLLID + "  " + cursor.getString(1));
+            favoriteIDs.add(cursor.getLong(1));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return favoriteIDs;
+    }
+
+
+    public boolean findFavoritePoll(Poll poll){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+         String selectQuery = "SELECT  * FROM " + TABLE_FAVORITES + " WHERE " + FAV_COLUMN_POLLID + " = " + poll.getId();
+         Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.getCount() > 0){
+            c.moveToFirst();
+            c.close();
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    //##############################################################################################
+    //                            Methods for recently voted Polls Table
+    //##############################################################################################
 
 
     public void insertPoll(Poll poll, String answerText){

@@ -17,7 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import fragments.FragmentAbout;
+import fragments.FragmentFavorites;
 import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
 import fragments.FragmentRecentlyVoted;
@@ -79,7 +79,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                 fragmentClass = FragmentTopPolls.class;
                 break;
             case R.id.nav_about:
-                fragmentClass = FragmentAbout.class;
+                fragmentClass = FragmentFavorites.class;
                 break;
             default:
                 fragmentClass = FragmentQuestionList.class;
@@ -144,14 +144,14 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                         fragmentManager.beginTransaction().attach(fragment).commit();
                     }
                 break;
-            case R.id.nav_about:
+            case R.id.nav_favorites:
                     detachNavigationDrawerFragments();
-                    if (fragmentManager.findFragmentByTag(FragmentAbout.class.getName()) == null){
-                        fragment = new FragmentAbout();
-                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentAbout.class.getName()).commit();
+                    if (fragmentManager.findFragmentByTag(FragmentFavorites.class.getName()) == null){
+                        fragment = new FragmentFavorites();
+                        fragmentManager.beginTransaction().add(R.id.content, fragment, FragmentFavorites.class.getName()).commit();
                     }
                     else {
-                        fragment = fragmentManager.findFragmentByTag(FragmentAbout.class.getName());
+                        fragment = fragmentManager.findFragmentByTag(FragmentFavorites.class.getName());
                         fragmentManager.beginTransaction().attach(fragment).commit();
                     }
                 break;
@@ -196,7 +196,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         if ((frag = fragmentManager.findFragmentByTag(FragmentTopPolls.class.getName())) != null)
             fragmentManager.beginTransaction().detach(frag).commit();
 
-        if ((frag = fragmentManager.findFragmentByTag(FragmentAbout.class.getName())) != null)
+        if ((frag = fragmentManager.findFragmentByTag(FragmentFavorites.class.getName())) != null)
             fragmentManager.beginTransaction().detach(frag).commit();
 
     }

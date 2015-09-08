@@ -21,8 +21,8 @@ public abstract class FilterOptions {
     /**
      * The items in this array have to be in the same order as in strings.xml and the values must match with the corresponding string array
      */
-    public final static List<String> categories = Arrays.asList("All", "Economy", "Environment", "Fashion", "Food", "Fun", "Health", "Miscellaneous",
-            "Movies/TV", "Music", "Politics", "Science", "Society", "Sports", "Technology", "World");
+    public final static List<String> categories = Arrays.asList("All", "Economy/Finance", "Fashion/Beauty", "Food", "Health", "Miscellaneous",
+            "Movies/TV", "Music", "Politics", "Society", "Sports", "Technology/Science", "World/Environment");
 
 
 }

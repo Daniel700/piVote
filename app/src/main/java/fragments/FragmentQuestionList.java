@@ -1,6 +1,8 @@
 package fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +27,7 @@ import java.util.List;
 import adapter.QuestionListAdapter;
 import database.DatabaseEndpoint;
 import database.DatabaseLogEndpoint;
+import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
 import model.logBeanApi.model.LogBean;
@@ -64,9 +67,26 @@ public class FragmentQuestionList extends Fragment {
         fabRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
-                mRecyclerView.setAdapter(mAdapter);
-                Snackbar.make(rootView, getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
+                alertDialogBuilder.setTitle("Retrieve new List");
+
+                alertDialogBuilder.setMessage("Are you sure you want to retrieve a new list?");
+                alertDialogBuilder.setPositiveButton(getString(R.string.dialogButtonPositive), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
+                        mRecyclerView.setAdapter(mAdapter);
+                        Snackbar.make(rootView, getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
+
+                        dialog.dismiss();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton(getString(R.string.dialogButtonNegative), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 
@@ -90,14 +110,18 @@ public class FragmentQuestionList extends Fragment {
             @Override
             public void onRefresh() {
                 try {
-
                     DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                    List<PollBean> beans = databaseEndpoint.getBatchPollTask(mAdapter.getIdList());
+                    List<PollBean> beans1 = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(0, 100));
+                    List<PollBean> beans2 = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(100, mAdapter.getIdList().size()));
+
+                    List<PollBean> beans = new ArrayList<PollBean>();
+                    beans.addAll(beans1);
+                    beans.addAll(beans2);
 
                     ModelTransformer transformer = new ModelTransformer();
                     List<Poll> pollList = new ArrayList<>();
 
-                    if (beans != null)
+                    if (beans.size() > 0)
                         for (PollBean pollBean : beans) {
                             pollList.add(transformer.transformPollBeanToPoll(pollBean));
                         }

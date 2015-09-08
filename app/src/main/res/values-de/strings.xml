@@ -75,42 +75,36 @@
     <!-- The items must be the same as in FilterOptions and have to be in the same order-->
     <string-array name="categories">
         <item>Kategorie auswählen</item>
-        <item>Wirtschaft</item>
-        <item>Umwelt</item>
-        <item>Mode</item>
+        <item>Wirtschaft/Finanzen</item>
+        <item>Mode/Beauty</item>
         <item>Essen</item>
-        <item>Spaß</item>
         <item>Gesundheit</item>
         <item>Sonstiges</item>
         <item>Filme/TV</item>
         <item>Musik</item>
         <item>Politik</item>
-        <item>Wissenschaft</item>
         <item>Gesellschaft</item>
         <item>Sport</item>
-        <item>Technologie</item>
-        <item>Welt</item>
+        <item>Technologie/Wissenschaft</item>
+        <item>Welt/Umwelt</item>
     </string-array>
 
 
     <!-- The items must be the same as in FilterOptions and have to be in the same order-->
     <string-array name="categories_filter">
         <item>Alle</item>
-        <item>Wirtschaft</item>
-        <item>Umwelt</item>
-        <item>Mode</item>
+        <item>Wirtschaft/Finanzen</item>
+        <item>Mode/Beauty</item>
         <item>Essen</item>
-        <item>Spaß</item>
         <item>Gesundheit</item>
         <item>Sonstiges</item>
         <item>Filme/TV</item>
         <item>Musik</item>
         <item>Politik</item>
-        <item>Wissenschaft</item>
         <item>Gesellschaft</item>
         <item>Sport</item>
-        <item>Technologie</item>
-        <item>Welt</item>
+        <item>Technologie/Wissenschaft</item>
+        <item>Welt/Umwelt</item>
     </string-array>
 
 
