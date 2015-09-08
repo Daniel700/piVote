@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import adapter.TopPollsAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import model.ModelTransformer;
 import model.Poll;
 import model.pollBeanApi.model.PollBean;
@@ -25,6 +26,7 @@ import piv.pivote.R;
 import utils.ToolsUpdateView;
 
 /**
+ * This class provides the view for the Top100 View
  * Created by Daniel on 11.08.2015.
  */
 public class FragmentTopPolls extends Fragment {
@@ -54,9 +56,19 @@ public class FragmentTopPolls extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mAdapter = new TopPollsAdapter(getCurrentPollList(),getActivity().getApplicationContext());
-                recyclerView.setAdapter(mAdapter);
-                swipeRefreshLayout.setRefreshing(false);
+                try{
+                    mAdapter = new TopPollsAdapter(getCurrentPollList(),getActivity().getApplicationContext());
+                    recyclerView.setAdapter(mAdapter);
+                }
+                catch (Exception e){
+                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                    endpoint.insertTask("FragmentTopPolls - swipeRefresh", e.getMessage());
+                    e.printStackTrace();
+                }
+                finally {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
             }
         });
 
@@ -73,7 +85,9 @@ public class FragmentTopPolls extends Fragment {
         return rootView;
     }
 
-
+    /**
+     * This method will refresh the Poll list for REFRESH_NUMBER times automatically for convenience
+     */
     public void updateView(){
         // refreshing the Adapter for REFRESH_NUMBER times
         if (refreshCounter != 0 && refreshCounter < ToolsUpdateView.REFRESH_NUMBER)
@@ -113,7 +127,10 @@ public class FragmentTopPolls extends Fragment {
     }
 
 
-
+    /**
+     * Requests the Top 100 Polls from the remote Database.
+     * @return Poll list for the Adapter
+     */
     public List<Poll> getCurrentPollList(){
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
         List<PollBean> pollBeanList = databaseEndpoint.getTop100PollsTask();

@@ -8,37 +8,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.api.client.util.DateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import adapter.CreateAnswersAdapter;
+import adapter.CreatePollAnswersAdapter;
 import database.DatabaseEndpoint;
 import database.FilterOptions;
 import layoutManager.DividerItemDecoration;
 import layoutManager.MyLinearLayoutManager;
-import model.TestData;
 import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 
 /**
+ * Activity for creating a poll.
+ * Saves the poll with the according information in the remote DB.
  * Created by Daniel on 07.08.2015.
  */
 public class PollCreateActivity extends AppCompatActivity {
 
     //private RecyclerView.LayoutManager mLayoutManager;
     private MyLinearLayoutManager mLayoutManager;
-    private CreateAnswersAdapter mAdapter;
+    private CreatePollAnswersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     private String language;
@@ -110,7 +109,7 @@ public class PollCreateActivity extends AppCompatActivity {
                             arrayList.add(i);
                         }
 
-                        mAdapter = new CreateAnswersAdapter(arrayList);
+                        mAdapter = new CreatePollAnswersAdapter(arrayList);
                         mRecyclerView.setAdapter(mAdapter);
                         // Update RecyclerView Height (only with standard layoutManager)
                         // mRecyclerView.getLayoutParams().height = 100 * numberOfAnswers;
@@ -131,8 +130,8 @@ public class PollCreateActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //################# Conduct validation of all input fields ########################
-                CreateAnswersAdapter createAnswersAdapter = ((CreateAnswersAdapter) mAdapter);
-                ArrayList<String> answers = createAnswersAdapter.getAnswers();
+                CreatePollAnswersAdapter createPollAnswersAdapter = ((CreatePollAnswersAdapter) mAdapter);
+                ArrayList<String> answers = createPollAnswersAdapter.getAnswers();
 
                 //Check if User has entered all attributes for the corresponding Poll
                 if (question.getText().toString().trim().isEmpty()) {
@@ -144,7 +143,7 @@ public class PollCreateActivity extends AppCompatActivity {
                 else if (category.equals(FilterOptions.categories.get(0))){
                     Snackbar.make(findViewById(R.id.spinner_category_cp), getString(R.string.createCategoryError), Snackbar.LENGTH_LONG).show();
                 }
-                else if (!(answers.size() == createAnswersAdapter.getItemCount()) || numberOfAnswers == 0){
+                else if (!(answers.size() == createPollAnswersAdapter.getItemCount()) || numberOfAnswers == 0){
                     Snackbar.make(findViewById(R.id.recycler_view_answers_cp), getString(R.string.createAnswersError), Snackbar.LENGTH_LONG).show();
                 }
                 else {
@@ -152,19 +151,16 @@ public class PollCreateActivity extends AppCompatActivity {
                     if (name.getText().toString().trim().isEmpty())
                         name.setText("Anonymous");
 
-
                     SharedPreferences sharedPreferences = getSharedPreferences("InstallSettings", MODE_PRIVATE);
                     String uuid = sharedPreferences.getString("UUID", "no id available");
 
                     PollBean pollBean = new PollBean();
-
                     pollBean.setUuid(uuid);
                     pollBean.setQuestion(question.getText().toString().trim());
                     pollBean.setLanguage(language);
                     pollBean.setCategory(category);
                     pollBean.setCreatedBy(name.getText().toString().trim());
                     pollBean.setOverallVotes(0);
-
                     pollBean.setCreationDate(new DateTime(new Date()));
                     pollBean.setLastVoted(new DateTime(new Date()));
 
@@ -177,6 +173,7 @@ public class PollCreateActivity extends AppCompatActivity {
                     }
                     pollBean.setAnswerBeans(answerBeans);
 
+                    //Insert the PollBean in remote DB
                     DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
                     databaseEndpoint.insertTask(pollBean);
 

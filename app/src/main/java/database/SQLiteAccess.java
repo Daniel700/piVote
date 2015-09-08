@@ -14,6 +14,8 @@ import java.util.List;
 import model.Poll;
 
 /**
+ * This class creates a SQLite Database and the Tables for recently voted Polls and favorite Polls.
+ * Also provides the corresponding methods to access these Tables.
  * Created by Daniel on 22.08.2015.
  */
 public class SQLiteAccess extends SQLiteOpenHelper {

@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
+ * This class represents the according answers from a poll.
  * Created by Daniel on 15.08.2015.
  */
 public class Answer implements Serializable {

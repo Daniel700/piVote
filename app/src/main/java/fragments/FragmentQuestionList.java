@@ -68,9 +68,9 @@ public class FragmentQuestionList extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
-                alertDialogBuilder.setTitle("Retrieve new List");
+                alertDialogBuilder.setTitle(getString(R.string.checkRefreshTitle));
 
-                alertDialogBuilder.setMessage("Are you sure you want to retrieve a new list?");
+                alertDialogBuilder.setMessage(getString(R.string.checkRefreshMessage));
                 alertDialogBuilder.setPositiveButton(getString(R.string.dialogButtonPositive), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
@@ -176,11 +176,14 @@ public class FragmentQuestionList extends Fragment {
             categoryPosition = data.getIntExtra("category", 0);
             mAdapter = new QuestionListAdapter(getCurrentPollList(languagePosition, categoryPosition), getActivity().getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
-            Snackbar.make(getView(), getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mRecyclerView, getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
         }
     }
 
-
+    /**
+     * Requests 200 random Polls from the remote Database.
+     * @return Poll list for the Adapter
+     */
     public List<Poll> getCurrentPollList(int languagePosition, int categoryPosition){
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
         List<PollBean> pollBeanList = databaseEndpoint.getRandomPollsTask(languagePosition, categoryPosition);

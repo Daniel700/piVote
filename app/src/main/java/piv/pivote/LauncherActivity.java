@@ -24,7 +24,9 @@ import fragments.FragmentRecentlyVoted;
 import fragments.FragmentTopPolls;
 import model.TestData;
 
-
+/**
+ * This activity is the Main Activity of the application and handles the navigation to other Fragments/Activities.
+ */
 public class LauncherActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
@@ -63,40 +65,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     private void navigate(final MenuItem menuItem) {
 
         Fragment fragment = null;
-/*
-        Class fragmentClass;
-        switch(menuItem.getItemId()) {
-            case R.id.nav_all_polls:
-                fragmentClass = FragmentQuestionList.class;
-                break;
-            case R.id.nav_my_polls:
-                fragmentClass = FragmentMyPolls.class;
-                break;
-            case R.id.nav_recently:
-                fragmentClass = FragmentRecentlyVoted.class;
-                break;
-            case R.id.nav_top_polls:
-                fragmentClass = FragmentTopPolls.class;
-                break;
-            case R.id.nav_about:
-                fragmentClass = FragmentFavorites.class;
-                break;
-            default:
-                fragmentClass = FragmentQuestionList.class;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.windowError), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content, fragment, fragmentClass.getName()).commit();
-        */
-
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         switch(menuItem.getItemId()){
@@ -167,13 +135,16 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                 }
         }
 
-
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawers();
     }
 
+
+    /**
+     * Method to detach Fragments from the View so that only the currently selected Fragment will be visible.
+     */
     public void detachNavigationDrawerFragments(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment frag;
@@ -207,7 +178,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         super.onActivityResult(requestCode, resultCode, data);
 
         View coordinatorLayout = null;
-
         //Start snackbar if previous action was submitting a vote
         if (data != null && data.getExtras() != null) {
             String snackbarText = data.getStringExtra("snackbarDetailed");
@@ -265,10 +235,11 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method that creates a UUID the first time the application is started.
+     */
     public void verifyInstallation(){
-
         boolean uuid_exists;
-
         SharedPreferences sharedPreferences = getSharedPreferences("InstallSettings", MODE_PRIVATE);
         uuid_exists = sharedPreferences.getBoolean("UUID_Exists", false);
 
@@ -280,7 +251,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
             editor.putBoolean("UUID_Exists", true);
             editor.apply();
         }
-
     }
+
 
 }

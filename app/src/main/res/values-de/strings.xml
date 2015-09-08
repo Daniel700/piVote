@@ -5,7 +5,7 @@
     <string name="tabTitle2">Meine Umfragen</string>
     <string name="tabTitle3">Kürzlich abgestimmt</string>
     <string name="tabTitle4">Top 100 Umfragen</string>
-    <string name="tabTitle5">About</string>
+    <string name="tabTitle5">Umfragen beobachten</string>
 
     <!-- ############### -->
     <!-- STRINGS IN CODE -->
@@ -36,9 +36,20 @@
     <!-- FragmentQuestionList -->
     <string name="refresh1">Es wurden</string>
     <string name="refresh2">Umfragen gefunden</string>
+    <string name="checkRefreshTitle">Neue Liste anfordern</string>
+    <string name="checkRefreshMessage">Bist du sicher dass du eine neue Umfragenliste anfordern willst?</string>
 
     <!-- FragmentMyPolls -->
     <string name="createMorePolls">Mehr Umfragen können erstellt werden in: </string>
+
+    <!-- FragmentFavorites -->
+    <string name="dialogDeleteTitle">Alle löschen</string>
+    <string name="dialogDeleteMessage">Bist du sicher dass du alle Einträge aus deiner Favoritenliste löschen willst?</string>
+
+
+    <string name="favoriteRemoved">Umfrage wurde aus deiner Favoritenliste entfernt</string>
+    <string name="favoriteAdded">Umfrage wurde deiner Favoritenliste hinzugefügt</string>
+    <string name="favoriteListFull">Bitte entferne zuerst wieder Umfragen aus deiner Favoritenliste (Limit erreicht)</string>
 
 
     <!-- ################## -->
@@ -66,6 +77,10 @@
     <string name="text">Text</string>
     <string name="buttonCreatePoll">Umfrage erstellen</string>
 
+    <string name="fragFavoritesHeaderText">Mit Hilfe des Favoritensymbols können in dieser Liste bis zu 25 Umfragen für unbegrenzte Zeit beobachtet werden</string>
+    <string name="fragFavoritesDeleteButton">Alle löschen</string>
+    <string name="fragMyPollsHeaderText">In dieser Liste werden bis zu 100 der zuletzt erstellten Umfragen angezeigt</string>
+    <string name="fragRecentlyVotedHeaderText">In dieser Liste werden bis zu 75 der zuletzt abgestimmten Umfragen angezeigt</string>
 
 
     <!-- ############# -->

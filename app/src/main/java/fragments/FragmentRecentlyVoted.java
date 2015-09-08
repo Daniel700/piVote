@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import adapter.QuestionListAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
@@ -71,6 +72,8 @@ public class FragmentRecentlyVoted extends Fragment {
                     recyclerView.setAdapter(mAdapter);
                 }
                 catch (Exception e){
+                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                    endpoint.insertTask("FragmentRecentlyVoted - swipeRefresh", e.getMessage());
                     e.printStackTrace();
                 }
                 finally {
@@ -84,7 +87,9 @@ public class FragmentRecentlyVoted extends Fragment {
         return rootView;
     }
 
-
+    /**
+     * This method will refresh the Poll list for REFRESH_NUMBER times automatically for convenience
+     */
     public void updateView(){
         // refreshing the Adapter for REFRESH_NUMBER times
         if (refreshCounter != 0 && refreshCounter < ToolsUpdateView.REFRESH_NUMBER)
@@ -124,7 +129,10 @@ public class FragmentRecentlyVoted extends Fragment {
     }
 
 
-
+    /**
+     * Requests the recently voted Polls from the remote Database.
+     * @return Poll list for the Adapter
+     */
     public List<Poll> getCurrentPollList(){
 
         SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());

@@ -38,9 +38,20 @@
     <!-- FragmentQuestionList -->
     <string name="refresh1">Found</string>
     <string name="refresh2">Polls</string>
+    <string name="checkRefreshTitle">Retrieve new List</string>
+    <string name="checkRefreshMessage">Are you sure you want to retrieve a new list?</string>
 
     <!-- FragmentMyPolls -->
     <string name="createMorePolls">You can create more Polls in: </string>
+
+    <!-- FragmentFavorites -->
+    <string name="dialogDeleteTitle">Delete All</string>
+    <string name="dialogDeleteMessage">Are you sure you want to delete all entries from your list?</string>
+
+
+    <string name="favoriteRemoved">Poll has been removed from your Favorites List</string>
+    <string name="favoriteAdded">Poll has been added to your Favorites List</string>
+    <string name="favoriteListFull">Please remove some Polls from your Favorites List (limit reached)</string>
 
 
     <!-- ################## -->
@@ -67,6 +78,11 @@
     <string name="number">Number</string>
     <string name="text">Text</string>
     <string name="buttonCreatePoll">Create Poll</string>
+
+    <string name="fragFavoritesHeaderText">You can observe 25 Polls for unlimited time by using the favorite icon</string>
+    <string name="fragFavoritesDeleteButton">Delete All</string>
+    <string name="fragMyPollsHeaderText">This list shows your last 100 created Polls</string>
+    <string name="fragRecentlyVotedHeaderText">This list shows your last 75 Votes</string>
 
 
 

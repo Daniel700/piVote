@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This list shows your last 75 Votes"
+        android:text="@string/fragRecentlyVotedHeaderText"
         android:gravity="center"
         android:textStyle="italic"
         android:layout_margin="5dp"/>

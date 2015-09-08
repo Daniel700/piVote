@@ -20,6 +20,7 @@ import piv.pivote.R;
 
 /**
  * Created by Daniel on 03.08.2015.
+ * Represents a Dialog for filtering the random List "All Polls"
  * The variables language and category will have the same value for every instance! (STATIC)
  * If you want to use this class for different Filter you will have to handle the Fragment in the Backstack and make the variables non-static.
  */

@@ -1,7 +1,6 @@
 package piv.pivote;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +16,8 @@ import android.widget.Toast;
 
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 
-import adapter.AnswersAdapter;
+import adapter.DetailedPollAnswersAdapter;
 import database.DatabaseEndpoint;
 import database.DatabaseLogEndpoint;
 import database.FilterOptions;
@@ -28,11 +25,12 @@ import database.SQLiteAccess;
 import model.Answer;
 import model.ModelTransformer;
 import model.Poll;
-import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 
 
 /**
+ * Activity for showing a poll with detailed information.
+ * Will be called after a list item is clicked.
  * Created by Daniel on 02.08.2015.
  */
 public class PollDetailedActivity extends AppCompatActivity {
@@ -88,8 +86,8 @@ public class PollDetailedActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-        mAdapter = new AnswersAdapter(poll, false);
+        //Set Adapter
+        mAdapter = new DetailedPollAnswersAdapter(poll, false);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_answers_detailed);
 
         int scrollPosition = 0;
@@ -103,14 +101,14 @@ public class PollDetailedActivity extends AppCompatActivity {
         mRecyclerView.scrollToPosition(scrollPosition);
         mRecyclerView.setAdapter(mAdapter);
 
-
+        //saves the selected vote in local and remote DB
         Button button = (Button) findViewById(R.id.button_vote);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
-                    Answer a = ((AnswersAdapter) mAdapter).getChosenAnswer();
+                    Answer a = ((DetailedPollAnswersAdapter) mAdapter).getChosenAnswer();
 
                     //Save Poll in local SQLite Database
                     SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
@@ -155,7 +153,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                 }
 
             }
-            mAdapter = new AnswersAdapter(poll, true);
+            mAdapter = new DetailedPollAnswersAdapter(poll, true);
             mRecyclerView.setAdapter(mAdapter);
         }
 

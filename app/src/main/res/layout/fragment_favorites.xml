@@ -13,21 +13,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="You can observe 25 Polls for unlimited time by using the favorite icon"
+            android:text="@string/fragFavoritesHeaderText"
             android:gravity="center"
             android:textStyle="italic"
+            android:padding="5dp"
             android:layout_margin="5dp"
             android:layout_weight="0.25"/>
 
         <Button
             android:id="@+id/button_delete_favs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/question_background_gradient"
             android:layout_margin="5dp"
             android:layout_weight="0.75"
             android:textColor="@android:color/white"
-            android:text="Delete All"/>
+            android:text="@string/fragFavoritesDeleteButton"/>
 
     </LinearLayout>
 

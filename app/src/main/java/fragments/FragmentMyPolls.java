@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import adapter.MyPollAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import model.ModelTransformer;
 import model.Poll;
 import model.pollBeanApi.model.PollBean;
@@ -75,9 +76,19 @@ public class FragmentMyPolls extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mAdapter = new MyPollAdapter(getCurrentPollList(), getActivity().getApplicationContext());
-                recyclerView.setAdapter(mAdapter);
-                swipeRefreshLayout.setRefreshing(false);
+                try {
+                    mAdapter = new MyPollAdapter(getCurrentPollList(), getActivity().getApplicationContext());
+                    recyclerView.setAdapter(mAdapter);
+                }
+                catch (Exception e) {
+                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                    endpoint.insertTask("FragmentMyPolls - swipeRefresh", e.getMessage());
+                    e.printStackTrace();
+                }
+                finally {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
             }
         });
 
@@ -98,7 +109,7 @@ public class FragmentMyPolls extends Fragment {
                     String elapsedTimeString = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(elapsedTime),
                             TimeUnit.MILLISECONDS.toMinutes(elapsedTime) % TimeUnit.HOURS.toMinutes(1),
                             TimeUnit.MILLISECONDS.toSeconds(elapsedTime) % TimeUnit.MINUTES.toSeconds(1));
-                    Snackbar.make(getActivity().getCurrentFocus(), getString(R.string.createMorePolls) + elapsedTimeString, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(recyclerView, getString(R.string.createMorePolls) + elapsedTimeString, Snackbar.LENGTH_LONG).show();
                 }
 
             }
@@ -122,6 +133,10 @@ public class FragmentMyPolls extends Fragment {
         }
     }
 
+
+    /**
+     * Limits the number of polls that can be created within 1 hour.
+     */
     public void limitCreationOfPolls(){
         if (!limitTaskStarted){
             limitTaskStarted = true;
@@ -140,6 +155,9 @@ public class FragmentMyPolls extends Fragment {
     }
 
 
+    /**
+     * This method will refresh the Poll list for REFRESH_NUMBER times automatically for convenience
+     */
     public void updateView(){
         // refreshing the Adapter for REFRESH_NUMBER times
         if (refreshCounter != 0 && refreshCounter < ToolsUpdateView.REFRESH_NUMBER)
@@ -178,7 +196,10 @@ public class FragmentMyPolls extends Fragment {
         }
     }
 
-
+    /**
+     * Requests all own created Polls from the remote Database.
+     * @return Poll list for the Adapter
+     */
     public List<Poll> getCurrentPollList(){
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
         List<PollBean> pollBeanList = databaseEndpoint.getMyPollsTask(uuid);

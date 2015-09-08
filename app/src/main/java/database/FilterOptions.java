@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * This class is needed because of internationalization of the application.
+ * These variables will be used to save the same values for every language in the remote DB.
  * Created by Daniel on 25.08.2015.
  */
 public abstract class FilterOptions {

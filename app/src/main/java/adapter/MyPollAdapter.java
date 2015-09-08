@@ -105,15 +105,15 @@ public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder
                 if (tmpFound) {
                     db.deleteFavoritePoll(poll);
                     holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(v.getResources(), R.drawable.ic_star_border_white_24dp, null));
-                    Snackbar.make(v, "Poll has been removed from your Favorites List", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, context.getString(R.string.favoriteRemoved), Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (db.getAllFavoritePolls().size() < 25) {
                         db.insertFavoritePoll(poll);
                         holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(v.getResources(), R.drawable.ic_star_white_24dp, null));
-                        Snackbar.make(v, "Poll has been added to your Favorites List", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(v, context.getString(R.string.favoriteAdded), Snackbar.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(v.getContext(), "Pleas remove some Polls from your Favorites List", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(v, "Please remove some Polls from your Favorites List", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), context.getString(R.string.favoriteListFull), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(v, context.getString(R.string.favoriteListFull), Snackbar.LENGTH_SHORT).show();
                     }
                 }
                 db.close();

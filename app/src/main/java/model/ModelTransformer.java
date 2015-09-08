@@ -12,6 +12,8 @@ import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 
 /**
+ * Helper class that can transform a given PollBean to a Poll.
+ * This is needed because of the other data model within the application.
  * Created by Daniel on 15.08.2015.
  */
 public class ModelTransformer {

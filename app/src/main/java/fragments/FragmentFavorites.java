@@ -19,6 +19,7 @@ import java.util.List;
 
 import adapter.QuestionListAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import database.SQLiteAccess;
 import model.ModelTransformer;
 import model.Poll;
@@ -62,6 +63,8 @@ public class FragmentFavorites extends Fragment {
                     recyclerView.setAdapter(mAdapter);
                 }
                 catch (Exception e){
+                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                    endpoint.insertTask("FragmentFavorites - swipeRefresh", e.getMessage());
                     e.printStackTrace();
                 }
                 finally {
@@ -74,41 +77,38 @@ public class FragmentFavorites extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
-                alertDialogBuilder.setTitle("Delete All");
-
-                alertDialogBuilder.setMessage("Are you sure you want to delete all entries from your list?");
+                alertDialogBuilder.setTitle(getString(R.string.dialogDeleteTitle));
+                alertDialogBuilder.setMessage(getString(R.string.dialogDeleteMessage));
                 alertDialogBuilder.setPositiveButton(getString(R.string.dialogButtonPositive), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());
+                        dbAccess.deleteAllFavoritePolls();
+                        dbAccess.close();
 
-                                SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());
-                                dbAccess.deleteAllFavoritePolls();
-                                dbAccess.close();
+                        mAdapter = new QuestionListAdapter(getCurrentPollList(), getActivity().getApplicationContext());
+                        recyclerView.setAdapter(mAdapter);
 
-                                mAdapter = new QuestionListAdapter(getCurrentPollList(), getActivity().getApplicationContext());
-                                recyclerView.setAdapter(mAdapter);
-
-                                dialog.dismiss();
-                            }
-                        });
+                        dialog.dismiss();
+                    }
+                });
                 alertDialogBuilder.setNegativeButton(getString(R.string.dialogButtonNegative),new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 dialog.cancel();
                             }
                         });
-
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-
             }
         });
-
 
         return rootView;
     }
 
-
+    /**
+     * Requests all Polls that are marked as favorite(in local DB) from the remote Database.
+     * @return Poll list for the Adapter
+     */
     public List<Poll> getCurrentPollList(){
 
         SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());

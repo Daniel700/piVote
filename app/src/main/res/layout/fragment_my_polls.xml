@@ -8,7 +8,7 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="This list shows your last 100 created Polls"
+    android:text="@string/fragMyPollsHeaderText"
     android:gravity="center"
     android:textStyle="italic"
     android:layout_margin="5dp"/>

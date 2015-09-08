@@ -305,7 +305,10 @@ public class DatabaseEndpoint {
 
     public void instantiateConnection(){
 
-        if (myApiService == null) {  // Only do this once
+        if (myApiService == null) {
+
+            /*
+            //ONLY FOR LOCAL TESTING PURPOSES
             PollBeanApi.Builder builder = new PollBeanApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
@@ -319,6 +322,12 @@ public class DatabaseEndpoint {
                     });
             Log.e("DB ENDPOINT", "Creating myApiService");
             myApiService = builder.build();
+            */
+
+            PollBeanApi.Builder builder = new PollBeanApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                    .setRootUrl("https://pivote-1036.appspot.com/_ah/api/");
+            myApiService = builder.build();
+
         }
 
     }
