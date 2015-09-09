@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/B_IiJrujhsQcwavmSkm5UEM0p9o\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/nXGfLEH25exrxFcrapZ5xZydl0M\"",
  "discoveryVersion": "v1",
  "id": "logBeanApi:v1",
  "name": "logBeanApi",
@@ -13,9 +13,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://myApplicationId.appspot.com/_ah/api/logBeanApi/v1/",
+ "baseUrl": "https://pivote-1036.appspot.com/_ah/api/logBeanApi/v1/",
  "basePath": "/_ah/api/logBeanApi/v1/",
- "rootUrl": "https://myApplicationId.appspot.com/_ah/api/",
+ "rootUrl": "https://pivote-1036.appspot.com/_ah/api/",
  "servicePath": "logBeanApi/v1/",
  "batchPath": "batch",
  "parameters": {

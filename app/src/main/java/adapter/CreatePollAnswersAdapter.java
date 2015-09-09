@@ -3,6 +3,7 @@ package adapter;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 import piv.pivote.R;
 
@@ -18,12 +21,13 @@ import piv.pivote.R;
  */
 public class CreatePollAnswersAdapter extends RecyclerView.Adapter<CreatePollAnswersAdapter.ViewHolder> {
     private ArrayList<Integer> numAnswers;
-    private ArrayList<String> answers = new ArrayList<>();
+    TreeMap<Integer, String> answers = new TreeMap<>();
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         protected TextView number;
         protected final EditText answerText;
+        protected int pos;
 
         public ViewHolder(View v) {
             super(v);
@@ -38,38 +42,41 @@ public class CreatePollAnswersAdapter extends RecyclerView.Adapter<CreatePollAns
     }
 
     @Override
-    public CreatePollAnswersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CreatePollAnswersAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_answers_cp, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
-    }
+        final ViewHolder vh = new ViewHolder(v);
 
-    @Override
-    public void onBindViewHolder(final CreatePollAnswersAdapter.ViewHolder holder, final int position) {
-
-        holder.number.setText(String.valueOf(numAnswers.get(position)));
-        holder.answerText.addTextChangedListener(new TextWatcher() {
+        vh.answerText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String answer = holder.answerText.getText().toString().trim();
-
-                if (answers.contains(answer))
-                    answers.remove(answer);
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
             @Override
-            public void afterTextChanged(Editable s) {
-                String answer = holder.answerText.getText().toString().trim();
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String answer = editable.toString().trim();
 
                 if (!answer.isEmpty())
-                    answers.add(answer);
+                    answers.put(vh.pos, editable.toString());
+                else
+                    answers.remove(vh.pos);
+
             }
         });
 
+        return vh;
     }
+
+
+    @Override
+    public void onBindViewHolder(final CreatePollAnswersAdapter.ViewHolder holder, final int position) {
+        holder.number.setText(String.valueOf(numAnswers.get(position)));
+        holder.pos = position;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -77,7 +84,7 @@ public class CreatePollAnswersAdapter extends RecyclerView.Adapter<CreatePollAns
     }
 
 
-    public ArrayList<String> getAnswers(){
+    public TreeMap<Integer, String> getAnswers(){
         return answers;
     }
 

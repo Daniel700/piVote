@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -130,8 +131,7 @@ public class PollCreateActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //################# Conduct validation of all input fields ########################
-                CreatePollAnswersAdapter createPollAnswersAdapter = ((CreatePollAnswersAdapter) mAdapter);
-                ArrayList<String> answers = createPollAnswersAdapter.getAnswers();
+                //#################################################################################
 
                 //Check if User has entered all attributes for the corresponding Poll
                 if (question.getText().toString().trim().isEmpty()) {
@@ -143,7 +143,7 @@ public class PollCreateActivity extends AppCompatActivity {
                 else if (category.equals(FilterOptions.categories.get(0))){
                     Snackbar.make(findViewById(R.id.spinner_category_cp), getString(R.string.createCategoryError), Snackbar.LENGTH_LONG).show();
                 }
-                else if (!(answers.size() == createPollAnswersAdapter.getItemCount()) || numberOfAnswers == 0){
+                else if (!(mAdapter.getAnswers().size() == mAdapter.getItemCount()) || numberOfAnswers == 0){
                     Snackbar.make(findViewById(R.id.recycler_view_answers_cp), getString(R.string.createAnswersError), Snackbar.LENGTH_LONG).show();
                 }
                 else {
@@ -165,7 +165,7 @@ public class PollCreateActivity extends AppCompatActivity {
                     pollBean.setLastVoted(new DateTime(new Date()));
 
                     ArrayList<AnswerBean> answerBeans = new ArrayList<AnswerBean>();
-                    for (String answer: answers) {
+                    for (String answer: mAdapter.getAnswers().values()) {
                         AnswerBean bean = new AnswerBean();
                         bean.setAnswerText(answer);
                         bean.setAnswerVotes(0);
@@ -183,7 +183,6 @@ public class PollCreateActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }

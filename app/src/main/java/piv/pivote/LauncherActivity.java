@@ -58,11 +58,16 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
         navigate(navigationView.getMenu().findItem(R.id.nav_all_polls));
 
         //Create some Test Data
-        TestData.getInstance();
+        //TestData.getInstance();
 
     }
 
     private void navigate(final MenuItem menuItem) {
+
+        // Highlight the selected item, update the title, and close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawerLayout.closeDrawers();
 
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -135,10 +140,7 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
                 }
         }
 
-        // Highlight the selected item, update the title, and close the drawer
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        mDrawerLayout.closeDrawers();
+
     }
 
 
