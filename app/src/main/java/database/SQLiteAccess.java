@@ -31,14 +31,16 @@ public class SQLiteAccess extends SQLiteOpenHelper {
     private static final String COLUMN_POLLID = "PollId";
     private static final String COLUMN_ANSWERTEXT = "AnswerText";
     private static final String COLUMN_VOTEDATE = "VoteDate";
-    private static final String[] allColumns = {COLUMN_ID, COLUMN_POLLID, COLUMN_ANSWERTEXT, COLUMN_VOTEDATE};
+    private static final String COLUMN_POLLCREATIONDATE = "PollCreationDate";
+    private static final String[] allColumns = {COLUMN_ID, COLUMN_POLLID, COLUMN_ANSWERTEXT, COLUMN_VOTEDATE, COLUMN_POLLCREATIONDATE};
 
     private static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_POLLS + "(" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_POLLID + " INTEGER NOT NULL, " +
             COLUMN_ANSWERTEXT + " TEXT NOT NULL, " +
-            COLUMN_VOTEDATE + " TEXT NOT NULL);";
+            COLUMN_VOTEDATE + " TEXT NOT NULL, " +
+            COLUMN_POLLCREATIONDATE + " TEXT NOT NULL);";
 
     // Table for favorite Polls
     private static final String TABLE_FAVORITES = "myFavorites";
@@ -73,7 +75,7 @@ public class SQLiteAccess extends SQLiteOpenHelper {
 
 
     //##############################################################################################
-    //                            Methods for recently voted Polls Table
+    //                            Methods for favorite Polls Table
     //##############################################################################################
 
 
@@ -146,6 +148,12 @@ public class SQLiteAccess extends SQLiteOpenHelper {
     //##############################################################################################
 
 
+    /**
+     * Method is used in PollDetailedActivity when a vote is submitted.
+     * In that case the vote has to be saved locally.
+     * @param poll = poll on that has been voted
+     * @param answerText = selected answer
+     */
     public void insertPoll(Poll poll, String answerText){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -153,7 +161,9 @@ public class SQLiteAccess extends SQLiteOpenHelper {
         values.put(COLUMN_POLLID, poll.getId());
         values.put(COLUMN_ANSWERTEXT, answerText);
         values.put(COLUMN_VOTEDATE, poll.getLastVoted().toString());
+        values.put(COLUMN_POLLCREATIONDATE, poll.getCreationDate().toString());
 
+        //if poll already in database overwrite this poll
         if (findPoll(poll).first){
             db.update(TABLE_POLLS, values, COLUMN_POLLID + " = " + poll.getId(), null);
             return;
@@ -164,24 +174,38 @@ public class SQLiteAccess extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * Method is used in Adapter to mark the question as voted and set selected answer
+     * @param poll = the poll that has to be checked if existent in SQLite
+     * @return true if poll was found and voted, false otherwise
+     */
     public Pair<Boolean, String> findPoll(Poll poll){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // String selectQuery = "SELECT  * FROM " + TABLE_POLLS + " WHERE " + COLUMN_POLLID + " = " + poll.getId();
-        // Cursor c = db.rawQuery(selectQuery, null);
-
         Cursor curs = db.query(TABLE_POLLS, allColumns, COLUMN_POLLID + " = " + poll.getId(), null, null, null, null, null);
 
+        //Poll is in Database
         if (curs.getCount() > 0){
             curs.moveToFirst();
-            Pair<Boolean, String> tmp = Pair.create(true, curs.getString(2));
-            curs.close();
-            return tmp;
+            //Check if poll in SQLite db is the same as in remote DB via comparison of creation Date
+            if (poll.getCreationDate().toString().equals(curs.getString(4)))
+            {
+                Pair<Boolean, String> tmp = Pair.create(true, curs.getString(2));
+                curs.close();
+                return tmp;
+            }
+            //otherwise the poll in SQLite is an outdated version and not used anymore in the remote DB
+            //this means the poll in the remote DB had been temporarily deleted and then created a new one with the same id as the old one
+            else
+            {
+                deleteEntry(curs.getInt(0));
+            }
+
         }
 
         return Pair.create(false, " ");
     }
+
 
     public List<Long> getRecentPolls(){
         List<Long> recentIDs = new ArrayList<Long>();
@@ -219,7 +243,8 @@ public class SQLiteAccess extends SQLiteOpenHelper {
             Log.e("PRINT POLLS", COLUMN_ID + "  " + cursor.getString(0) + "     " +
                                  COLUMN_POLLID + "  " + cursor.getString(1) + "     " +
                                  COLUMN_ANSWERTEXT + "  " + cursor.getString(2) + "     " +
-                                 COLUMN_VOTEDATE + "  " + cursor.getString(3));
+                                 COLUMN_VOTEDATE + "  " + cursor.getString(3) + "   " +
+                                 COLUMN_POLLCREATIONDATE + " " + cursor.getString(4));
             cursor.moveToNext();
         }
 

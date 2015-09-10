@@ -113,6 +113,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                     //Save Poll in local SQLite Database
                     SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
                     dbAccess.insertPoll(poll, a.getAnswerText());
+                    dbAccess.printAllPolls();
                     dbAccess.close();
 
                     ModelTransformer modelTransformer = new ModelTransformer();

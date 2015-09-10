@@ -26,7 +26,25 @@ public class Poll implements Serializable {
     private String createdBy;
     private Date creationDate;
     private Date lastVoted;
+    private boolean alreadyVoted;
+    private boolean isFavorite;
 
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
+    public boolean isAlreadyVoted() {
+        return alreadyVoted;
+    }
+
+    public void setAlreadyVoted(boolean alreadyVoted) {
+        this.alreadyVoted = alreadyVoted;
+    }
 
     public ArrayList<Answer> getAnswers() {
         return answers;

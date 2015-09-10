@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +104,18 @@ public class FragmentFavorites extends Fragment {
                 alertDialog.show();
             }
         });
+
+        //Ad Mob productive version
+        /*
+        AdView mAdView = (AdView) findViewById(R.id.adView_favorite_polls);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
+
+        //Ad Mob test version
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_favorite_polls);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        mAdView.loadAd(adRequest);
 
         return rootView;
     }

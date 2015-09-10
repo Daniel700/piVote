@@ -64,6 +64,14 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     public QuestionListAdapter(List<Poll> pollList, Context context) {
         this.pollList = pollList;
         this.context = context;
+
+        SQLiteAccess dbAccess = new SQLiteAccess(context);
+        for (Poll poll: pollList) {
+            poll.setIsFavorite(dbAccess.findFavoritePoll(poll));
+            Pair<Boolean, String> pair = dbAccess.findPoll(poll);
+            poll.setAlreadyVoted(pair.first);
+        }
+        dbAccess.close();
     }
 
     // Create new views (invoked by the layout manager)
@@ -82,19 +90,14 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
 
         final Poll poll = pollList.get(position);
 
-        SQLiteAccess dbAccess = new SQLiteAccess(context);
-        boolean isFavorite = dbAccess.findFavoritePoll(poll);
-        Pair<Boolean, String> pair = dbAccess.findPoll(poll);
-        boolean found = pair.first;
-        dbAccess.close();
 
         //Color question red if already voted
-        if (found)
+        if (poll.isAlreadyVoted())
             holder.vQuestion.setBackgroundResource(R.drawable.question_background_negative_gradient);
         else
             holder.vQuestion.setBackgroundResource(R.drawable.question_background_gradient);
         //Mark as favorite if in fav List
-        if (isFavorite)
+        if (poll.isFavorite())
             holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_star_white_24dp, null));
         else
             holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_star_border_white_24dp, null));

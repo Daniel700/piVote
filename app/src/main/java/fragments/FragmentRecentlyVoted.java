@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -84,6 +87,18 @@ public class FragmentRecentlyVoted extends Fragment {
 
         updateView();
 
+        //Ad Mob productive version
+        /*
+        AdView mAdView = (AdView) findViewById(R.id.adView_recently_voted);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
+
+        //Ad Mob test version
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_recently_voted);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        mAdView.loadAd(adRequest);
+
         return rootView;
     }
 
@@ -138,7 +153,7 @@ public class FragmentRecentlyVoted extends Fragment {
         SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());
         List<Long> list = dbAccess.getRecentPolls();
         dbAccess.printAllPolls();
-        dbAccess.close();
+
 
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
         List<PollBean> pollBeanList = databaseEndpoint.getBatchPollTask(list);
@@ -146,10 +161,17 @@ public class FragmentRecentlyVoted extends Fragment {
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();
 
+        //Transform requested PollBeans to Polls and check if the PollBeans are the same as the Polls in SQLite, then only add these
+        //Needs a double check because the assigned ID in the remote DB to a PollBean can change due to deletion and new created PollBean
+        //but in SQLite can still be a outdated PollBean-version of this ID
         if (pollBeanList != null)
         for (PollBean pollBean: pollBeanList) {
-            pollList.add(transformer.transformPollBeanToPoll(pollBean));
+            Poll poll = transformer.transformPollBeanToPoll(pollBean);
+            if(dbAccess.findPoll(poll).first)
+                pollList.add(poll);
         }
+
+        dbAccess.close();
 
         return pollList;
     }

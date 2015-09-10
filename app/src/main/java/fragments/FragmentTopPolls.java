@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -81,6 +84,18 @@ public class FragmentTopPolls extends Fragment {
         recyclerView.scrollToPosition(scrollPosition);
 
         updateView();
+
+        //Ad Mob productive version
+        /*
+        AdView mAdView = (AdView) findViewById(R.id.adView_top100_polls);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
+
+        //Ad Mob test version
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        mAdView.loadAd(adRequest);
 
         return rootView;
     }

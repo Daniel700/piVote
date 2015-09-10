@@ -16,6 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -99,12 +102,12 @@ public class FragmentMyPolls extends Fragment {
             public void onClick(View v) {
                 //ToDo: if app is closed and reopened the counter is reset / fix
                 //Creation of Polls is limited to 2 per hour
-                if (limitCounter < 2) {
+                if (limitCounter < 3) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, PollCreateActivity.class);
                     startActivityForResult(intent, 50);
                 }
-                if (limitCounter == 2){
+                if (limitCounter == 3){
                     long elapsedTime = 3600000 - TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - limitStartTime);
                     String elapsedTimeString = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(elapsedTime),
                             TimeUnit.MILLISECONDS.toMinutes(elapsedTime) % TimeUnit.HOURS.toMinutes(1),
@@ -116,6 +119,18 @@ public class FragmentMyPolls extends Fragment {
         });
 
         updateView();
+
+        //Ad Mob productive version
+        /*
+        AdView mAdView = (AdView) findViewById(R.id.adView_my_polls);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        */
+
+        //Ad Mob test version
+        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_my_polls);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        mAdView.loadAd(adRequest);
 
         return rootView;
     }

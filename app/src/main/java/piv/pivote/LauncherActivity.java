@@ -17,6 +17,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import fragments.FragmentFavorites;
 import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;

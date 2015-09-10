@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.api.client.util.DateTime;
 
 import java.util.ArrayList;
@@ -45,10 +47,19 @@ public class PollCreateActivity extends AppCompatActivity {
     private String category;
     private int numberOfAnswers;
 
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poll_create);
+
+        //Initialize Interstitial Ad
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad));
+        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        mInterstitialAd.loadAd(adRequest);
 
         //Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -176,6 +187,12 @@ public class PollCreateActivity extends AppCompatActivity {
                     //Insert the PollBean in remote DB
                     DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
                     databaseEndpoint.insertTask(pollBean);
+
+
+                    //Show interstitial Ad
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    }
 
                     setResult(RESULT_OK);
                     finish();

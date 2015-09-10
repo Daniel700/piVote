@@ -7,6 +7,12 @@
     <string name="tabTitle4">Top 100 Polls</string>
     <string name="tabTitle5">Observe Polls</string>
 
+
+    <!-- ###################### AD MOB ###################### -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad">ca-app-pub-3940256099942544/1033173712</string>
+
+
     <!-- ############### -->
     <!-- STRINGS IN CODE -->
     <!-- ############### -->
