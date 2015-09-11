@@ -59,8 +59,6 @@ public class PollBeanEndpoint {
         // ofy().load().type(PollBean.class).reverse().first().now();
         // ofy().load().type(PollBean.class).startAt().list();
 
-        // ToDo: shuffle is O(n) -> what if list size is large?     +   memCache for keylist?
-
         List<PollBean> randoms;
         randoms = ObjectifyService.run(new Work<List<PollBean>>() {
             @Override

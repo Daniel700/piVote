@@ -13,7 +13,7 @@ import java.util.Date;
  * only the standard constructors available.
  * Therefore we need our own model class directly in the app.
  */
-//ToDo: Maybe introduce closingDate for Polls? also needed in PollBean
+
 public class Poll implements Serializable {
 
     private Long id;

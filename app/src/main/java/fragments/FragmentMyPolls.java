@@ -100,14 +100,14 @@ public class FragmentMyPolls extends Fragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToDo: if app is closed and reopened the counter is reset / fix
+
                 //Creation of Polls is limited to 2 per hour
-                if (limitCounter < 3) {
+                if (limitCounter < 2) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, PollCreateActivity.class);
                     startActivityForResult(intent, 50);
                 }
-                if (limitCounter == 3){
+                if (limitCounter == 2){
                     long elapsedTime = 3600000 - TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - limitStartTime);
                     String elapsedTimeString = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(elapsedTime),
                             TimeUnit.MILLISECONDS.toMinutes(elapsedTime) % TimeUnit.HOURS.toMinutes(1),

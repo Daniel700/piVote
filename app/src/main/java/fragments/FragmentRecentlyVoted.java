@@ -152,11 +152,13 @@ public class FragmentRecentlyVoted extends Fragment {
 
         SQLiteAccess dbAccess = new SQLiteAccess(getActivity().getApplicationContext());
         List<Long> list = dbAccess.getRecentPolls();
-        dbAccess.printAllPolls();
+        //dbAccess.printAllPolls();
 
 
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-        List<PollBean> pollBeanList = databaseEndpoint.getBatchPollTask(list);
+        List<PollBean> pollBeanList = null;
+        if (list.size() > 0)
+        pollBeanList = databaseEndpoint.getBatchPollTask(list);
 
         ModelTransformer transformer = new ModelTransformer();
         List<Poll> pollList = new ArrayList<>();

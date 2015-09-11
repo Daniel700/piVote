@@ -113,13 +113,12 @@ public class PollDetailedActivity extends AppCompatActivity {
                     //Save Poll in local SQLite Database
                     SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
                     dbAccess.insertPoll(poll, a.getAnswerText());
-                    dbAccess.printAllPolls();
+                    //dbAccess.printAllPolls();
                     dbAccess.close();
 
                     ModelTransformer modelTransformer = new ModelTransformer();
                     PollBean pollBean = modelTransformer.transformFromPollToPollBean(poll);
 
-                    //ToDo: Check if sharding is needed and possible?
                     DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
                     databaseEndpoint.updatePollTask(pollBean, a.getAnswerText());
 
