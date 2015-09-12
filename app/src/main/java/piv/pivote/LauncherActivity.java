@@ -153,13 +153,13 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
     public void detachNavigationDrawerFragments(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment frag;
-
+/*
         if (fragmentManager.getFragments() != null) {
             for (Fragment fra: fragmentManager.getFragments()) {
                 Log.e("Launcher detach", "Fragments in Manager: " + String.valueOf(fragmentManager.getFragments().size()));
             }
         }
-
+*/
         if ((frag = fragmentManager.findFragmentByTag(FragmentMyPolls.class.getName())) != null)
             fragmentManager.beginTransaction().detach(frag).commit();
 

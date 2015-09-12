@@ -3,12 +3,10 @@ package adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +19,10 @@ import java.util.List;
 
 import database.FilterOptions;
 import database.SQLiteAccess;
-import model.ModelTransformer;
 import model.Poll;
-import model.pollBeanApi.model.PollBean;
 import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
+import utils.Settings;
 
 /**
  * Created by Daniel on 12.08.2015.
@@ -119,7 +116,7 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
                     holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(v.getResources(), R.drawable.ic_star_border_white_24dp, null));
                     Snackbar.make(v, context.getString(R.string.favoriteRemoved), Snackbar.LENGTH_SHORT).show();
                 } else {
-                    if (db.getAllFavoritePolls().size() < 25) {
+                    if (db.getAllFavoritePolls().size() <= Settings.FAVORITE_LIST_MAXIMUM) {
                         db.insertFavoritePoll(poll);
                         holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(v.getResources(), R.drawable.ic_star_white_24dp, null));
                         Snackbar.make(v, context.getString(R.string.favoriteAdded), Snackbar.LENGTH_SHORT).show();

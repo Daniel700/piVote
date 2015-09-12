@@ -30,6 +30,7 @@ import layoutManager.DividerItemDecoration;
 import layoutManager.MyLinearLayoutManager;
 import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
+import utils.Settings;
 
 /**
  * Activity for creating a poll.
@@ -56,9 +57,15 @@ public class PollCreateActivity extends AppCompatActivity {
 
         //Initialize Interstitial Ad
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad));
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_poll_create));
+        AdRequest adRequest;
+        if (Settings.AD_MOB_TEST_ENVIRONMENT) {
+            //adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+            adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+        }
+        else {
+            adRequest = new AdRequest.Builder().build();
+        }
         mInterstitialAd.loadAd(adRequest);
 
         //Set Toolbar
@@ -163,7 +170,7 @@ public class PollCreateActivity extends AppCompatActivity {
                         name.setText("Anonymous");
 
                     SharedPreferences sharedPreferences = getSharedPreferences("InstallSettings", MODE_PRIVATE);
-                    String uuid = sharedPreferences.getString("UUID", "no id available");
+                    String uuid = sharedPreferences.getString("UUID", "no id available - PollCreateActivity");
 
                     PollBean pollBean = new PollBean();
                     pollBean.setUuid(uuid);

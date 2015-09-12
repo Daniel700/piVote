@@ -82,7 +82,7 @@ public class PollDetailedActivity extends AppCompatActivity {
         }
         catch (Exception e){
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("PollDetailedActivity - Views", e.getMessage());
+            endpoint.insertTask("PollDetailedActivity - Views", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
 
@@ -128,7 +128,7 @@ public class PollDetailedActivity extends AppCompatActivity {
                     finish();
                 } catch (Exception e) {
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("PollDetailedActivity - button_vote", e.getMessage());
+                    endpoint.insertTask("PollDetailedActivity - button_vote", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                     Toast.makeText(getApplicationContext(), getString(R.string.voteSubmitError), Toast.LENGTH_SHORT).show();
                 }
 

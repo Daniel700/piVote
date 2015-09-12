@@ -1,7 +1,6 @@
 package fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +25,7 @@ import model.ModelTransformer;
 import model.Poll;
 import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
-import utils.ToolsUpdateView;
+import utils.Settings;
 
 /**
  * This class provides the view for the Top100 View
@@ -65,7 +64,7 @@ public class FragmentTopPolls extends Fragment {
                 }
                 catch (Exception e){
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("FragmentTopPolls - swipeRefresh", e.getMessage());
+                    endpoint.insertTask("FragmentTopPolls - swipeRefresh", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                     e.printStackTrace();
                 }
                 finally {
@@ -76,7 +75,6 @@ public class FragmentTopPolls extends Fragment {
         });
 
 
-
         recyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -85,17 +83,22 @@ public class FragmentTopPolls extends Fragment {
 
         updateView();
 
-        //Ad Mob productive version
-        /*
-        AdView mAdView = (AdView) findViewById(R.id.adView_top100_polls);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        */
 
-        //Ad Mob test version
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
-        mAdView.loadAd(adRequest);
+        if (Settings.AD_MOB_TEST_ENVIRONMENT)
+        {
+            //Ad Mob test version
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+            mAdView.loadAd(adRequest);
+        }
+        else
+        {
+            //Ad Mob productive version
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+
 
         return rootView;
     }
@@ -105,14 +108,14 @@ public class FragmentTopPolls extends Fragment {
      */
     public void updateView(){
         // refreshing the Adapter for REFRESH_NUMBER times
-        if (refreshCounter != 0 && refreshCounter < ToolsUpdateView.REFRESH_NUMBER)
+        if (refreshCounter != 0 && refreshCounter < Settings.REFRESH_NUMBER)
         {
             mAdapter = new TopPollsAdapter(getCurrentPollList(), getActivity().getApplicationContext());
             recyclerView.setAdapter(mAdapter);
             refreshCounter++;
         }
         // if allowed Number of refreshes is reached start a timer to reset this value
-        else if (refreshCounter == ToolsUpdateView.REFRESH_NUMBER){
+        else if (refreshCounter == Settings.REFRESH_NUMBER){
             if (!taskStarted){
                 taskStarted = true;
                 TimerTask timerTask = new TimerTask() {
@@ -123,11 +126,11 @@ public class FragmentTopPolls extends Fragment {
                     }
                 };
                 Timer timer = new Timer();
-                timer.schedule(timerTask, ToolsUpdateView.DURATION);
+                timer.schedule(timerTask, Settings.DURATION);
                 startTime = System.nanoTime();
             }
             else {
-                long elapsedTime = ToolsUpdateView.DURATION - TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+                long elapsedTime = Settings.DURATION - TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
                 String elapsedTimeString = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(elapsedTime),
                         TimeUnit.MILLISECONDS.toMinutes(elapsedTime) % TimeUnit.HOURS.toMinutes(1),
                         TimeUnit.MILLISECONDS.toSeconds(elapsedTime) % TimeUnit.MINUTES.toSeconds(1));

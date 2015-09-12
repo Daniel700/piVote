@@ -3,20 +3,16 @@ package database;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.google.api.client.util.DateTime;
 
-import java.io.IOException;
 import java.util.Date;
 
 import model.logBeanApi.LogBeanApi;
 import model.logBeanApi.model.LogBean;
-import model.pollBeanApi.PollBeanApi;
+import utils.Settings;
 
 
 /**
@@ -32,7 +28,7 @@ public class DatabaseLogEndpoint extends Application {
     public void onCreate() {
         super.onCreate();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("InstallSettings", MODE_PRIVATE);
-        uuid = sharedPreferences.getString("UUID", "no id available");
+        uuid = sharedPreferences.getString("UUID", "no id available - DatabaseLogEndpoint");
     }
 
 
@@ -93,7 +89,7 @@ public class DatabaseLogEndpoint extends Application {
             */
 
             LogBeanApi.Builder builder = new LogBeanApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                    .setRootUrl("https://pivote-1036.appspot.com/_ah/api/");
+                    .setRootUrl(Settings.PROJECT_ADDRESS);
             myApiService = builder.build();
 
         }

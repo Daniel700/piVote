@@ -36,6 +36,7 @@ import model.Poll;
 import model.logBeanApi.model.LogBean;
 import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
+import utils.Settings;
 
 /**
  * Created by Daniel on 28.07.2015.
@@ -114,12 +115,19 @@ public class FragmentQuestionList extends Fragment {
             public void onRefresh() {
                 try {
                     DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                    List<PollBean> beans1 = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(0, 100));
-                    List<PollBean> beans2 = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(100, mAdapter.getIdList().size()));
-
                     List<PollBean> beans = new ArrayList<PollBean>();
-                    beans.addAll(beans1);
-                    beans.addAll(beans2);
+
+                    if (mAdapter.getIdList().size() <= 100)
+                    {
+                        beans = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(0, mAdapter.getIdList().size()));
+                    }
+                    else
+                    {
+                        List<PollBean> beans1 = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(0, 100));
+                        List<PollBean> beans2 = databaseEndpoint.getBatchPollTask(mAdapter.getIdList().subList(100, mAdapter.getIdList().size()));
+                        beans.addAll(beans1);
+                        beans.addAll(beans2);
+                    }
 
                     ModelTransformer transformer = new ModelTransformer();
                     List<Poll> pollList = new ArrayList<>();
@@ -133,25 +141,29 @@ public class FragmentQuestionList extends Fragment {
                     mRecyclerView.setAdapter(mAdapter);
                 } catch (Exception e) {
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("FragmentQuestionList - swipeRefresh", e.getMessage());
-                    e.printStackTrace();
+                    endpoint.insertTask("FragmentQuestionList - swipeRefresh", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                 } finally {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
 
-        //Ad Mob productive version
-        /*
-        AdView mAdView = (AdView) findViewById(R.id.adView_question_list);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        */
+        if (Settings.AD_MOB_TEST_ENVIRONMENT)
+        {
 
-        //Ad Mob test version
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_question_list);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
-        mAdView.loadAd(adRequest);
+            //Ad Mob test version
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_question_list);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+            mAdView.loadAd(adRequest);
+
+        }
+        else {
+            //Ad Mob productive version
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_question_list);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+
 
         return rootView;
     }

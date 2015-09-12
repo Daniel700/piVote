@@ -28,6 +28,7 @@ import model.ModelTransformer;
 import model.Poll;
 import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
+import utils.Settings;
 
 /**
  * Created by Daniel on 12.08.2015.
@@ -67,7 +68,7 @@ public class FragmentFavorites extends Fragment {
                 }
                 catch (Exception e){
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("FragmentFavorites - swipeRefresh", e.getMessage());
+                    endpoint.insertTask("FragmentFavorites - swipeRefresh", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                     e.printStackTrace();
                 }
                 finally {
@@ -95,27 +96,33 @@ public class FragmentFavorites extends Fragment {
                         dialog.dismiss();
                     }
                 });
-                alertDialogBuilder.setNegativeButton(getString(R.string.dialogButtonNegative),new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                dialog.cancel();
-                            }
-                        });
+                alertDialogBuilder.setNegativeButton(getString(R.string.dialogButtonNegative), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
         });
 
-        //Ad Mob productive version
-        /*
-        AdView mAdView = (AdView) findViewById(R.id.adView_favorite_polls);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        */
 
-        //Ad Mob test version
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView_favorite_polls);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
-        mAdView.loadAd(adRequest);
+
+        if (Settings.AD_MOB_TEST_ENVIRONMENT)
+        {
+            //Ad Mob test version
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_favorite_polls);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+            mAdView.loadAd(adRequest);
+        }
+        else
+        {
+            //Ad Mob productive version
+            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_favorite_polls);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
+
 
         return rootView;
     }

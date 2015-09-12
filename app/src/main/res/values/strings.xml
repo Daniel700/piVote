@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">piVote</string>
+    <string name="app_name" translatable="false">piVote</string>
 
     <string name="tabTitle1">All Polls</string>
     <string name="tabTitle2">My Polls</string>
@@ -8,19 +8,37 @@
     <string name="tabTitle5">Observe Polls</string>
 
 
-    <!-- ###################### AD MOB ###################### -->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_ad">ca-app-pub-3940256099942544/1033173712</string>
+    <!-- ###################### AD MOB TEST ###################### -->
+
+    <string name="banner_fragment_question_list" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_fragment_my_polls" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_fragment_recently_voted" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_fragment_top_polls" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_fragment_favorite_polls" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="interstitial_poll_create" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
 
 
-    <!-- ############### -->
+    <!-- ###################### AD MOB LIVE ###################### -->
+    <!--
+    <string name="banner_fragment_question_list" translatable="false">ca-app-pub-8931744357161861/8938332639</string>
+    <string name="banner_fragment_my_polls" translatable="false">ca-app-pub-8931744357161861/8798731838</string>
+    <string name="banner_fragment_recently_voted" translatable="false">ca-app-pub-8931744357161861/1275465033</string>
+    <string name="banner_fragment_top_polls" translatable="false">ca-app-pub-8931744357161861/2752198234</string>
+    <string name="banner_fragment_favorite_polls" translatable="false">ca-app-pub-8931744357161861/4228931432</string>
+
+    <string name="interstitial_poll_create" translatable="false">ca-app-pub-8931744357161861/5705664632</string>
+    -->
+
+
+     <!-- ############### -->
     <!-- STRINGS IN CODE -->
     <!-- ############### -->
 
 
     <!-- Launcher Activity -->
-    <string name="open">drawerOpened</string>
-    <string name="close">drawerClosed</string>
+    <string name="open" translatable="false">drawerOpened</string>
+    <string name="close" translatable="false">drawerClosed</string>
     <string name="windowError">Window could not be created</string>
     <string name="voteSubmit1">Your Vote - </string>
     <string name="voteSubmit2"> - has been submitted</string>
@@ -219,7 +237,7 @@
     </string-array>
 
 
-    <string-array name="numberOfAnswers">
+    <string-array name="numberOfAnswers" translatable="false">
         <item>0</item>
         <item>2</item>
         <item>3</item>

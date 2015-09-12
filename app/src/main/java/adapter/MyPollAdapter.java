@@ -14,20 +14,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.api.client.util.DateTime;
-
 import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
 
 import database.FilterOptions;
 import database.SQLiteAccess;
-import model.ModelTransformer;
 import model.Poll;
-import model.pollBeanApi.model.PollBean;
 import piv.pivote.PollDetailedActivity;
 import piv.pivote.R;
+import utils.Settings;
 
 /**
  * Created by Daniel on 03.08.2015.
@@ -111,7 +107,7 @@ public class MyPollAdapter extends RecyclerView.Adapter<MyPollAdapter.ViewHolder
                     holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(v.getResources(), R.drawable.ic_star_border_white_24dp, null));
                     Snackbar.make(v, context.getString(R.string.favoriteRemoved), Snackbar.LENGTH_SHORT).show();
                 } else {
-                    if (db.getAllFavoritePolls().size() < 25) {
+                    if (db.getAllFavoritePolls().size() <= Settings.FAVORITE_LIST_MAXIMUM) {
                         db.insertFavoritePoll(poll);
                         holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(v.getResources(), R.drawable.ic_star_white_24dp, null));
                         Snackbar.make(v, context.getString(R.string.favoriteAdded), Snackbar.LENGTH_SHORT).show();

@@ -1,23 +1,17 @@
 package database;
 
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import model.logBeanApi.LogBeanApi;
 import model.pollBeanApi.PollBeanApi;
 import model.pollBeanApi.model.PollBean;
+import utils.Settings;
 
 /**
  * Created by Daniel on 16.08.2015.
@@ -40,7 +34,7 @@ public class DatabaseEndpoint {
                         }
                         catch (IOException e) {
                             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                            endpoint.insertTask("InsertTask - Async", e.getMessage());
+                            endpoint.insertTask("InsertTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                             e.printStackTrace();
                         }
 
@@ -61,7 +55,7 @@ public class DatabaseEndpoint {
                     }
                     catch (IOException e) {
                         DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                        endpoint.insertTask("GetTop100PollsTask - Async", e.getMessage());
+                        endpoint.insertTask("GetTop100PollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                         e.printStackTrace();
                     }
 
@@ -82,7 +76,7 @@ public class DatabaseEndpoint {
                     }
                     catch (Exception e) {
                         DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                        endpoint.insertTask("GetMyPollsTask - Async", e.getMessage());
+                        endpoint.insertTask("GetMyPollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                         e.printStackTrace();
                     }
 
@@ -103,7 +97,7 @@ public class DatabaseEndpoint {
                     }
                     catch (Exception e) {
                         DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                        endpoint.insertTask("GetPollTask - Async", e.getMessage());
+                        endpoint.insertTask("GetPollTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                         e.printStackTrace();
                     }
 
@@ -125,7 +119,7 @@ public class DatabaseEndpoint {
                     }
                     catch (Exception e) {
                         DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                        endpoint.insertTask("UpdatePollTask - Async", e.getMessage());
+                        endpoint.insertTask("UpdatePollTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                         e.printStackTrace();
                     }
 
@@ -154,7 +148,7 @@ public class DatabaseEndpoint {
                     }
                     catch (IOException e) {
                         DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                        endpoint.insertTask("GetRandomPollsTask - Async", e.getMessage());
+                        endpoint.insertTask("GetRandomPollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                         e.printStackTrace();
                     }
 
@@ -180,7 +174,7 @@ public class DatabaseEndpoint {
                     }
                     catch (Exception e){
                         DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                        endpoint.insertTask("GetBatchPollTask - Async", e.getMessage());
+                        endpoint.insertTask("GetBatchPollTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                         e.printStackTrace();
                     }
 
@@ -205,7 +199,7 @@ public class DatabaseEndpoint {
         }
         catch (Exception e){
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("GetBatchPollTask", e.getMessage());
+            endpoint.insertTask("GetBatchPollTask", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
         return pollBean;
@@ -223,7 +217,7 @@ public class DatabaseEndpoint {
         }
         catch (Exception e){
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("GetRandomPollsTask", e.getMessage());
+            endpoint.insertTask("GetRandomPollsTask", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
 
@@ -240,7 +234,7 @@ public class DatabaseEndpoint {
         }
         catch (Exception e){
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("UpdatePollTask", e.getMessage());
+            endpoint.insertTask("UpdatePollTask", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
 
@@ -256,7 +250,7 @@ public class DatabaseEndpoint {
         }
         catch (Exception e){
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("GetPollTask", e.getMessage());
+            endpoint.insertTask("GetPollTask", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
 
@@ -273,7 +267,7 @@ public class DatabaseEndpoint {
         }
         catch (Exception e) {
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("GetMyPollsTask", e.getMessage());
+            endpoint.insertTask("GetMyPollsTask", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
 
@@ -290,7 +284,7 @@ public class DatabaseEndpoint {
         }
         catch (Exception e){
             DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-            endpoint.insertTask("GetTop100PollsTask", e.getMessage());
+            endpoint.insertTask("GetTop100PollsTask", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
             e.printStackTrace();
         }
 
@@ -325,7 +319,7 @@ public class DatabaseEndpoint {
             */
 
             PollBeanApi.Builder builder = new PollBeanApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                    .setRootUrl("https://pivote-1036.appspot.com/_ah/api/");
+                    .setRootUrl(Settings.PROJECT_ADDRESS);
             myApiService = builder.build();
 
         }
