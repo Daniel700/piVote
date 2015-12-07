@@ -64,7 +64,7 @@
     <string name="refresh1">Found</string>
     <string name="refresh2">Polls</string>
     <string name="checkRefreshTitle">Retrieve new List</string>
-    <string name="checkRefreshMessage">Are you sure you want to retrieve a new list?</string>
+    <string name="checkRefreshMessage">Are you sure that you want to retrieve a new list?</string>
 
     <!-- FragmentMyPolls -->
     <string name="createMorePolls">You can create more Polls in: </string>

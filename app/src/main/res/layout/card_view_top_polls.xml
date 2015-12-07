@@ -18,7 +18,7 @@
             android:id="@+id/sortNumber_top_polls"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/sortNumber_light"
+            android:background="@color/sortNumber_dark"
             android:gravity="center"
             android:textStyle="italic"
             android:textSize="12sp"
