@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ public class FragmentRecentlyVoted extends Fragment implements SwipeRefreshLayou
     private PollBeanApi pollBeanApi;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View rootView;
 
     private static int refreshCounter = 0;
     private static boolean taskStarted = false;
@@ -59,7 +59,7 @@ public class FragmentRecentlyVoted extends Fragment implements SwipeRefreshLayou
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_recently_voted, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recently_voted, container, false);
 
             if (Settings.AD_MOB_TEST_ENVIRONMENT)
             {
@@ -177,7 +177,7 @@ public class FragmentRecentlyVoted extends Fragment implements SwipeRefreshLayou
                 }
                 catch (Exception e){
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("GetBatchPollTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                    endpoint.insertTask("FragmentRecentlyVoted - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                     e.printStackTrace();
                 }
             }
@@ -202,7 +202,7 @@ public class FragmentRecentlyVoted extends Fragment implements SwipeRefreshLayou
         protected void onPostExecute(List<Poll> pollList) {
             super.onPostExecute(pollList);
 
-            if (rootView.hasFocus()){
+            if (FragmentRecentlyVoted.this.isVisible()){
                 progressBar.setVisibility(View.GONE);
                 mAdapter = new QuestionListAdapter(pollList, getContext());
                 recyclerView.setAdapter(mAdapter);

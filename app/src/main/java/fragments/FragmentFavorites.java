@@ -44,7 +44,6 @@ public class FragmentFavorites extends Fragment implements View.OnClickListener,
     private PollBeanApi pollBeanApi;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View rootView;
 
 
     @Override
@@ -56,7 +55,7 @@ public class FragmentFavorites extends Fragment implements View.OnClickListener,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
             if (Settings.AD_MOB_TEST_ENVIRONMENT)
             {
@@ -166,7 +165,7 @@ public class FragmentFavorites extends Fragment implements View.OnClickListener,
                 }
                 catch (Exception e){
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("GetBatchPollTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                    endpoint.insertTask("FragmentFavorites - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                     e.printStackTrace();
                 }
 
@@ -191,7 +190,7 @@ public class FragmentFavorites extends Fragment implements View.OnClickListener,
         protected void onPostExecute(List<Poll> pollList) {
             super.onPostExecute(pollList);
 
-            if (rootView.hasFocus()){
+            if (FragmentFavorites.this.isVisible()){
                 progressBar.setVisibility(View.GONE);
                 mAdapter = new QuestionListAdapter(pollList, getContext());
                 recyclerView.setAdapter(mAdapter);

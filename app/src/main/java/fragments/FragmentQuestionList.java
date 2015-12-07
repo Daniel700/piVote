@@ -50,7 +50,6 @@ public class FragmentQuestionList extends Fragment implements View.OnClickListen
     private QuestionListAdapter mAdapter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View rootView;
 
     private PollBeanApi pollBeanApi;
     private int languagePosition = 0;
@@ -64,9 +63,8 @@ public class FragmentQuestionList extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         setHasOptionsMenu(true);
-        rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_question_list, container, false);
 
             if (Settings.AD_MOB_TEST_ENVIRONMENT)
             {
@@ -147,7 +145,6 @@ public class FragmentQuestionList extends Fragment implements View.OnClickListen
             languagePosition = data.getIntExtra("language", 0);
             categoryPosition = data.getIntExtra("category", 0);
             new LoadContentTask().execute();
-            Snackbar.make(mRecyclerView, getString(R.string.refresh1) + " " + String.valueOf(mAdapter.getItemCount()) + " " + getString(R.string.refresh2), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -226,7 +223,7 @@ public class FragmentQuestionList extends Fragment implements View.OnClickListen
         protected void onPostExecute(List<Poll> pollList) {
             super.onPostExecute(pollList);
 
-            if (rootView.hasFocus()){
+            if (FragmentQuestionList.this.isVisible()){
                 mAdapter = new QuestionListAdapter(pollList, getActivity().getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);
                 swipeRefreshLayout.setRefreshing(false);
@@ -260,7 +257,7 @@ public class FragmentQuestionList extends Fragment implements View.OnClickListen
             }
             catch (IOException e) {
                 DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                endpoint.insertTask("GetRandomPollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                endpoint.insertTask("FragmentQuestionList - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                 e.printStackTrace();
             }
 
@@ -272,7 +269,7 @@ public class FragmentQuestionList extends Fragment implements View.OnClickListen
         protected void onPostExecute(List<Poll> pollList) {
             super.onPostExecute(pollList);
 
-            if (rootView.hasFocus()){
+            if (FragmentQuestionList.this.isVisible()){
                 progressBar.setVisibility(View.GONE);
                 mAdapter = new QuestionListAdapter(pollList, getActivity().getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);

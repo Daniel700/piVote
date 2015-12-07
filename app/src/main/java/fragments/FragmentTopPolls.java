@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class FragmentTopPolls extends Fragment implements SwipeRefreshLayout.OnR
     private PollBeanApi pollBeanApi;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View rootView;
 
     private static int refreshCounter = 0;
     private static boolean taskStarted = false;
@@ -58,7 +58,7 @@ public class FragmentTopPolls extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_top_polls, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_top_polls, container, false);
 
             if (Settings.AD_MOB_TEST_ENVIRONMENT)
             {
@@ -173,7 +173,7 @@ public class FragmentTopPolls extends Fragment implements SwipeRefreshLayout.OnR
             }
             catch (IOException e) {
                 DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                endpoint.insertTask("GetTop100PollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                endpoint.insertTask("FragmentTopPolls - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                 e.printStackTrace();
             }
 
@@ -189,7 +189,7 @@ public class FragmentTopPolls extends Fragment implements SwipeRefreshLayout.OnR
         protected void onPostExecute(List<Poll> pollList) {
             super.onPostExecute(pollList);
 
-            if (rootView.hasFocus()){
+            if (FragmentTopPolls.this.isVisible()){
                 progressBar.setVisibility(View.GONE);
                 mAdapter = new TopPollsAdapter(pollList, getContext());
                 recyclerView.setAdapter(mAdapter);

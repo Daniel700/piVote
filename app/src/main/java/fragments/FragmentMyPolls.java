@@ -53,7 +53,6 @@ public class FragmentMyPolls extends Fragment implements View.OnClickListener, S
     private PollBeanApi pollBeanApi;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private View rootView;
 
     private static int refreshCounter = 0;
     private static boolean taskStarted = false;
@@ -75,7 +74,7 @@ public class FragmentMyPolls extends Fragment implements View.OnClickListener, S
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_my_polls, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_my_polls, container, false);
 
             if (Settings.AD_MOB_TEST_ENVIRONMENT)
             {
@@ -254,7 +253,7 @@ public class FragmentMyPolls extends Fragment implements View.OnClickListener, S
             }
             catch (Exception e) {
                 DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                endpoint.insertTask("GetMyPollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                endpoint.insertTask("FragmentMyPolls - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
                 e.printStackTrace();
             }
 
@@ -265,7 +264,7 @@ public class FragmentMyPolls extends Fragment implements View.OnClickListener, S
         protected void onPostExecute(List<Poll> pollList) {
             super.onPostExecute(pollList);
 
-            if (rootView.hasFocus()){
+            if (FragmentMyPolls.this.isVisible()){
                 progressBar.setVisibility(View.GONE);
                 mAdapter = new MyPollAdapter(pollList, getContext());
                 recyclerView.setAdapter(mAdapter);
