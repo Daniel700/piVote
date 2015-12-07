@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/question"/>
+            android:background="@color/question_detailed_dark"/>
 
         <EditText
             android:id="@+id/editText_question_cp"
@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/question"/>
+            android:background="@color/question_detailed_dark"/>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -180,7 +180,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/question" />
+        android:background="@color/question_detailed_dark" />
 
     <Button
         android:id="@+id/button_create"
@@ -191,7 +191,7 @@
         android:layout_margin="10dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_background" />
+        android:theme="@style/MaterialButtonPositive"/>
 
 
 </LinearLayout>

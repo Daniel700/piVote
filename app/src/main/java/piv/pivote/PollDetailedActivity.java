@@ -110,12 +110,17 @@ public class PollDetailedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                try {
-                    new UpdatePollTask().execute();
-                } catch (Exception e) {
-                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("PollDetailedActivity - button_vote", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
-                    Toast.makeText(getApplicationContext(), getString(R.string.voteSubmitError), Toast.LENGTH_SHORT).show();
+                if (((DetailedPollAnswersAdapter) mAdapter).getChosenAnswer() != null){
+                    try {
+                        new UpdatePollTask().execute();
+                    } catch (Exception e) {
+                        DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                        endpoint.insertTask("PollDetailedActivity - button_vote", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                        Toast.makeText(getApplicationContext(), getString(R.string.voteSubmitError), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.voteSubmitMissingAnswer), Toast.LENGTH_SHORT).show();
                 }
 
             }

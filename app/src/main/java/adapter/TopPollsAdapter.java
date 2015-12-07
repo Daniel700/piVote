@@ -88,9 +88,9 @@ public class TopPollsAdapter extends RecyclerView.Adapter<TopPollsAdapter.ViewHo
 
         //Color question red if already voted
         if (poll.isAlreadyVoted())
-            holder.vQuestion.setBackgroundResource(R.drawable.question_background_negative_gradient);
+            holder.vQuestion.setBackgroundResource(R.color.question_negative_dark);
         else
-            holder.vQuestion.setBackgroundResource(R.drawable.question_background_gradient);
+            holder.vQuestion.setBackgroundResource(R.color.question_dark);
         //Mark as favorite if in fav List
         if (poll.isFavorite())
             holder.vButtonFav.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_star_white_24dp, null));

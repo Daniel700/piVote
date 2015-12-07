@@ -1,13 +1,24 @@
 <resources>
 
-    <color name="question">#6379F5</color>
-    <color name="question_dark">#020BA8</color>
+    <color name="question_detailed_light">#6379F5</color>
+    <color name="question_detailed_dark">#020BA8</color>
     <color name="question_alternative">#5AC65A</color>
+
+    <color name="question_light">#9BB9FF</color>
+    <color name="question_dark">#2A6AFF</color>
+    <color name="question_negative_light">#ABABAB</color>
+    <color name="question_negative_dark">#666666</color>
 
     <color name="table_row_header">#E5E5E5</color>
     <color name="table_row_column">#BCBCBC</color>
 
     <color name="button_background_light">#FFD372</color>
     <color name="button_background_dark">#FFBE30</color>
+
+    <color name="favorite_light">#FFDF88</color>
+    <color name="favorite_dark">#FFBC00</color>
+
+    <color name="sortNumber_light">#FFF3D2</color>
+    <color name="sortNumber_dark">#727272</color>
 
 </resources>

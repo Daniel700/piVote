@@ -18,7 +18,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:background="@drawable/question_detailed_background"
+        android:background="@color/question_detailed_dark"
         android:textColor="@android:color/white" />
 
     <TableLayout
@@ -142,7 +142,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/question"/>
+        android:background="@color/question_detailed_dark"/>
 
 
     <TableLayout
@@ -199,7 +199,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/question"/>
+        android:background="@color/question_detailed_dark"/>
 
     <Button
         android:id="@+id/button_vote"
@@ -210,7 +210,7 @@
         android:layout_margin="10dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_background"
+        android:theme="@style/MaterialButtonPositive"
         />
 
 </LinearLayout>

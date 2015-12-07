@@ -57,6 +57,7 @@
 
     <!-- PollDetailedActivity -->
     <string name="activity_detailed_poll">Detailed Poll View</string>
+    <string name="voteSubmitMissingAnswer">Please choose an answer</string>
     <string name="voteSubmitError">Your vote couldn\'t be submitted, please try again later</string>
 
     <!-- FragmentQuestionList -->

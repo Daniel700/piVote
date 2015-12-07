@@ -31,6 +31,7 @@
 
     <!-- PollDetailedActivity -->
     <string name="activity_detailed_poll">Detailansicht</string>
+    <string name="voteSubmitMissingAnswer">Bitte Antwort auswählen</string>
     <string name="voteSubmitError">Deine Abstimmung konnte nicht übertragen werden, bitte später nochmal versuchen</string>
 
     <!-- FragmentQuestionList -->

@@ -3,8 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-
-
         <!--   your app branding color for the app bar
         <item name="colorPrimary">#777777</item>
           darker variant for the status bar and contextual app bars
@@ -13,7 +11,6 @@
         <item name="colorAccent">#DE3636</item>
         -->
 
-
         <!--   your app branding color for the app bar -->
         <item name="colorPrimary">#3C4FBE</item>
         <!--  darker variant for the status bar and contextual app bars -->
@@ -21,7 +18,12 @@
         <!-- theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#EDEDED</item>
 
+    </style>
 
+    <!--                  BUTTON POSITIVE MATERIAL DESIGN                        -->
+    <style name="MaterialButtonPositive" parent="Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/button_background_dark</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>
