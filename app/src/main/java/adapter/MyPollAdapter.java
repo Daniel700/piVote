@@ -17,7 +17,6 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.util.List;
 
-
 import database.FilterOptions;
 import database.SQLiteAccess;
 import model.Poll;

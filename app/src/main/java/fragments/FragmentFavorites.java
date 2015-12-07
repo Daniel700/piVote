@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
 

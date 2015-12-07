@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-
 import database.FilterOptions;
 import database.SQLiteAccess;
 import model.Poll;

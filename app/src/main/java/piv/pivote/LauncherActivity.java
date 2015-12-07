@@ -13,19 +13,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import fragments.FragmentFavorites;
 import fragments.FragmentMyPolls;
 import fragments.FragmentQuestionList;
 import fragments.FragmentRecentlyVoted;
 import fragments.FragmentTopPolls;
-import model.TestData;
 
 /**
  * This activity is the Main Activity of the application and handles the navigation to other Fragments/Activities.

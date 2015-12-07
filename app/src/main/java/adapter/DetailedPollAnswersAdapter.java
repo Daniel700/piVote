@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
 import model.Answer;
 import model.Poll;
 import piv.pivote.R;

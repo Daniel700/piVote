@@ -1,19 +1,9 @@
 package database;
 
-import android.os.AsyncTask;
-import android.support.v4.util.Pair;
-
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import model.ModelTransformer;
-import model.Poll;
 import model.pollBeanApi.PollBeanApi;
-import model.pollBeanApi.model.PollBean;
 import utils.Settings;
 
 /**
