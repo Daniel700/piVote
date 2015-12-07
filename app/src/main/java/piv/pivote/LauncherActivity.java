@@ -203,8 +203,6 @@ public class LauncherActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(final MenuItem menuItem) {
-            menuItem.setChecked(true);
-            mDrawerLayout.closeDrawer(GravityCompat.START);
             navigate(menuItem);
         return true;
     }

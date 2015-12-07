@@ -1,12 +1,17 @@
 package model;
 
 
+import android.os.AsyncTask;
+
 import com.google.api.client.util.DateTime;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
+import model.pollBeanApi.PollBeanApi;
 import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 
@@ -23,11 +28,12 @@ public class TestData {
 
 
     public ArrayList<PollBean> backendList;
-
+    private PollBeanApi pollBeanApi;
 
     private TestData() {
 
         backendList = new ArrayList<>();
+        pollBeanApi = DatabaseEndpoint.instantiateConnection();
 
         for (int i = 0; i < 7; i++){
             backendList.add(Poll1());
@@ -38,9 +44,28 @@ public class TestData {
 
         DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
         for (PollBean p: backendList) {
-            databaseEndpoint.insertTask(p);
+            new InsertTask().execute(p);
         }
 
+
+    }
+
+
+    private class InsertTask extends AsyncTask<PollBean, Void, Void> {
+
+        @Override
+        protected Void doInBackground(PollBean... params) {
+
+            try {
+                pollBeanApi.insertPollBean(params[0]).execute();
+            }
+            catch (IOException e) {
+                DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                endpoint.insertTask("InsertTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                e.printStackTrace();
+            }
+            return null;
+        }
 
     }
 

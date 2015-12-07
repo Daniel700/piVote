@@ -5,6 +5,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    <ProgressBar
+        android:id="@+id/progress_bar_top_polls"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"/>
+
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/coordinatorLayoutTopPolls"
     android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package piv.pivote;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
@@ -25,6 +26,7 @@ import database.SQLiteAccess;
 import model.Answer;
 import model.ModelTransformer;
 import model.Poll;
+import model.pollBeanApi.PollBeanApi;
 import model.pollBeanApi.model.PollBean;
 
 
@@ -39,6 +41,7 @@ public class PollDetailedActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView mRecyclerView;
     private Poll poll;
+    private PollBeanApi pollBeanApi;
 
 
     @Override
@@ -108,24 +111,7 @@ public class PollDetailedActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 try {
-                    Answer a = ((DetailedPollAnswersAdapter) mAdapter).getChosenAnswer();
-
-                    //Save Poll in local SQLite Database
-                    SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
-                    dbAccess.insertPoll(poll, a.getAnswerText());
-                    //dbAccess.printAllPolls();
-                    dbAccess.close();
-
-                    ModelTransformer modelTransformer = new ModelTransformer();
-                    PollBean pollBean = modelTransformer.transformFromPollToPollBean(poll);
-
-                    DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                    databaseEndpoint.updatePollTask(pollBean, a.getAnswerText());
-
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("snackbarDetailed", a.getAnswerText());
-                    setResult(RESULT_OK, returnIntent);
-                    finish();
+                    new UpdatePollTask().execute();
                 } catch (Exception e) {
                     DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
                     endpoint.insertTask("PollDetailedActivity - button_vote", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
@@ -157,7 +143,6 @@ public class PollDetailedActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(mAdapter);
         }
 
-
     }
 
 
@@ -171,4 +156,58 @@ public class PollDetailedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private class UpdatePollTask extends AsyncTask<Void, Void, String> {
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String answer = null;
+
+            try {
+                Answer a = ((DetailedPollAnswersAdapter) mAdapter).getChosenAnswer();
+                answer = a.getAnswerText();
+
+                //Save Poll in local SQLite Database
+                SQLiteAccess dbAccess = new SQLiteAccess(getApplicationContext());
+                dbAccess.insertPoll(poll, a.getAnswerText());
+                //dbAccess.printAllPolls();
+                dbAccess.close();
+
+                ModelTransformer modelTransformer = new ModelTransformer();
+                PollBean pollBean = modelTransformer.transformFromPollToPollBean(poll);
+
+                pollBeanApi.updatePollBean(answer, pollBean).execute();
+            }
+            catch (Exception e) {
+                DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                endpoint.insertTask("UpdatePollTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                e.printStackTrace();
+            }
+
+            return answer;
+        }
+
+        @Override
+        protected void onPostExecute(String answer) {
+            super.onPostExecute(answer);
+
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("snackbarDetailed", answer);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pollBeanApi = DatabaseEndpoint.instantiateConnection();
+        }
+
+    }
+
+
 }

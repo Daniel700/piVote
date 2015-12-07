@@ -1,6 +1,7 @@
 package piv.pivote;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -20,14 +21,17 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.api.client.util.DateTime;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import adapter.CreatePollAnswersAdapter;
 import database.DatabaseEndpoint;
+import database.DatabaseLogEndpoint;
 import database.FilterOptions;
 import layoutManager.DividerItemDecoration;
 import layoutManager.MyLinearLayoutManager;
+import model.pollBeanApi.PollBeanApi;
 import model.pollBeanApi.model.AnswerBean;
 import model.pollBeanApi.model.PollBean;
 import utils.Settings;
@@ -44,6 +48,7 @@ public class PollCreateActivity extends AppCompatActivity {
     private CreatePollAnswersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
+    private PollBeanApi pollBeanApi;
     private String language;
     private String category;
     private int numberOfAnswers;
@@ -55,6 +60,7 @@ public class PollCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poll_create);
 
+        pollBeanApi = DatabaseEndpoint.instantiateConnection();
         //Initialize Interstitial Ad
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_poll_create));
@@ -192,8 +198,7 @@ public class PollCreateActivity extends AppCompatActivity {
                     pollBean.setAnswerBeans(answerBeans);
 
                     //Insert the PollBean in remote DB
-                    DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-                    databaseEndpoint.insertTask(pollBean);
+                    new InsertTask().execute(pollBean);
 
 
                     //Show interstitial Ad
@@ -223,4 +228,25 @@ public class PollCreateActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private class InsertTask extends AsyncTask<PollBean, Void, Void> {
+
+        @Override
+        protected Void doInBackground(PollBean... params) {
+
+            try {
+                pollBeanApi.insertPollBean(params[0]).execute();
+            }
+            catch (IOException e) {
+                DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                endpoint.insertTask("InsertTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+    }
+
+
 }

@@ -32,7 +32,11 @@
 
     </LinearLayout>
 
-
+    <ProgressBar
+        android:id="@+id/progress_bar_favorites"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayoutQuestionList"

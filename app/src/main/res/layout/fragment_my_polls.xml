@@ -13,6 +13,12 @@
     android:textStyle="italic"
     android:layout_margin="5dp"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar_my_polls"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"/>
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayoutMyPolls"
         android:layout_width="match_parent"

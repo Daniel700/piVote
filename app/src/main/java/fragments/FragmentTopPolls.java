@@ -1,5 +1,6 @@
 package fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -23,19 +26,24 @@ import database.DatabaseEndpoint;
 import database.DatabaseLogEndpoint;
 import model.ModelTransformer;
 import model.Poll;
+import model.pollBeanApi.PollBeanApi;
 import model.pollBeanApi.model.PollBean;
 import piv.pivote.R;
 import utils.Settings;
 
 /**
- * This class provides the view for the Top100 View
+ * This class provides the view for the Top100 List
  * Created by Daniel on 11.08.2015.
  */
-public class FragmentTopPolls extends Fragment {
+public class FragmentTopPolls extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView recyclerView;
+    private PollBeanApi pollBeanApi;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View rootView;
 
     private static int refreshCounter = 0;
     private static boolean taskStarted = false;
@@ -44,74 +52,72 @@ public class FragmentTopPolls extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new TopPollsAdapter(getCurrentPollList(), getActivity().getApplicationContext());
+        pollBeanApi = DatabaseEndpoint.instantiateConnection();
     }
-
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_top_polls, container, false);
 
-        final View rootView = inflater.inflate(R.layout.fragment_top_polls, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_top_polls);
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_top_polls);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                try{
-                    mAdapter = new TopPollsAdapter(getCurrentPollList(),getActivity().getApplicationContext());
-                    recyclerView.setAdapter(mAdapter);
-                }
-                catch (Exception e){
-                    DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
-                    endpoint.insertTask("FragmentTopPolls - swipeRefresh", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
-                    e.printStackTrace();
-                }
-                finally {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-
+            if (Settings.AD_MOB_TEST_ENVIRONMENT)
+            {
+                //Ad Mob test version
+                AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
+                AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
+                mAdView.loadAd(adRequest);
             }
-        });
+            else
+            {
+                //Ad Mob productive version
+                AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+            }
 
-
-        recyclerView.setAdapter(mAdapter);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_top_polls);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_top_polls);
         mLayoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         int scrollPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
         recyclerView.scrollToPosition(scrollPosition);
 
-        updateView();
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_top_polls);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
-
-        if (Settings.AD_MOB_TEST_ENVIRONMENT)
-        {
-            //Ad Mob test version
-            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
-            AdRequest adRequest = new AdRequest.Builder().addTestDevice("2D18A580DC26C325F086D6FB9D84F765").build();
-            mAdView.loadAd(adRequest);
-        }
-        else
-        {
-            //Ad Mob productive version
-            AdView mAdView = (AdView) rootView.findViewById(R.id.adView_top100_polls);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
-        }
-
+        new LoadContentTask(false).execute();
 
         return rootView;
+    }
+
+
+    /**
+     * Refresh Listener for SwipeLayout
+     */
+    @Override
+    public void onRefresh() {
+        try{
+            new LoadContentTask(true).execute();
+        }
+        catch (Exception e){
+            DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+            endpoint.insertTask("FragmentTopPolls - swipeRefresh", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+            e.printStackTrace();
+        }
+        finally {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     /**
      * This method will refresh the Poll list for REFRESH_NUMBER times automatically for convenience
      */
+    @Deprecated
     public void updateView(){
         // refreshing the Adapter for REFRESH_NUMBER times
         if (refreshCounter != 0 && refreshCounter < Settings.REFRESH_NUMBER)
         {
-            mAdapter = new TopPollsAdapter(getCurrentPollList(), getActivity().getApplicationContext());
-            recyclerView.setAdapter(mAdapter);
+            new LoadContentTask(false).execute();
             refreshCounter++;
         }
         // if allowed Number of refreshes is reached start a timer to reset this value
@@ -147,21 +153,57 @@ public class FragmentTopPolls extends Fragment {
 
     /**
      * Requests the Top 100 Polls from the remote Database.
-     * @return Poll list for the Adapter
      */
-    public List<Poll> getCurrentPollList(){
-        DatabaseEndpoint databaseEndpoint = new DatabaseEndpoint();
-        List<PollBean> pollBeanList = databaseEndpoint.getTop100PollsTask();
+    private class LoadContentTask extends AsyncTask<Void, Void, List<Poll>> {
 
-        ModelTransformer transformer = new ModelTransformer();
-        List<Poll> pollList = new ArrayList<>();
-
-        if (pollBeanList != null)
-        for (PollBean pollBean: pollBeanList) {
-            pollList.add(transformer.transformPollBeanToPoll(pollBean));
+        boolean isSwipe;
+        LoadContentTask(boolean isSwipe){
+            this.isSwipe = isSwipe;
         }
 
-        return pollList;
+        @Override
+        protected List<Poll> doInBackground(Void... params) {
+
+            List<PollBean> pollBeanList = null;
+            ModelTransformer transformer = new ModelTransformer();
+            List<Poll> pollList = new ArrayList<>();
+
+            try {
+                pollBeanList = pollBeanApi.getTop100PollBeans().execute().getItems();
+            }
+            catch (IOException e) {
+                DatabaseLogEndpoint endpoint = new DatabaseLogEndpoint();
+                endpoint.insertTask("GetTop100PollsTask - Async", "1st Msg: " + e.getMessage() + "\n 2nd Msg: " + e.toString());
+                e.printStackTrace();
+            }
+
+            if (pollBeanList != null)
+                for (PollBean pollBean: pollBeanList) {
+                    pollList.add(transformer.transformPollBeanToPoll(pollBean));
+                }
+
+            return pollList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Poll> pollList) {
+            super.onPostExecute(pollList);
+
+            if (rootView.hasFocus()){
+                progressBar.setVisibility(View.GONE);
+                mAdapter = new TopPollsAdapter(pollList, getContext());
+                recyclerView.setAdapter(mAdapter);
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            if (!isSwipe)
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
+
 
 }

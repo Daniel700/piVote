@@ -13,6 +13,11 @@
         android:textStyle="italic"
         android:layout_margin="5dp"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar_recently_voted"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"/>
 
 <android.support.design.widget.CoordinatorLayout
     android:orientation="vertical"

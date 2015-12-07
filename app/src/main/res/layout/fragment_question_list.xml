@@ -6,6 +6,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_question_list"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"/>
+
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/coordinatorLayoutQuestionList"
     android:layout_width="match_parent"
@@ -34,6 +40,7 @@
         android:layout_marginRight="@dimen/fab_button_margin_right"
         android:layout_marginEnd="@dimen/fab_button_margin_right"
         android:alpha="0.8"
+        android:onClick="refreshQuestionList"
         app:backgroundTint="?attr/colorPrimary"
         app:elevation="6dp"
         app:layout_anchor="@id/recycler_view_question_list"
