@@ -71,7 +71,7 @@
 
     <!-- FragmentFavorites -->
     <string name="dialogDeleteTitle">Delete All</string>
-    <string name="dialogDeleteMessage">Are you sure you want to delete all entries from your list?</string>
+    <string name="dialogDeleteMessage">Are you sure that you want to delete all entries from your list?</string>
 
 
     <string name="favoriteRemoved">Poll has been removed from your Favorites List</string>

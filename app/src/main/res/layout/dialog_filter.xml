@@ -6,6 +6,16 @@
 
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:text="@string/dialogTitle" />
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@color/question_detailed_dark"/>
 

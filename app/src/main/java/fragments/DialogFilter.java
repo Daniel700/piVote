@@ -1,20 +1,18 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import piv.pivote.R;
 
@@ -29,12 +27,20 @@ public class DialogFilter extends DialogFragment {
     private static int language = 0;
     private static int category = 0;
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dialog_filter, container);
-        getDialog().setTitle(getString(R.string.dialogTitle));
 
         Spinner spinnerLanguage = (Spinner) rootView.findViewById(R.id.spinner_filter_language);
         Spinner spinnerCategory = (Spinner) rootView.findViewById(R.id.spinner_filter_category);
